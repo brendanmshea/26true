@@ -12,6 +12,12 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'neighborhood',
+      title: 'Neighborhood Corridor',
+      type: 'string',
+      description: 'e.g. Roxbury, Dorchester, Mattapan, Jamaica Plain',
+    }),
+    defineField({
       name: 'mile',
       title: 'Course Mile Marker',
       type: 'string',
@@ -27,6 +33,13 @@ export default defineType({
       title: 'Vibe & Energy',
       type: 'string',
       description: 'e.g. Live DJ, Brass Band, Block Party',
+    }),
+    defineField({
+      name: 'amenities',
+      title: 'Zone Amenities & Supplies',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'e.g. Hydration, Electrolytes, Fruit, Noise Makers',
     }),
     defineField({
       name: 'order',

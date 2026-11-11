@@ -78,7 +78,17 @@ export async function getRaceData() {
           stravaRouteUrl: raceInfo?.stravaRouteUrl || localRaceData.course.stravaRouteUrl,
           googleMapsEmbedUrl: raceInfo?.googleMapsEmbedUrl || localRaceData.course.googleMapsEmbedUrl,
           neighborhoods: neighborhoods && neighborhoods.length > 0 ? neighborhoods : localRaceData.course.neighborhoods,
-          cheerZones: cheerZones && cheerZones.length > 0 ? cheerZones : localRaceData.course.cheerZones,
+          cheerZones:
+            cheerZones && cheerZones.length > 0
+              ? cheerZones.map((z: any, idx: number) => ({
+                  number: z.number ?? z.order ?? idx + 1,
+                  neighborhood: z.neighborhood || z.name || 'Boston',
+                  location: z.location || '',
+                  mile: z.mile || '',
+                  vibe: z.vibe || '',
+                  amenities: Array.isArray(z.amenities) && z.amenities.length > 0 ? z.amenities : ['Hydration', 'Community Support'],
+                }))
+              : localRaceData.course.cheerZones,
         },
 
         pillars: pillars && pillars.length > 0 ? pillars : localRaceData.pillars,

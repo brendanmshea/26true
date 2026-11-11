@@ -173,12 +173,12 @@ const { course, general } = raceData;
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {course.cheerZones.map((zone) => (
+          {(course.cheerZones || []).map((zone, idx) => (
             <div class="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 flex flex-col justify-between hover:border-[#3fd4a4]/40 transition-colors">
               <div>
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-neutral-900">
                   <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#d4ff00] text-black">
-                    Cheer Zone {zone.number}
+                    Cheer Zone {zone.number ?? zone.order ?? idx + 1}
                   </span>
                   <span class="font-edo text-lg text-[#3fd4a4]">
                     {zone.mile}
@@ -186,7 +186,7 @@ const { course, general } = raceData;
                 </div>
 
                 <div class="font-edo text-2xl text-white mb-1">
-                  {zone.neighborhood}
+                  {zone.neighborhood || zone.name}
                 </div>
                 <div class="text-xs font-semibold text-neutral-400 mb-3 flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5 text-[#d4ff00] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,15 +200,17 @@ const { course, general } = raceData;
                 </div>
               </div>
 
-              <div class="mt-4 pt-3 border-t border-neutral-900">
-                <div class="flex flex-wrap gap-1.5">
-                  {zone.amenities.map((item) => (
-                    <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-neutral-900 text-neutral-300 border border-neutral-800">
-                      {item}
-                    </span>
-                  ))}
+              {zone.amenities && zone.amenities.length > 0 && (
+                <div class="mt-4 pt-3 border-t border-neutral-900">
+                  <div class="flex flex-wrap gap-1.5">
+                    {zone.amenities.map((item) => (
+                      <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-neutral-900 text-neutral-300 border border-neutral-800">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           ))}
         </div>
