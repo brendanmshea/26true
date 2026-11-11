@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { raceData } from '../data/raceData';
+
+const { gallery, general } = raceData;
+const categories = ['All', 'Race Day', 'Cheer Squads', 'Community', 'Finish Line'];
+---
+
+<Layout
+  title={`Photo Gallery — ${general.name}`}
+  description="Explore moments, cheer squads, and finish line celebrations from 26.TRUE in Boston."
+>
+  <!-- Header -->
+  <section class="bg-black py-16 lg:py-24 border-b border-neutral-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-4">
+          Visual Memories
+        </div>
+        <h1 class="font-edo text-5xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal mb-4">
+          26.TRUE Photo Gallery
+        </h1>
+        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
+          The emotion, the sweat, the drumlines, and the triumph. Every block of Boston showing up for each other.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & Gallery Grid -->
+  <section class="py-16 bg-black min-h-[60vh]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Filter Bar -->
+      <div class="flex flex-wrap items-center gap-2 mb-12" id="gallery-filter-bar">
+        {categories.map((cat, idx) => (
+          <button
+            type="button"
+            class={`gallery-filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+              idx === 0
+                ? 'bg-[#d4ff00] text-black shadow-md shadow-[#d4ff00]/20'
+                : 'bg-neutral-950 text-neutral-300 hover:text-white border border-neutral-800'
+            }`}
+            data-category={cat.toLowerCase().replace(' ', '-')}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- Photo Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+        {gallery.map((photo) => (
+          <div
+            class="gallery-item group relative overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 flex flex-col"
+            data-category={photo.category}
+          >
+            <div class="relative aspect-[4/3] overflow-hidden bg-neutral-900">
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-black/80 backdrop-blur-md text-[#d4ff00] border border-neutral-800">
+                  {photo.neighborhood}
+                </span>
+              </div>
+            </div>
+            
+            <div class="p-6 flex flex-col justify-between flex-grow">
+              <p class="text-sm font-medium text-neutral-200 mb-4 leading-snug">
+                {photo.caption}
+              </p>
+              <div class="flex items-center justify-between text-xs text-neutral-500 pt-3 border-t border-neutral-900 font-bold">
+                <span class="uppercase tracking-wider text-[#3fd4a4]">{photo.category.replace('-', ' ')}</span>
+                <span>{photo.year}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Community Upload Box -->
+      <div class="mt-20 p-8 sm:p-12 rounded-3xl bg-neutral-950 border border-neutral-800 text-center max-w-3xl mx-auto">
+        <span class="text-xs font-black uppercase tracking-widest text-[#d4ff00]">
+          Community Photographers & Runners
+        </span>
+        <h3 class="font-edo text-3xl sm:text-4xl text-white uppercase mt-2 mb-4">
+          Share Your 26.TRUE Shots
+        </h3>
+        <p class="text-sm text-neutral-400 mb-8 max-w-lg mx-auto">
+          Did you snap photos of your crew, the cheer stations, or the finish line? Tag <strong class="text-white">@pioneersrc</strong> or send high-res photos to <a href={`mailto:${general.contactEmail}`} class="text-[#d4ff00] underline">{general.contactEmail}</a> to be featured in the official gallery.
+        </p>
+        <a
+          href={`mailto:${general.contactEmail}?subject=26.TRUE%20Photo%20Submission`}
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider bg-[#d4ff00] hover:bg-[#c3ec00] text-black transition-all"
+        >
+          <span>Submit Photos</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.gallery-filter-btn');
+  const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const selected = btn.getAttribute('data-category');
+
+      // Update button styles
+      buttons.forEach((b) => {
+        b.classList.remove('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
+        b.classList.add('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
+      });
+      btn.classList.remove('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
+      btn.classList.add('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
+
+      // Filter gallery cards
+      items.forEach((item) => {
+        const itemCat = item.getAttribute('data-category');
+        if (selected === 'all' || itemCat === selected) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

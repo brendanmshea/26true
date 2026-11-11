@@ -5,70 +5,85 @@ const { general } = raceData;
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-sm">
+<footer class="bg-black border-t border-neutral-900 text-neutral-400 text-sm">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
       
       <!-- Brand & Mission (2 cols) -->
       <div class="lg:col-span-2 space-y-4">
         <a href="/" class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center font-black text-slate-950 text-lg tracking-tighter">
-            26
+          <img
+            src="/images/race_logo.png"
+            alt="26.TRUE Logo"
+            class="h-10 w-auto object-contain"
+          />
+          <div class="flex flex-col">
+            <span class="font-edo text-2xl text-white tracking-wider">
+              26.TRUE
+            </span>
+            <span class="text-[10px] font-bold text-[#3fd4a4] uppercase tracking-widest">
+              Our City. Our Way.
+            </span>
           </div>
-          <span class="text-xl font-black tracking-wider text-white uppercase">
-            26TRUE
-          </span>
         </a>
-        <p class="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
+        <p class="text-xs sm:text-sm text-neutral-400 max-w-sm leading-relaxed font-normal">
           {general.description}
         </p>
-        <div class="pt-2 text-xs text-slate-400 border-t border-slate-900">
-          Official Charity Beneficiary: <span class="text-slate-300 font-semibold">{general.charityPartner}</span>
+        <div class="pt-2 flex items-center gap-3">
+          <img
+            src="/images/Pioneers Logo - white.svg"
+            alt="PIONEERS Run Crew"
+            class="h-7 w-auto object-contain opacity-75"
+          />
+          <span class="text-xs text-neutral-400">
+            Founded & Organized by <strong class="text-white">PIONEERS Run Crew</strong>
+          </span>
         </div>
       </div>
 
       <!-- Quick Links -->
       <div>
-        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">
-          Race Details
+        <h4 class="text-xs font-black uppercase tracking-wider text-[#d4ff00] mb-4">
+          Explore
         </h4>
-        <ul class="space-y-2.5 text-xs sm:text-sm">
-          <li><a href="/course" class="hover:text-emerald-400 transition-colors">Course & Elevation</a></li>
-          <li><a href="/schedule" class="hover:text-emerald-400 transition-colors">Weekend Schedule</a></li>
-          <li><a href="/schedule#packet-pickup" class="hover:text-emerald-400 transition-colors">Packet Pickup</a></li>
-          <li><a href="/sponsors" class="hover:text-emerald-400 transition-colors">Sponsors & Partners</a></li>
-          <li><a href="/faq" class="hover:text-emerald-400 transition-colors">FAQ & Rules</a></li>
+        <ul class="space-y-2.5 text-xs sm:text-sm font-semibold">
+          <li><a href="/course" class="hover:text-[#d4ff00] transition-colors">Neighborhood Course</a></li>
+          <li><a href="/gallery" class="hover:text-[#d4ff00] transition-colors">Photo Gallery</a></li>
+          <li><a href="/history" class="hover:text-[#d4ff00] transition-colors">Origin & History</a></li>
+          <li><a href="/faq" class="hover:text-[#d4ff00] transition-colors">FAQ & Guide</a></li>
         </ul>
       </div>
 
-      <!-- Community -->
+      <!-- Neighborhoods -->
       <div>
-        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">
-          Community & Aid
+        <h4 class="text-xs font-black uppercase tracking-wider text-[#3fd4a4] mb-4">
+          Neighborhoods
         </h4>
-        <ul class="space-y-2.5 text-xs sm:text-sm">
-          <li><a href={`mailto:${general.volunteerEmail}?subject=Volunteering`} class="hover:text-emerald-400 transition-colors">Volunteer Crew</a></li>
-          <li><a href={`mailto:${general.sponsorEmail}?subject=Sponsorship`} class="hover:text-emerald-400 transition-colors">Partner With Us</a></li>
-          <li><a href="/faq#spectators" class="hover:text-emerald-400 transition-colors">Spectator Zones</a></li>
-          <li><a href="/course#aid-stations" class="hover:text-emerald-400 transition-colors">Aid Station Guide</a></li>
+        <ul class="space-y-2 text-xs text-neutral-400 font-medium">
+          <li>Roxbury</li>
+          <li>Dorchester</li>
+          <li>Mattapan</li>
+          <li>Jamaica Plain</li>
+          <li>Hyde Park</li>
+          <li>South End</li>
         </ul>
       </div>
 
-      <!-- Registration & Direct Contact -->
+      <!-- Contact & Community -->
       <div>
-        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">
-          Get In Touch
+        <h4 class="text-xs font-black uppercase tracking-wider text-white mb-4">
+          Get Involved
         </h4>
         <div class="space-y-2 text-xs sm:text-sm">
-          <p class="text-slate-300 font-medium">{general.cityState}</p>
-          <p><a href={`mailto:${general.contactEmail}`} class="hover:text-emerald-400 transition-colors">{general.contactEmail}</a></p>
+          <p><a href={`mailto:${general.volunteerEmail}?subject=26.TRUE%20Volunteer`} class="hover:text-[#d4ff00] transition-colors font-bold">Volunteer & Cheer Squads</a></p>
+          <p><a href={`mailto:${general.contactEmail}`} class="hover:text-[#d4ff00] transition-colors">{general.contactEmail}</a></p>
         </div>
         <div class="mt-6">
           <a
             href={general.registrationUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-emerald-400 text-slate-950 hover:bg-emerald-300 transition-colors"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black hover:bg-[#c3ec00] transition-colors"
           >
             <span>Register on RunSignup</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,13 +96,13 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <!-- Bottom Bar -->
-    <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+    <div class="mt-12 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
       <div>
-        &copy; {currentYear} {general.name}. All rights reserved. Hosted on Cloudflare Pages.
+        &copy; {currentYear} {general.name} &bull; PIONEERS Run Crew. Hosted on Cloudflare Pages.
       </div>
       <div class="flex items-center gap-6">
-        <a href="/faq#rules" class="hover:text-slate-400 transition-colors">Race Rules & Waiver</a>
-        <a href="/faq#privacy" class="hover:text-slate-400 transition-colors">Privacy Policy</a>
+        <a href="/faq" class="hover:text-white transition-colors">Runner Guide</a>
+        <a href="https://www.pioneersrc.com" target="_blank" rel="noopener noreferrer" class="text-[#3fd4a4] hover:text-[#d4ff00] transition-colors font-bold">PIONEERS Run Crew</a>
       </div>
     </div>
   </div>

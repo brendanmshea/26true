@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { raceData } from '../data/raceData';
+
+const { general, historyMilestones } = raceData;
+---
+
+<Layout
+  title={`History & Mission — ${general.name}`}
+  description="The story of 26.TRUE and PIONEERS Run Crew: bringing marathon culture to Boston's Black and Brown neighborhoods."
+>
+  <!-- Page Header -->
+  <section class="bg-black py-16 lg:py-24 border-b border-neutral-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-4">
+          Origin & Movement
+        </div>
+        <h1 class="font-edo text-5xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal mb-6">
+          The Story of 26.TRUE
+        </h1>
+        <p class="text-lg sm:text-xl text-neutral-300 leading-relaxed font-normal">
+          Born out of a necessity for representation, community, and joy. How a Boston running crew redefined what 26.2 miles looks like.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote Section -->
+  <section class="py-16 bg-neutral-950 border-b border-neutral-900">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-block w-12 h-1 bg-[#d4ff00] mb-6"></div>
+      <blockquote class="font-edo text-2xl sm:text-3xl lg:text-4xl text-white tracking-normal leading-snug mb-6">
+        &ldquo;26.TRUE is the real Boston Marathon because it runs through the heart of our neighborhoods and reflects the true soul of our city.&rdquo;
+      </blockquote>
+      <div class="text-xs font-black uppercase tracking-widest text-[#3fd4a4]">
+        — Mayor Michelle Wu, City of Boston
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive Story & Photos -->
+  <section class="py-20 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+        <div class="lg:col-span-6 space-y-6 text-neutral-300 text-sm sm:text-base leading-relaxed">
+          <div class="text-xs font-black uppercase tracking-widest text-[#d4ff00]">
+            The Spark
+          </div>
+          <h2 class="font-edo text-3xl sm:text-4xl text-white uppercase">
+            A Course Built For Our Community
+          </h2>
+          <p>
+            For more than a century, the historic Boston Marathon has held legendary status. But for runners living in Roxbury, Dorchester, and Mattapan, the traditional route felt distant — starting 26 miles away in Hopkinton and winding primarily through affluent western suburbs before a brief finish in the Back Bay.
+          </p>
+          <p>
+            In 2021, when the pandemic forced the traditional marathon into a virtual format, <strong class="text-white">PIONEERS Run Crew</strong> saw an opportunity not just to run a virtual race, but to build an authentic physical route through the neighborhoods that make Boston what it is.
+          </p>
+          <p>
+            They named it <strong class="text-[#d4ff00]">26.TRUE</strong>: twenty-six point two miles held entirely within the city limits of Boston, elevating local businesses, community centers, and neighborhood pride.
+          </p>
+        </div>
+
+        <div class="lg:col-span-6">
+          <div class="relative rounded-3xl overflow-hidden bg-neutral-950 border border-neutral-800 p-4">
+            <img
+              src="/images/race_locations_logo.png"
+              alt="26.TRUE Jacket Artwork"
+              class="w-full h-auto object-contain rounded-2xl"
+            />
+            <div class="p-4 text-center">
+              <span class="text-xs font-black uppercase tracking-wider text-[#3fd4a4]">
+                The Neighborhood Footprint
+              </span>
+              <p class="text-xs text-neutral-400 mt-1">
+                Roxbury &bull; Dorchester &bull; Mattapan &bull; JP &bull; Hyde Park &bull; South End
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestone Timeline -->
+      <div class="max-w-4xl mx-auto pt-10 border-t border-neutral-900">
+        <div class="text-center mb-16">
+          <h2 class="text-xs font-black uppercase tracking-widest text-[#d4ff00] mb-2">
+            Milestones & Legacy
+          </h2>
+          <p class="font-edo text-3xl sm:text-4xl text-white uppercase">
+            From Virtual Movement To Boston Institution
+          </p>
+        </div>
+
+        <div class="space-y-12">
+          {historyMilestones.map((milestone) => (
+            <div class="relative pl-8 sm:pl-12 border-l-2 border-[#d4ff00]/40 group">
+              <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-black border-2 border-[#d4ff00] group-hover:bg-[#d4ff00] transition-colors"></div>
+              
+              <div class="font-edo text-xl sm:text-2xl text-[#d4ff00] mb-1">
+                {milestone.year}
+              </div>
+              <h3 class="font-edo text-2xl sm:text-3xl text-white uppercase mb-2">
+                {milestone.title}
+              </h3>
+              <p class="text-sm font-semibold text-[#3fd4a4] mb-3">
+                {milestone.summary}
+              </p>
+              <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                {milestone.details}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- About PIONEERS Callout -->
+      <div class="mt-24 p-8 sm:p-12 rounded-3xl bg-neutral-950 border border-neutral-800 max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-8">
+        <div class="shrink-0">
+          <img
+            src="/images/Pioneers Logo - white.svg"
+            alt="PIONEERS Run Crew Logo"
+            class="w-28 h-28 object-contain"
+          />
+        </div>
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider text-[#d4ff00]">About The Crew</span>
+          <h3 class="font-edo text-2xl sm:text-3xl text-white uppercase mt-1 mb-3">
+            PIONEERS Run Crew
+          </h3>
+          <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed mb-4">
+            Founded in 2017, PIONEERS Run Crew meets weekly in Boston to create a culturally empowering, safe, and welcoming running community for runners of color and all athletes.
+          </p>
+          <a
+            href="https://www.pioneersrc.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs font-black uppercase tracking-wider text-[#3fd4a4] hover:text-[#d4ff00] transition-colors inline-flex items-center gap-1.5"
+          >
+            <span>Visit pioneersrc.com</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>

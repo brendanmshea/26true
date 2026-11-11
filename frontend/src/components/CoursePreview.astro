@@ -3,136 +3,56 @@ import { raceData } from '../data/raceData';
 const { course } = raceData;
 ---
 
-<section class="py-20 lg:py-28 bg-slate-900/30 border-y border-slate-800/80 relative overflow-hidden">
+<section class="py-20 lg:py-28 bg-black border-y border-neutral-900 relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       
       <!-- Left description -->
-      <div class="lg:col-span-5">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 mb-4">
-          USATF Cert #{course.usatfCert}
+      <div class="lg:col-span-6 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black">
+          The Neighborhood Route
         </div>
-        <h2 class="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight mb-4">
-          A Fast, Net-Downhill Scenic Parkway Route
+        <h2 class="font-edo text-4xl sm:text-5xl text-white uppercase tracking-normal">
+          Through Boston's Cultural Heart
         </h2>
-        <p class="text-slate-300 text-base leading-relaxed mb-6">
-          Designed by distance runners to maximize speed and flow. Featuring gentle rolling descents over the first 16 miles, wide roadway lanes to prevent congestion, and an electric riverside final 5K straight into Heritage Park.
+        <p class="text-neutral-300 text-base leading-relaxed font-normal">
+          26.TRUE is an authentic tour of Boston. We run through Roxbury, Dorchester, Mattapan, Jamaica Plain, Hyde Park, and the South End — passing historic parks, local businesses, and community centers with block-party cheer squads lining the way.
         </p>
 
-        <div class="space-y-3 mb-8">
-          <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Surface</span>
-            <span class="text-sm font-bold text-white">{course.surface}</span>
-          </div>
-          <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Elevation Profile</span>
-            <span class="text-sm font-bold text-emerald-400">+{course.elevationGain} / -{course.elevationLoss} (Net -140 ft)</span>
-          </div>
-          <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Course Time Limit</span>
-            <span class="text-sm font-bold text-white">{course.cutoffTime}</span>
-          </div>
+        <!-- Neighborhood tags -->
+        <div class="flex flex-wrap gap-2 pt-2">
+          {course.neighborhoods.map((n) => (
+            <span class="px-3 py-1 rounded-xl text-xs font-bold uppercase tracking-wider bg-neutral-900 text-neutral-300 border border-neutral-800">
+              {n.name}
+            </span>
+          ))}
         </div>
 
-        <a
-          href="/course"
-          class="inline-flex items-center gap-2 text-sm font-bold text-emerald-400 hover:text-emerald-300 transition-colors group"
-        >
-          <span>View Turn-by-Turn Map & All 12 Aid Stations</span>
-          <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-          </svg>
-        </a>
+        <div class="pt-4">
+          <a
+            href="/course"
+            class="inline-flex items-center gap-2 text-sm font-black uppercase tracking-wider text-[#d4ff00] hover:text-[#3fd4a4] transition-colors group"
+          >
+            <span>View Full Route & All Cheer Stations</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </a>
+        </div>
       </div>
 
       <!-- Right visual card -->
-      <div class="lg:col-span-7">
-        <div class="bg-slate-950 rounded-3xl border border-slate-800 p-6 sm:p-8 relative shadow-2xl overflow-hidden">
-          
-          <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Course Elevation Snapshot</span>
-              <h3 class="text-lg font-bold text-white">Miles 0.0 &rarr; 26.2</h3>
-            </div>
-            <span class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-500/20">
-              Optimal PR Profile
-            </span>
+      <div class="lg:col-span-6 flex justify-center">
+        <div class="w-full max-w-md bg-neutral-950 rounded-3xl border border-neutral-800 p-8 relative shadow-2xl flex flex-col items-center text-center">
+          <img
+            src="/images/race_locations_logo.png"
+            alt="26.TRUE Route Footprint"
+            class="w-full max-w-[320px] h-auto object-contain mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]"
+          />
+          <div class="w-full pt-4 border-t border-neutral-900 flex items-center justify-between text-xs">
+            <span class="font-bold text-neutral-400">Marathon (26.2) & Half (13.1)</span>
+            <span class="font-black text-[#3fd4a4] uppercase">100% City of Boston</span>
           </div>
-
-          <!-- Stylized Elevation Profile SVG -->
-          <div class="py-6">
-            <div class="relative h-44 w-full">
-              <!-- Grid lines -->
-              <div class="absolute inset-0 flex flex-col justify-between opacity-15">
-                <div class="border-b border-white"></div>
-                <div class="border-b border-white"></div>
-                <div class="border-b border-white"></div>
-                <div class="border-b border-white"></div>
-              </div>
-
-              <!-- SVG Curve -->
-              <svg class="w-full h-full overflow-visible" viewBox="0 0 500 150" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="elevationGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.35" />
-                    <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M 0 50 Q 70 30, 130 55 T 260 85 T 390 95 L 500 120 L 500 150 L 0 150 Z"
-                  fill="url(#elevationGrad)"
-                />
-                <path
-                  d="M 0 50 Q 70 30, 130 55 T 260 85 T 390 95 L 500 120"
-                  fill="none"
-                  stroke="#34d399"
-                  stroke-width="3"
-                />
-                
-                <!-- Markers -->
-                <circle cx="0" cy="50" r="5" fill="#34d399" class="animate-pulse" />
-                <circle cx="250" cy="85" r="4" fill="#38bdf8" />
-                <circle cx="500" cy="120" r="5" fill="#f59e0b" />
-              </svg>
-            </div>
-
-            <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mt-2 px-1">
-              <div>
-                <span class="block font-bold text-white">Start Line</span>
-                <span>Elev: 460 ft</span>
-              </div>
-              <div class="text-center">
-                <span class="block font-bold text-white">Halfway Checkpoint (13.1)</span>
-                <span>Elev: 390 ft</span>
-              </div>
-              <div class="text-right">
-                <span class="block font-bold text-white">Finish Festival</span>
-                <span>Elev: 320 ft</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Aid Stations Strip -->
-          <div class="mt-6 pt-6 border-t border-slate-800">
-            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-              Fuel & Hydration Partners on Course
-            </div>
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900 border border-slate-800 text-slate-300">
-                Maurten Gel 100 (x4 Stations)
-              </span>
-              <span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900 border border-slate-800 text-slate-300">
-                Nuun Endurance Lemon-Lime
-              </span>
-              <span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900 border border-slate-800 text-slate-300">
-                Cold Water & Ice Sponges
-              </span>
-              <span class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900 border border-slate-800 text-slate-300">
-                Medical & SAG Support
-              </span>
-            </div>
-          </div>
-
         </div>
       </div>
 

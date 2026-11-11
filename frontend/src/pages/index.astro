@@ -3,9 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import RaceStats from '../components/RaceStats.astro';
 import HighlightsSection from '../components/HighlightsSection.astro';
+import PhotoStrip from '../components/PhotoStrip.astro';
 import CoursePreview from '../components/CoursePreview.astro';
-import ScheduleSection from '../components/ScheduleSection.astro';
-import SponsorGrid from '../components/SponsorGrid.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { raceData } from '../data/raceData';
 
@@ -13,39 +12,41 @@ const { general } = raceData;
 ---
 
 <Layout>
-  <!-- Hero with Live Countdown -->
+  <!-- Hero with Live Countdown & Jacket Artwork -->
   <Hero />
 
-  <!-- 4 Key Numbers -->
+  <!-- 4 Untimed & Community Metrics -->
   <RaceStats />
 
-  <!-- Why Run 26True -->
+  <!-- Why We Run 26.TRUE -->
   <HighlightsSection />
 
-  <!-- Course Elevation & Aid Preview -->
+  <!-- Photo Strip / Community Energy Showcase -->
+  <PhotoStrip />
+
+  <!-- Boston Neighborhood Route Teaser -->
   <CoursePreview />
 
-  <!-- Weekend Timeline -->
-  <ScheduleSection />
-
-  <!-- FAQ Accordion (Top 4 FAQs) -->
+  <!-- Top Frequently Asked Questions -->
   <FaqAccordion limit={4} />
 
   <!-- Big Pre-Footer CTA -->
-  <section class="py-20 lg:py-28 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-800 text-center relative overflow-hidden">
+  <section class="py-20 lg:py-28 bg-black border-t border-neutral-900 text-center relative overflow-hidden">
     <div class="absolute inset-0 opacity-15 pointer-events-none">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-emerald-500 blur-[140px] rounded-full"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#d4ff00] blur-[150px] rounded-full"></div>
     </div>
     
     <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-500/30 mb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-6">
         {general.registrationStatus}
       </div>
-      <h2 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight mb-6">
-        Ready To Put Your Training To The Test?
+      
+      <h2 class="font-edo text-4xl sm:text-6xl text-white uppercase tracking-normal mb-6">
+        Ready To Run Boston Our Way?
       </h2>
-      <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-        Join 3,500 runners on the starting line this October. Field size is strictly capped to guarantee open roads and personal space for your fastest possible 26.2.
+      
+      <p class="text-base sm:text-lg text-neutral-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+        Experience 26.2 or 13.1 miles through the historic streets, sounds, and heartbeat of Boston. An unforgettable celebration of community, culture, and collective grit.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -53,27 +54,20 @@ const { general } = raceData;
           href={general.registrationUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-base font-extrabold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 rounded-2xl shadow-xl shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
         >
           <span>Register on RunSignup</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
           </svg>
         </a>
         <a
-          href="/faq"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-2xl transition-all"
+          href="/history"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-2xl transition-all"
         >
-          <span>Read Runner FAQ</span>
+          <span>Read The Origin Story</span>
         </a>
-      </div>
-
-      <div class="mt-8 text-xs text-slate-400">
-        Prices increase on {general.priceIncreaseDate} or when tier 1 sells out.
       </div>
     </div>
   </section>
-
-  <!-- Partners & Sponsors -->
-  <SponsorGrid />
 </Layout>

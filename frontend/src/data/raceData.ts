@@ -4,324 +4,333 @@ export interface RaceStat {
   subtext: string;
 }
 
-export interface AidStation {
+export interface CheerStation {
   mile: number;
+  neighborhood: string;
   location: string;
+  vibe: string;
   amenities: string[];
 }
 
-export interface ScheduleEvent {
-  time: string;
+export interface GalleryImage {
+  id: string;
+  src: string;
+  alt: string;
+  caption: string;
+  neighborhood: string;
+  year: string;
+  category: 'race-day' | 'cheer-squad' | 'finish-line' | 'community';
+}
+
+export interface HistoryMilestone {
+  year: string;
   title: string;
-  location: string;
-  description: string;
-}
-
-export interface ScheduleDay {
-  date: string;
-  dayOfWeek: string;
-  events: ScheduleEvent[];
-}
-
-export interface Sponsor {
-  name: string;
-  tier: 'title' | 'gold' | 'silver' | 'community';
-  url: string;
-  tagline?: string;
-  logoText: string;
+  summary: string;
+  details: string;
 }
 
 export interface FaqItem {
   question: string;
   answer: string;
-  category: 'Registration' | 'Race Day Logistics' | 'Course & Rules' | 'Spectators & Volunteers';
+  category: 'About 26.TRUE' | 'Course & Route' | 'Registration & Bibs' | 'Cheer Squads & Volunteers';
 }
 
 export const raceData = {
   general: {
-    name: "26True Marathon",
-    shortName: "26True",
-    tagline: "The Purest 26.2. No Gimmicks. Just Grit & Community.",
-    description: "26True is an authentic, runner-first marathon and half marathon built by distance runners for the running community. Fast, scenic, USATF-certified, and focused entirely on the runner experience.",
+    name: "26.TRUE",
+    shortName: "26.TRUE",
+    tagline: "Our City. Our Way.",
+    organizer: "PIONEERS Run Crew",
+    description: "26.TRUE is an untimed, community-first marathon and half marathon created by PIONEERS Run Crew to celebrate the culture, energy, and rich neighborhoods of Boston that the traditional marathon route bypasses.",
     date: "2026-10-18T07:00:00-04:00",
     displayDate: "Sunday, October 18, 2026",
-    location: "Riverfront Park & Scenic Parkway",
-    cityState: "Boston, MA",
+    location: "City of Boston, MA",
+    neighborhoodsList: [
+      "Roxbury",
+      "Dorchester",
+      "Mattapan",
+      "Jamaica Plain",
+      "Hyde Park",
+      "South End",
+    ],
     registrationUrl: "https://runsignup.com",
-    registrationStatus: "Early Bird Open",
-    registrationPrice: "$115 Marathon / $85 Half",
-    priceIncreaseDate: "May 1, 2026",
-    charityPartner: "Youth Running & Track Foundation 501(c)(3)",
+    registrationStatus: "Registration Opening Soon",
+    registrationPrice: "Community Accessible Pricing",
+    charityPartner: "PIONEERS Run Crew Foundation",
     contactEmail: "info@26true.com",
     volunteerEmail: "volunteer@26true.com",
-    sponsorEmail: "sponsors@26true.com",
   },
   
   announcement: {
     active: true,
-    badge: "Registration Live",
-    message: "Early bird pricing is active! The first 500 bibs include exclusive custom technical running socks.",
-    linkText: "Claim Your Bib",
-    linkUrl: "#register",
+    badge: "26.TRUE 2026",
+    message: "26.TRUE 2026 course and registration details dropping soon. Follow along as we prepare to take over the city.",
+    linkText: "Stay Updated",
+    linkUrl: "#newsletter",
   },
 
   stats: [
     {
-      label: "Course Distance",
+      label: "Race Distances",
       value: "26.2 & 13.1",
-      subtext: "USATF Certified & Boston Qualifier (BQ)",
+      subtext: "Full Marathon & Half Marathon options",
     },
     {
-      label: "Net Elevation",
-      value: "-140 ft",
-      subtext: "Fast, gentle rolling net downhill course",
+      label: "City Footprint",
+      value: "100% Boston",
+      subtext: "Entirely within city limits & historic neighborhoods",
     },
     {
-      label: "Aid Stations",
-      value: "13 Stations",
-      subtext: "Fully stocked every 1.5–2 miles with Nuun & Maurten",
+      label: "Timing Format",
+      value: "Untimed",
+      subtext: "No chip timing or cutoff pressure — purely about the culture",
     },
     {
-      label: "Field Limit",
-      value: "3,500",
-      subtext: "Capped to avoid bottlenecking and congestion",
+      label: "Cheer Squads",
+      value: "Citywide",
+      subtext: "Block parties, DJs, and live hype squads across the course",
     },
   ] as RaceStat[],
 
-  highlights: [
+  pillars: [
     {
-      title: "Boston Qualifier Certified",
-      description: "Accurately measured and USATF sanctioned with chip timing checkpoints at 10K, Halfway, 30K, and Finish.",
-      icon: "trophy",
+      title: "Our City, Our Way",
+      description: "Unlike suburban-to-downtown courses, 26.TRUE stays right inside Boston. We run through Roxbury, Dorchester, Mattapan, and Jamaica Plain — centering the vibrant communities that make this city breathe.",
+      icon: "map-pin",
+      accent: "#d4ff00",
     },
     {
-      title: "Pacer Teams in Every Corral",
-      description: "Dedicated sub-3:00 through 5:30 pacer groups leading even-split pacing strategies all the way home.",
+      title: "Untimed & Community-Driven",
+      description: "No clock chasing, no chip mats, and no stress. Whether you run 3 hours or 6 hours, we move together. Every runner gets cheered with the same thunderous energy from start to finish.",
+      icon: "heart",
+      accent: "#3fd4a4",
+    },
+    {
+      title: "Culture, DJs & Block Parties",
+      description: "The course is lined with grassroots cheer zones featuring live DJs, brass horns, local cookouts, and community leaders holding down the blocks to push you through every mile.",
+      icon: "music",
+      accent: "#d4ff00",
+    },
+    {
+      title: "Founded by PIONEERS",
+      description: "Built in 2021 by PIONEERS Run Crew, Boston's premier Black- and Brown-led running community. As the crew says: 'You can't be what you can't see.'",
       icon: "users",
-    },
-    {
-      title: "Runner-First Support",
-      description: "Maurten Gel 100 stations, Nuun Endurance hydration, medical squads, and ice sponges in the late miles.",
-      icon: "heart-pulse",
-    },
-    {
-      title: "Legendary Finish Festival",
-      description: "Custom heavyweight finisher medal, warm post-race meal, local craft beer garden, and physical recovery tents.",
-      icon: "sparkles",
+      accent: "#3fd4a4",
     },
   ],
 
+  historyMilestones: [
+    {
+      year: "2017",
+      title: "The Birth of PIONEERS Run Crew",
+      summary: "Founded as Boston's first Black- and Brown-led running crew to carve out space and representation in endurance running.",
+      details: "PIONEERS Run Crew began with a clear purpose: to bridge the gap in distance running, diversify the sport, and provide an empowering, inclusive space for athletes of color across Greater Boston.",
+    },
+    {
+      year: "2021",
+      title: "The First 26.TRUE Is Born",
+      summary: "When the traditional marathon moved virtual during COVID-19, PIONEERS chose to build their own 26.2.",
+      details: "Rather than running 26.2 miles through Hopkinton and western suburbs, the crew mapped out an entirely new route through Roxbury, Dorchester, and Mattapan. The inaugural 26.TRUE proved that the heart of Boston’s running spirit lives in its neighborhood streets.",
+    },
+    {
+      year: "2022–2023",
+      title: "'The Real Boston Marathon'",
+      summary: "Civic recognition and exponential growth across running crews nationwide.",
+      details: "Boston Mayor Michelle Wu celebrated 26.TRUE as 'the real Boston Marathon' for how genuinely it reflects the city's diversity. Crews from New York, Chicago, Philadelphia, and Atlanta traveled to Boston to celebrate the movement.",
+    },
+    {
+      year: "2024–2026",
+      title: "The Tradition Continues",
+      summary: "Expanding to full and half marathon distances with thousands of supporters lining the streets.",
+      details: "Now an essential cornerstone of Boston’s athletic and cultural calendar, 26.TRUE unites hundreds of runners, dozens of community partners, and thousands of spectators in an unforgettable celebration of resilience, culture, and unity.",
+    },
+  ] as HistoryMilestone[],
+
   course: {
-    usatfCert: "MA26001RN",
-    surface: "100% Closed Paved Roads",
-    cutoffTime: "6 Hours 00 Minutes (13:44/mile pace)",
-    startLocation: "Riverfront Commons (Grand Ave & River Rd)",
-    finishLocation: "Heritage Amphitheater Park",
-    elevationGain: "380 ft",
-    elevationLoss: "520 ft",
-    gpxDownloadUrl: "#download-gpx",
-    aidStations: [
-      { mile: 2.2, location: "North Canal Bridge", amenities: ["Water", "Nuun Endurance"] },
-      { mile: 4.5, location: "Memorial Park Turnaround", amenities: ["Water", "Nuun Endurance", "Restrooms"] },
-      { mile: 6.8, location: "Old Mill Crossing", amenities: ["Water", "Nuun Endurance", "Maurten Gel 100"] },
-      { mile: 9.1, location: "Pine Ridge Overlook", amenities: ["Water", "Nuun Endurance", "First Aid", "Restrooms"] },
-      { mile: 11.4, location: "East Campus Boulevard", amenities: ["Water", "Nuun Endurance", "Maurten Gel 100"] },
-      { mile: 13.1, location: "Halfway Checkpoint (Civic Center)", amenities: ["Water", "Nuun", "Medical", "Drop Bags"] },
-      { mile: 15.3, location: "South Parkway Mile 15", amenities: ["Water", "Nuun", "Maurten Gel 100", "Oranges & Bananas"] },
-      { mile: 17.5, location: "Valley Creek Bridge", amenities: ["Water", "Nuun", "Pickle Juice", "First Aid"] },
-      { mile: 19.8, location: "Highland Woods Entrance", amenities: ["Water", "Nuun", "Maurten Gel 100 (Caff)"] },
-      { mile: 21.5, location: "The 'True Grit' Cheer Tunnel", amenities: ["Water", "Nuun", "Ice Sponges", "Crowd Hype"] },
-      { mile: 23.2, location: "Harbor Boulevard Overpass", amenities: ["Water", "Nuun", "Maurten Gel 100", "Restrooms"] },
-      { mile: 25.0, location: "Final Mile Marker (Beacon St)", amenities: ["Water", "Nuun", "Cold Sponges"] },
-    ] as AidStation[],
+    tagline: "Through The Heart of Boston's Historic Neighborhoods",
+    neighborhoods: [
+      { name: "Roxbury", highlight: "Malcolm X Park, Nubian Square, Shelburne Community Center" },
+      { name: "Dorchester", highlight: "Dorchester Ave corridor, Franklin Park, Town Field" },
+      { name: "Mattapan", highlight: "River Street, Blue Hill Ave, Mattapan Square" },
+      { name: "Jamaica Plain", highlight: "Southwest Corridor Park, Centre Street, Jamaica Pond" },
+      { name: "Hyde Park", highlight: "Cleary Square, Mother Brook, Truman Parkway" },
+      { name: "South End", highlight: "Columbus Ave, Community Gardens, Historic Brownstones" },
+    ],
+    cheerStations: [
+      {
+        mile: 3.5,
+        neighborhood: "Roxbury",
+        location: "Malcolm X Park Plaza",
+        vibe: "Opening Mile Hype & Drumline",
+        amenities: ["Water", "Electrolytes", "Music", "Cheer Squad"],
+      },
+      {
+        mile: 7.2,
+        neighborhood: "Dorchester",
+        location: "Town Field Park",
+        vibe: "Afrobeats & Caribbean Brass",
+        amenities: ["Water", "Bananas & Oranges", "First Aid"],
+      },
+      {
+        mile: 11.0,
+        neighborhood: "Mattapan",
+        location: "Mattapan Square / River St",
+        vibe: "Community BBQ & DJ Set",
+        amenities: ["Water", "Electrolytes", "Energy Chews", "Restrooms"],
+      },
+      {
+        mile: 13.1,
+        neighborhood: "Franklin Park",
+        location: "Playstead Halfway Checkpoint",
+        vibe: "Halfway Celebration & Crew Handoffs",
+        amenities: ["Water", "Drop Bags", "Medical", "Half Marathon Finish"],
+      },
+      {
+        mile: 17.5,
+        neighborhood: "Hyde Park",
+        location: "Cleary Square Crossing",
+        vibe: "Local Businesses & Youth Cheer Crews",
+        amenities: ["Water", "Electrolytes", "Sponges"],
+      },
+      {
+        mile: 21.0,
+        neighborhood: "Jamaica Plain",
+        location: "Southwest Corridor / Green St",
+        vibe: "The Wall Breakers Hype Tunnel",
+        amenities: ["Water", "Ice Sponges", "High Fives", "Energy Gels"],
+      },
+      {
+        mile: 24.5,
+        neighborhood: "South End",
+        location: "Columbus Ave & Mass Ave",
+        vibe: "The Final Push DJ Stage",
+        amenities: ["Water", "Crowd Noise", "Cold Towels"],
+      },
+      {
+        mile: 26.2,
+        neighborhood: "Roxbury / Finish Village",
+        location: "Shelburne Community Center Park",
+        vibe: "Epic Finish Line Block Party & Cookout",
+        amenities: ["Finisher Medals", "Food Trucks", "Live DJ", "Recovery Zone"],
+      },
+    ] as CheerStation[],
   },
 
-  scheduleDays: [
+  gallery: [
     {
-      date: "Friday, October 16, 2026",
-      dayOfWeek: "Friday",
-      events: [
-        {
-          time: "1:00 PM – 7:00 PM",
-          title: "Runner Expo & Packet Pickup",
-          location: "Riverfront Convention Hall, Hall A",
-          description: "Pick up your bib, timing chip, technical race shirt, and gear bag. Photo ID required. Official merchandise available.",
-        },
-        {
-          time: "5:30 PM",
-          title: "First-Timer & Course Strategy Panel",
-          location: "Expo Main Stage",
-          description: "Meet the pacer captains and race director for pacing strategies, course breakdown, and weather review.",
-        },
-      ],
+      id: "photo-1",
+      src: "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1200&q=80",
+      alt: "Runners in motion through Boston streets",
+      caption: "Taking up space: Runners hitting the pavement as the morning sun breaks over Roxbury.",
+      neighborhood: "Roxbury",
+      year: "2024",
+      category: "race-day",
     },
     {
-      date: "Saturday, October 17, 2026",
-      dayOfWeek: "Saturday",
-      events: [
-        {
-          time: "8:00 AM – 9:00 AM",
-          title: "Community 5K Shakeout Run",
-          location: "Heritage Park Plaza",
-          description: "Free, easy 3-mile shakeout run hosted by local running clubs. Coffee and light refreshments provided.",
-        },
-        {
-          time: "10:00 AM – 5:00 PM",
-          title: "Final Packet Pickup & Expo",
-          location: "Riverfront Convention Hall, Hall A",
-          description: "Final opportunity to pick up your bib. Note: There is NO race morning packet pickup.",
-        },
-      ],
+      id: "photo-2",
+      src: "https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?auto=format&fit=crop&w=1200&q=80",
+      alt: "Cheer squad celebrating runners with horns and banners",
+      caption: "Unmatched energy: The Dorchester cheer squad holding down the corner with drums, horns, and pure love.",
+      neighborhood: "Dorchester",
+      year: "2024",
+      category: "cheer-squad",
     },
     {
-      date: "Sunday, October 18, 2026",
-      dayOfWeek: "Race Day",
-      events: [
-        {
-          time: "5:15 AM",
-          title: "Shuttles & Gear Check Open",
-          location: "Grand Avenue Staging Area",
-          description: "Free runner parking shuttles begin running from designated satellite parking lots.",
-        },
-        {
-          time: "6:40 AM",
-          title: "Corrals Close & National Anthem",
-          location: "Start Line, Riverfront Commons",
-          description: "All runners must be inside their assigned starting corral.",
-        },
-        {
-          time: "7:00 AM",
-          title: "26True Marathon Wave 1 Start",
-          location: "Start Line",
-          description: "Wheelchair, Handcycle, and Corral A & B.",
-        },
-        {
-          time: "7:15 AM",
-          title: "26True Marathon Wave 2 Start",
-          location: "Start Line",
-          description: "Corrals C, D & E.",
-        },
-        {
-          time: "7:45 AM",
-          title: "26True Half Marathon Start",
-          location: "Start Line",
-          description: "All Half Marathon corrals.",
-        },
-        {
-          time: "10:30 AM",
-          title: "Overall & Age Group Awards",
-          location: "Heritage Amphitheater Stage",
-          description: "Top 3 overall men, women, and non-binary athletes, followed by masters and age group podium presentations.",
-        },
-        {
-          time: "1:30 PM",
-          title: "Official Finish Line Course Closure",
-          location: "Heritage Amphitheater Park",
-          description: "Celebrating our final marathon finishers. The post-race festival continues until 3:00 PM.",
-        },
-      ],
-    },
-  ] as ScheduleDay[],
-
-  sponsors: [
-    {
-      name: "Apex Performance Running",
-      tier: "title",
-      url: "https://example.com",
-      tagline: "Official Footwear & Technical Apparel Partner",
-      logoText: "APEX RUNNING",
+      id: "photo-3",
+      src: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&fit=crop&w=1200&q=80",
+      alt: "PIONEERS Run Crew athletes pacing together",
+      caption: "Strength in numbers: PIONEERS Run Crew members locking into stride along Franklin Park.",
+      neighborhood: "Franklin Park",
+      year: "2023",
+      category: "community",
     },
     {
-      name: "Riverfront Health Network",
-      tier: "title",
-      url: "https://example.com",
-      tagline: "Official Sports Medicine & Medical Support",
-      logoText: "RIVERFRONT HEALTH",
+      id: "photo-4",
+      src: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=80",
+      alt: "Emotional finish line embrace",
+      caption: "Tears and triumph: Crossing the 26.TRUE finish line surrounded by family, crew, and city.",
+      neighborhood: "Roxbury",
+      year: "2024",
+      category: "finish-line",
     },
     {
-      name: "Nuun Hydration",
-      tier: "gold",
-      url: "https://example.com",
-      tagline: "Official On-Course Electrolyte Drink",
-      logoText: "NUUN HYDRATION",
+      id: "photo-5",
+      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80",
+      alt: "Athletes warming up before sunrise",
+      caption: "Race morning quiet: Pre-race breath and fellowship before the journey begins.",
+      neighborhood: "Malcolm X Park",
+      year: "2023",
+      category: "race-day",
     },
     {
-      name: "Maurten",
-      tier: "gold",
-      url: "https://example.com",
-      tagline: "Official On-Course Energy Hydrogel",
-      logoText: "MAURTEN",
+      id: "photo-6",
+      src: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=1200&q=80",
+      alt: "High fives along the spectator route",
+      caption: "Every neighborhood shows love: High fives and cold sponges in the heat of Mile 20.",
+      neighborhood: "Mattapan",
+      year: "2024",
+      category: "cheer-squad",
     },
     {
-      name: "Beacon Community Bank",
-      tier: "gold",
-      url: "https://example.com",
-      tagline: "Community Youth Running Sponsor",
-      logoText: "BEACON BANK",
+      id: "photo-7",
+      src: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1200&q=80",
+      alt: "Runner celebrating on the final straightaway",
+      caption: "26.2 miles our way: Reclaiming the streets of Boston one stride at a time.",
+      neighborhood: "South End",
+      year: "2023",
+      category: "finish-line",
     },
     {
-      name: "True Grit Brewing Co.",
-      tier: "community",
-      url: "https://example.com",
-      tagline: "Finisher Beer Garden Partner",
-      logoText: "TRUE GRIT BREWING",
+      id: "photo-8",
+      src: "https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=1200&q=80",
+      alt: "Community block party at the finish line",
+      caption: "The celebration continues: DJs, dancing, food, and community fellowship at the finish festival.",
+      neighborhood: "Roxbury",
+      year: "2024",
+      category: "community",
     },
-    {
-      name: "Pioneer Physical Therapy",
-      tier: "community",
-      url: "https://example.com",
-      tagline: "Finish Line Recovery Tent",
-      logoText: "PIONEER PT",
-    },
-    {
-      name: "City Sports Commission",
-      tier: "community",
-      url: "https://example.com",
-      tagline: "Host City Partner",
-      logoText: "CITY SPORTS COMMISSION",
-    },
-  ] as Sponsor[],
+  ] as GalleryImage[],
 
   faqs: [
     {
-      category: "Registration",
-      question: "Can I transfer my bib or defer to next year?",
-      answer: "Yes. You may transfer your bib to another runner through your RunSignup account until September 15, 2026 for a $15 processing fee. Deferrals to the 2027 edition are allowed until August 31, 2026. After September 15, all bib sales are final.",
+      category: "About 26.TRUE",
+      question: "Is 26.TRUE a timed or certified race?",
+      answer: "No. 26.TRUE is an untimed, community-centered marathon and half marathon. We do not use timing chips, bib corrals, or strict time cutoffs. The event is intentionally built around collective support, representation, and celebrating the culture of our city.",
     },
     {
-      category: "Registration",
-      question: "Can I switch between the Marathon and the Half Marathon?",
-      answer: "Yes, provided the distance you are switching into has not reached its field cap. You will pay the difference if upgrading from the Half to the Full, or can switch down to the Half with no refund of the price difference.",
+      category: "About 26.TRUE",
+      question: "Who organizes 26.TRUE?",
+      answer: "26.TRUE was founded and is organized by PIONEERS Run Crew, Boston's premier Black- and Brown-led running community established in 2017. The event is powered by dozens of passionate volunteers, local run crews, and community partners.",
     },
     {
-      category: "Race Day Logistics",
-      question: "Is there race day bib pickup?",
-      answer: "No. All runners must pick up their packet at the Health & Fitness Expo on Friday (1 PM–7 PM) or Saturday (10 AM–5 PM). If you cannot attend in person, a friend or family member may pick up your packet with a copy of your photo ID and confirmation email.",
+      category: "Course & Route",
+      question: "What route and neighborhoods does 26.TRUE cover?",
+      answer: "The course stays 100% within the city limits of Boston. The route winds through Roxbury, Dorchester, Mattapan, Hyde Park, Jamaica Plain, and the South End, highlighting iconic cultural landmarks like Malcolm X Park, Franklin Park, and Nubian Square.",
     },
     {
-      category: "Race Day Logistics",
-      question: "Is gear check available on race morning?",
-      answer: "Yes. Secure gear check will be available in the start village from 5:15 AM to 6:30 AM. You must use the clear plastic bag provided at packet pickup. Checked bags will be safely transported directly to the finish festival gear pickup area.",
+      category: "Course & Route",
+      question: "Can I run the Half Marathon instead of the Full?",
+      answer: "Yes! 26.TRUE offers both the full 26.2-mile marathon and a 13.1-mile half marathon route. Both distances start together and experience the unforgettable neighborhood cheer energy.",
     },
     {
-      category: "Course & Rules",
-      question: "What is the official course time limit?",
-      answer: "The course has a strict 6-hour time limit (13:44 per mile pace) from the moment the final wave crosses the starting mat. After 1:15 PM, city roadways will reopen and runners behind pace will be directed to sidewalks or offered shuttle pickup.",
+      category: "Course & Route",
+      question: "Are there aid stations along the course?",
+      answer: "Yes. Community-run cheer and aid stations are stationed throughout the route providing water, electrolytes, fruit, energy snacks, medical first aid, and incredible DJ energy.",
     },
     {
-      category: "Course & Rules",
-      question: "Are headphones, strollers, or dogs permitted on the course?",
-      answer: "Bone-conduction headphones (e.g. Shokz) are strongly recommended so you can hear course marshals and medical personnel. Standard headphones are permitted but must be kept at low volume. For safety reasons, baby strollers, pets, roller skates, and unauthorized pacing bicycles are strictly prohibited.",
+      category: "Registration & Bibs",
+      question: "How does packet and bib pickup work?",
+      answer: "There is no corporate expo. Registered runners will receive detailed instructions via email on community-hosted bib pickup locations and dates in the week leading up to race weekend.",
     },
     {
-      category: "Spectators & Volunteers",
-      question: "Where are the best spots for spectators to cheer?",
-      answer: "The best spectator locations are Mile 4.5 (Memorial Park, easy parking), Mile 13.1 (Civic Center halfway festival), Mile 21.5 (The 'True Grit' Tunnel with live DJ and brass band), and the final straightaway at Heritage Amphitheater Park.",
+      category: "Cheer Squads & Volunteers",
+      question: "How can I volunteer or set up a cheer station?",
+      answer: "Community cheer stations and volunteer squads are the heartbeat of 26.TRUE! Whether you want to hand out water, DJ a corner, take photos, or bring a drumline, we want you involved. Reach out to volunteer@26true.com to join a crew.",
     },
     {
-      category: "Spectators & Volunteers",
-      question: "How can I volunteer for race weekend?",
-      answer: "We welcome over 600 volunteers each year! Positions include water stop crews, finish medal distribution, gear check, course marshaling, and expo registration. All volunteers receive an exclusive crew jacket, meal pass, and guaranteed discounted entry for next year's race.",
+      category: "Cheer Squads & Volunteers",
+      question: "Where are the best spots for spectators?",
+      answer: "Top spectator hubs include Malcolm X Park (Mile 3.5), Town Field in Dorchester (Mile 7.2), Mattapan Square (Mile 11), Franklin Park Playstead (Mile 13.1), and the Southwest Corridor at Green Street in JP (Mile 21).",
     },
   ] as FaqItem[],
 };

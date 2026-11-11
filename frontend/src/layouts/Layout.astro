@@ -15,14 +15,14 @@ const { general } = raceData;
 const {
   title = `${general.name} — ${general.tagline}`,
   description = general.description,
-  image = '/og-image.jpg',
+  image = '/images/race_locations_logo.png',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, 'https://26true.com');
 ---
 
 <!doctype html>
-<html lang="en" class="bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500 selection:text-slate-950">
+<html lang="en" class="bg-black text-neutral-100 antialiased selection:bg-[#d4ff00] selection:text-black">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +34,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://26true.com');
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#090d16" />
+    <meta name="theme-color" content="#000000" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -50,21 +50,22 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://26true.com');
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={image} />
 
-    <!-- Google Fonts: Inter & Outfit -->
+    <!-- Google Fonts: Plus Jakarta Sans for body -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
       :root {
         font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       }
-      h1, h2, h3, h4, h5, h6, .font-display {
-        font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+      h1, h2, h3, h4, .font-edo {
+        font-family: 'Edo', cursive, system-ui, sans-serif;
+        letter-spacing: 0.04em;
       }
     </style>
   </head>
-  <body class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+  <body class="min-h-screen flex flex-col bg-black text-neutral-100">
     <AnnouncementBanner />
     <Navbar />
     <main class="flex-grow">

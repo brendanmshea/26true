@@ -6,27 +6,29 @@ const currentPath = Astro.url.pathname;
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/course', label: 'Course' },
-  { href: '/schedule', label: 'Schedule' },
-  { href: '/sponsors', label: 'Sponsors' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/history', label: 'History' },
   { href: '/faq', label: 'FAQ' },
 ];
 ---
 
-<header class="sticky top-0 z-40 w-full bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 transition-all">
+<header class="sticky top-0 z-50 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 transition-all">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center font-black text-slate-950 text-xl tracking-tighter shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-          26
-        </div>
-        <div class="flex flex-col">
-          <span class="text-xl font-black tracking-wider text-white uppercase flex items-center gap-1">
-            26TRUE <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
+      <!-- Brand Logos -->
+      <a href="/" class="flex items-center gap-3.5 group">
+        <img
+          src="/images/race_logo.png"
+          alt="26.TRUE Marathon Logo"
+          class="h-12 w-auto object-contain transition-transform group-hover:scale-105"
+        />
+        <div class="hidden sm:flex flex-col border-l border-neutral-800 pl-3">
+          <span class="font-edo text-xl text-white tracking-wider flex items-center gap-1.5">
+            26.TRUE <span class="w-2 h-2 rounded-full bg-[#d4ff00] inline-block"></span>
           </span>
-          <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
-            Marathon & Half
+          <span class="text-[10px] font-bold tracking-widest text-[#3fd4a4] uppercase">
+            Presented by PIONEERS
           </span>
         </div>
       </a>
@@ -38,10 +40,10 @@ const navLinks = [
           return (
             <a
               href={link.href}
-              class={`px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
+              class={`px-3.5 py-2 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${
                 isActive
-                  ? 'text-emerald-400 bg-slate-900'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-900/60'
+                  ? 'text-[#d4ff00] bg-neutral-900 border-b-2 border-[#d4ff00]'
+                  : 'text-neutral-300 hover:text-white hover:bg-neutral-900/80'
               }`}
             >
               {link.label}
@@ -56,10 +58,10 @@ const navLinks = [
           href={general.registrationUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 rounded-xl shadow-md shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-xl shadow-lg shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
         >
-          <span>Register Now</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <span>Register</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
           </svg>
         </a>
@@ -68,7 +70,7 @@ const navLinks = [
         <button
           type="button"
           id="mobile-menu-btn"
-          class="md:hidden p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 focus:outline-hidden"
+          class="md:hidden p-2.5 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-900 focus:outline-hidden"
           aria-label="Toggle navigation menu"
         >
           <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,11 +85,11 @@ const navLinks = [
   </div>
 
   <!-- Mobile Drawer -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-950 px-4 pt-3 pb-6 space-y-2">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-900 bg-black px-4 pt-3 pb-6 space-y-2">
     {navLinks.map((link) => (
       <a
         href={link.href}
-        class="block px-3 py-2.5 rounded-lg text-base font-semibold text-slate-300 hover:text-white hover:bg-slate-900"
+        class="block px-3 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wider text-neutral-300 hover:text-[#d4ff00] hover:bg-neutral-900"
       >
         {link.label}
       </a>
@@ -97,7 +99,7 @@ const navLinks = [
         href={general.registrationUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="w-full flex items-center justify-center gap-2 px-5 py-3 text-base font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-xl"
+        class="w-full flex items-center justify-center gap-2 px-5 py-3 text-xs font-black uppercase tracking-wider text-black bg-[#d4ff00] rounded-xl"
       >
         <span>Register on RunSignup</span>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

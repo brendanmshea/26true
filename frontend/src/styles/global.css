@@ -1,8 +1,34 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Edo';
+  src: url('/fonts/edo.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-edo: 'Edo', cursive, sans-serif;
+  --color-volt: #d4ff00;
+  --color-mint: #3fd4a4;
+  --color-dark: #000000;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
   }
+}
+
+.font-edo {
+  font-family: 'Edo', cursive, sans-serif;
+  letter-spacing: 0.05em;
+}
+
+h1, h2, .font-title {
+  font-family: 'Edo', cursive, sans-serif;
+  letter-spacing: 0.04em;
 }

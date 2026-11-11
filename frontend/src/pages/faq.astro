@@ -3,31 +3,30 @@ import Layout from '../layouts/Layout.astro';
 import { raceData } from '../data/raceData';
 
 const { faqs, general } = raceData;
-
-const categories = ['All', 'Registration', 'Race Day Logistics', 'Course & Rules', 'Spectators & Volunteers'];
+const categories = ['All', 'About 26.TRUE', 'Course & Route', 'Registration & Bibs', 'Cheer Squads & Volunteers'];
 ---
 
 <Layout
-  title={`Runner FAQ & Rules — ${general.name}`}
-  description="Frequently asked questions about 26True registration, bib transfers, gear check, time cutoffs, and parking."
+  title={`FAQ & Runner Guide — ${general.name}`}
+  description="Frequently asked questions about 26.TRUE: untimed marathon format, Boston neighborhood route, bib pickup, and volunteer cheer squads."
 >
-  <section class="bg-slate-950 py-16 lg:py-24 border-b border-slate-800">
+  <section class="bg-black py-16 lg:py-24 border-b border-neutral-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-500/30 mb-4">
-          Runner Knowledge Base
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-4">
+          Community Guide
         </div>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight mb-4">
+        <h1 class="font-edo text-5xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal mb-4">
           Frequently Asked Questions
         </h1>
-        <p class="text-lg text-slate-300 leading-relaxed">
-          Clear answers to help you prepare for a seamless, stress-free race weekend.
+        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
+          Clear answers about the untimed format, Boston neighborhood route, cheer stations, and community bib pickup.
         </p>
       </div>
     </div>
   </section>
 
-  <section class="py-16 bg-slate-950">
+  <section class="py-16 bg-black min-h-[60vh]">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Category Filter Pills -->
@@ -35,10 +34,10 @@ const categories = ['All', 'Registration', 'Race Day Logistics', 'Course & Rules
         {categories.map((cat, idx) => (
           <button
             type="button"
-            class={`faq-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            class={`faq-filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
               idx === 0
-                ? 'bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 active-cat'
-                : 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800'
+                ? 'bg-[#d4ff00] text-black shadow-md shadow-[#d4ff00]/20'
+                : 'bg-neutral-950 text-neutral-300 hover:text-white border border-neutral-800'
             }`}
             data-category={cat}
           >
@@ -51,25 +50,25 @@ const categories = ['All', 'Registration', 'Race Day Logistics', 'Course & Rules
       <div class="space-y-4" id="faq-list">
         {faqs.map((faq) => (
           <details
-            class="faq-item group bg-slate-900/40 border border-slate-800/80 rounded-2xl overflow-hidden transition-all [&[open]]:border-emerald-500/40 [&[open]]:bg-slate-900/70"
+            class="faq-item group bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden transition-all [&[open]]:border-[#d4ff00]/40"
             data-category={faq.category}
           >
             <summary class="flex items-center justify-between p-6 cursor-pointer list-none select-none">
               <div class="pr-4">
-                <span class="inline-block text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                <span class="inline-block text-[10px] font-black uppercase tracking-wider text-[#3fd4a4] mb-1">
                   {faq.category}
                 </span>
-                <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition-colors">
+                <h3 class="text-base font-bold text-white group-hover:text-[#d4ff00] transition-colors">
                   {faq.question}
                 </h3>
               </div>
-              <span class="shrink-0 w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-white transition-colors group-open:rotate-180 transition-transform duration-200">
+              <span class="shrink-0 w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center text-neutral-400 group-hover:text-white transition-colors group-open:rotate-180 transition-transform duration-200">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
             </summary>
-            <div class="px-6 pb-6 text-sm text-slate-300 leading-relaxed border-t border-slate-800/50 pt-4">
+            <div class="px-6 pb-6 text-sm text-neutral-300 leading-relaxed border-t border-neutral-900 pt-4">
               {faq.answer}
             </div>
           </details>
@@ -77,11 +76,17 @@ const categories = ['All', 'Registration', 'Race Day Logistics', 'Course & Rules
       </div>
 
       <!-- Support Box -->
-      <div class="mt-16 p-8 rounded-3xl bg-slate-900/60 border border-slate-800 text-center">
-        <h3 class="text-xl font-bold text-white mb-2">Can't find what you're looking for?</h3>
-        <p class="text-sm text-slate-400 max-w-md mx-auto mb-6">
-          Reach out directly to the race directors at <a href={`mailto:${general.contactEmail}`} class="text-emerald-400 underline">{general.contactEmail}</a>.
+      <div class="mt-16 p-8 rounded-3xl bg-neutral-950 border border-neutral-800 text-center">
+        <h3 class="font-edo text-2xl text-white uppercase mb-2">Can't find what you're looking for?</h3>
+        <p class="text-sm text-neutral-400 max-w-md mx-auto mb-6">
+          Reach out directly to the crew at <a href={`mailto:${general.contactEmail}`} class="text-[#d4ff00] underline">{general.contactEmail}</a>.
         </p>
+        <a
+          href={`mailto:${general.contactEmail}`}
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black hover:bg-[#c3ec00] transition-colors"
+        >
+          <span>Email The Crew</span>
+        </a>
       </div>
 
     </div>
@@ -98,11 +103,11 @@ const categories = ['All', 'Registration', 'Race Day Logistics', 'Course & Rules
 
       // Update button styles
       buttons.forEach((b) => {
-        b.classList.remove('bg-emerald-400', 'text-slate-950', 'shadow-md', 'shadow-emerald-500/20');
-        b.classList.add('bg-slate-900', 'text-slate-300', 'border', 'border-slate-800');
+        b.classList.remove('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
+        b.classList.add('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
       });
-      btn.classList.remove('bg-slate-900', 'text-slate-300', 'border', 'border-slate-800');
-      btn.classList.add('bg-emerald-400', 'text-slate-950', 'shadow-md', 'shadow-emerald-500/20');
+      btn.classList.remove('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
+      btn.classList.add('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
 
       // Filter items
       items.forEach((item) => {

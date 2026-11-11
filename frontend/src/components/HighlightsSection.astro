@@ -1,35 +1,39 @@
 ---
 import { raceData } from '../data/raceData';
-const { highlights } = raceData;
+const { pillars } = raceData;
 ---
 
-<section class="py-20 lg:py-28 bg-slate-950">
+<section class="py-20 lg:py-28 bg-black">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <h2 class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-3">
-        Engineered For Runners
+      <h2 class="text-xs font-black uppercase tracking-widest text-[#d4ff00] mb-3">
+        Why We Run 26.TRUE
       </h2>
-      <p class="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
-        Everything You Need To Chase Your Personal Best
+      <p class="font-edo text-4xl sm:text-5xl text-white uppercase tracking-normal">
+        Reclaiming The Distance In Our Neighborhoods
+      </p>
+      <p class="text-sm sm:text-base text-neutral-400 mt-4 max-w-xl mx-auto">
+        More than 26.2 miles — it is a movement of representation, culture, and collective pride through the heart of Boston.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {highlights.map((item, index) => (
-        <div class="bg-slate-900/40 border border-slate-800/80 hover:border-slate-700 rounded-3xl p-8 flex flex-col justify-between transition-all hover:-translate-y-1">
+      {pillars.map((item, index) => (
+        <div class="bg-neutral-950 border border-neutral-800/80 hover:border-neutral-700 rounded-3xl p-8 flex flex-col justify-between transition-all hover:-translate-y-1 group">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-lg mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-neutral-900 border border-neutral-800 text-[#d4ff00] flex items-center justify-center font-edo text-xl mb-6 group-hover:border-[#d4ff00]/50 transition-colors">
               0{index + 1}
             </div>
-            <h3 class="text-xl font-bold text-white mb-3 tracking-tight">
+            <h3 class="font-edo text-2xl text-white mb-3 tracking-normal group-hover:text-[#3fd4a4] transition-colors">
               {item.title}
             </h3>
-            <p class="text-sm text-slate-400 leading-relaxed">
+            <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
               {item.description}
             </p>
           </div>
-          <div class="mt-8 pt-4 border-t border-slate-800/50 flex items-center gap-2 text-xs font-semibold text-emerald-400">
-            <span>Learn more</span>
+          <div class="mt-8 pt-4 border-t border-neutral-900 flex items-center gap-2 text-xs font-bold text-[#d4ff00]">
+            <span>Explore history</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -37,5 +41,6 @@ const { highlights } = raceData;
         </div>
       ))}
     </div>
+
   </div>
 </section>

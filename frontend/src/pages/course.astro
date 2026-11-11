@@ -6,156 +6,133 @@ const { course, general } = raceData;
 ---
 
 <Layout
-  title={`Course & Elevation — ${general.name}`}
-  description="Full course map, elevation profile, and aid station breakdown for the 26True Marathon and Half Marathon."
+  title={`Neighborhood Course Route — ${general.name}`}
+  description="Full course guide, neighborhood milestones, and cheer station guide for the 26.TRUE Marathon and Half Marathon."
 >
   <!-- Page Header -->
-  <section class="bg-slate-950 py-16 lg:py-24 border-b border-slate-800 relative">
+  <section class="bg-black py-16 lg:py-24 border-b border-neutral-900 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-500/30 mb-4">
-          USATF Certified #{course.usatfCert}
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-4">
+          100% City of Boston
         </div>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight mb-4">
-          Course Map & Elevation
+        <h1 class="font-edo text-5xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal mb-4">
+          The Neighborhood Route
         </h1>
-        <p class="text-lg text-slate-300 leading-relaxed">
-          The 26True course is engineered for speed, safety, and scenic beauty. A net-downhill route winding along paved parkways, historic riverfront bridges, and flat waterfront roads with minimal sharp turns.
+        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
+          Running through the cultural and community core of Boston. Covering full 26.2 marathon and 13.1 half marathon routes through Roxbury, Dorchester, Mattapan, Jamaica Plain, Hyde Park, and the South End.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Key Metrics Row -->
-  <section class="bg-slate-900/40 border-b border-slate-800 py-10">
+  <!-- Neighborhood Highlights Bar -->
+  <section class="bg-neutral-950 border-b border-neutral-900 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
-          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Elevation Gain</div>
-          <div class="text-2xl font-black text-white">+{course.elevationGain}</div>
-          <div class="text-xs text-slate-400 mt-1">Gentle rolling climbs in miles 3–7</div>
-        </div>
-        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
-          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Elevation Loss</div>
-          <div class="text-2xl font-black text-emerald-400">-{course.elevationLoss}</div>
-          <div class="text-xs text-slate-400 mt-1">Net downhill (-140 ft)</div>
-        </div>
-        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
-          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Road Surface</div>
-          <div class="text-2xl font-black text-white">100% Paved</div>
-          <div class="text-xs text-slate-400 mt-1">Closed city parkways & bridges</div>
-        </div>
-        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
-          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Course Time Limit</div>
-          <div class="text-2xl font-black text-white">6:00:00</div>
-          <div class="text-xs text-slate-400 mt-1">13:44 per mile pace cutoff</div>
-        </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {course.neighborhoods.map((n) => (
+          <div class="bg-black border border-neutral-800 p-4 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="font-edo text-xl text-white mb-1">{n.name}</div>
+              <div class="text-[11px] text-neutral-400 leading-tight">{n.highlight}</div>
+            </div>
+            <div class="mt-3 text-[10px] font-black uppercase tracking-wider text-[#3fd4a4]">
+              Neighborhood Stop
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Interactive Map Placeholder & GPX Download -->
-  <section class="py-16 bg-slate-950">
+  <!-- Map Presentation & Artwork -->
+  <section class="py-16 bg-black">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-          <h2 class="text-2xl font-bold text-white uppercase tracking-tight">Interactive Course Route</h2>
-          <p class="text-sm text-slate-400">Marathon (Red route, 26.2 mi) and Half Marathon (Blue route, 13.1 mi)</p>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+        <div class="lg:col-span-5 space-y-6">
+          <div class="text-xs font-black uppercase tracking-widest text-[#d4ff00]">
+            The Journey
+          </div>
+          <h2 class="font-edo text-3xl sm:text-4xl text-white uppercase">
+            Streets Full of Culture & Community
+          </h2>
+          <p class="text-sm text-neutral-300 leading-relaxed font-normal">
+            Every mile is an authentic celebration. You'll run past Malcolm X Park, through the vibrant commercial corridor of Nubian Square, down Dorchester Ave, across the scenic Franklin Park Playstead, along Mattapan Square, and through the Southwest Corridor path.
+          </p>
+          <div class="p-5 rounded-2xl bg-neutral-950 border border-neutral-800">
+            <div class="text-xs font-black uppercase tracking-wider text-[#3fd4a4] mb-1">Untimed & Supported</div>
+            <div class="text-xs text-neutral-400">
+              Run at your pace. Our volunteers, sweep crews, and community cheer squads stay out until the final runner finishes their journey.
+            </div>
+          </div>
         </div>
-        <div class="flex items-center gap-3">
-          <a
-            href={course.gpxDownloadUrl}
-            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 transition-colors"
-          >
-            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-            </svg>
-            <span>Download GPX File</span>
-          </a>
+
+        <div class="lg:col-span-7">
+          <div class="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center">
+            <img
+              src="/images/race_locations_logo.png"
+              alt="26.TRUE Route Artwork"
+              class="w-full max-w-[400px] h-auto object-contain mb-4"
+            />
+            <span class="text-xs font-black uppercase tracking-widest text-[#d4ff00]">
+              Official 26.TRUE Course Footprint
+            </span>
+          </div>
         </div>
       </div>
 
-      <!-- Map Display Box -->
-      <div class="w-full h-96 sm:h-[480px] bg-slate-900 border border-slate-800 rounded-3xl relative overflow-hidden flex flex-col items-center justify-center p-6 text-center">
-        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-          </svg>
+      <!-- Cheer Stations Table -->
+      <div class="pt-10 border-t border-neutral-900">
+        <div class="max-w-3xl mb-12">
+          <div class="text-xs font-black uppercase tracking-widest text-[#d4ff00] mb-2">
+            Hype & Hydration
+          </div>
+          <h2 class="font-edo text-3xl sm:text-4xl text-white uppercase mb-3">
+            Cheer Stations & Community Hubs
+          </h2>
+          <p class="text-sm text-neutral-300 leading-relaxed font-normal">
+            Powered by local run crews, neighborhood associations, DJs, and families holding down their blocks with music, water, fruit, and loud love.
+          </p>
         </div>
-        <h3 class="text-xl font-bold text-white mb-2">Interactive Course Map (RideWithGPS / Strava Embed)</h3>
-        <p class="text-sm text-slate-400 max-w-md mb-6">
-          Start: {course.startLocation} &bull; Finish: {course.finishLocation}. Full turn-by-turn interactive map with mile markers and live elevation scrubs.
-        </p>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">
-          Embed container ready for Sanity CMS map token or Strava/RideWithGPS iframe
-        </span>
-      </div>
 
-    </div>
-  </section>
-
-  <!-- All 12 Aid Stations Table -->
-  <section class="py-16 bg-slate-900/30 border-t border-slate-800" id="aid-stations">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="max-w-3xl mb-12">
-        <div class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">
-          Runner Support
-        </div>
-        <h2 class="text-3xl font-black text-white uppercase tracking-tight mb-3">
-          Aid Station Milestones & Nutrition
-        </h2>
-        <p class="text-sm text-slate-300 leading-relaxed">
-          12 official aid stations positioned along the route. Every station features fresh cold water and Nuun Endurance (Lemon-Lime). Maurten Gel 100 stations are located at miles 6.8, 11.4, 15.3, 19.8, and 23.2.
-        </p>
-      </div>
-
-      <div class="bg-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm text-slate-300">
-            <thead class="bg-slate-900/80 text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
-              <tr>
-                <th scope="col" class="py-4 px-6 font-bold">Mile</th>
-                <th scope="col" class="py-4 px-6 font-bold">Location</th>
-                <th scope="col" class="py-4 px-6 font-bold">Available Amenities & Fuel</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-800/80">
-              {course.aidStations.map((station) => (
-                <tr class="hover:bg-slate-900/40 transition-colors">
-                  <td class="py-4 px-6 font-mono font-bold text-emerald-400 text-base">
-                    Mile {station.mile.toFixed(1)}
-                  </td>
-                  <td class="py-4 px-6 font-medium text-white">
-                    {station.location}
-                  </td>
-                  <td class="py-4 px-6">
-                    <div class="flex flex-wrap gap-1.5">
-                      {station.amenities.map((item) => {
-                        const isMaurten = item.includes('Maurten');
-                        const isMed = item.includes('Medical') || item.includes('First Aid');
-                        return (
-                          <span
-                            class={`px-2.5 py-1 rounded-md text-xs font-semibold ${
-                              isMaurten
-                                ? 'bg-amber-950/80 text-amber-300 border border-amber-500/30'
-                                : isMed
-                                ? 'bg-red-950/80 text-red-300 border border-red-500/30'
-                                : 'bg-slate-900 text-slate-300 border border-slate-800'
-                            }`}
-                          >
+        <div class="bg-neutral-950 border border-neutral-800 rounded-3xl overflow-hidden shadow-2xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-neutral-300">
+              <thead class="bg-neutral-900/90 text-xs font-black uppercase tracking-wider text-neutral-400 border-b border-neutral-800">
+                <tr>
+                  <th scope="col" class="py-4 px-6">Mile</th>
+                  <th scope="col" class="py-4 px-6">Neighborhood Hub</th>
+                  <th scope="col" class="py-4 px-6">Vibe & Amenities</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-900">
+                {course.cheerStations.map((station) => (
+                  <tr class="hover:bg-neutral-900/40 transition-colors">
+                    <td class="py-4 px-6 font-edo text-xl text-[#d4ff00] whitespace-nowrap">
+                      Mile {station.mile.toFixed(1)}
+                    </td>
+                    <td class="py-4 px-6">
+                      <div class="font-bold text-white text-base">{station.neighborhood}</div>
+                      <div class="text-xs text-neutral-400">{station.location}</div>
+                    </td>
+                    <td class="py-4 px-6">
+                      <div class="text-xs font-bold text-[#3fd4a4] mb-1.5">{station.vibe}</div>
+                      <div class="flex flex-wrap gap-1.5">
+                        {station.amenities.map((item) => (
+                          <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-neutral-900 text-neutral-300 border border-neutral-800">
                             {item}
                           </span>
-                        );
-                      })}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
+
       </div>
 
     </div>
