@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import BannerPhoto from '../components/BannerPhoto.astro';
 import HighlightsSection from '../components/HighlightsSection.astro';
 import PhotoStrip from '../components/PhotoStrip.astro';
 import CoursePreview from '../components/CoursePreview.astro';
@@ -14,6 +15,9 @@ const { general } = raceData;
 <Layout>
   <!-- Hero with Live Two-Stage Countdown & Darkened Background Image -->
   <Hero />
+
+  <!-- Responsive Community Photo Banner -->
+  <BannerPhoto />
 
   <!-- Why We Run 26.TRUE / 4 Pillars with Background Photo -->
   <HighlightsSection />

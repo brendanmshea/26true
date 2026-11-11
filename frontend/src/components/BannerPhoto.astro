@@ -1,0 +1,30 @@
+---
+// BannerPhoto.astro - Responsive photo banner showcasing 26.TRUE runners
+---
+
+<section class="relative bg-black py-4 sm:py-8 lg:py-12 overflow-hidden border-b border-neutral-900">
+  <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+    <div class="relative overflow-hidden sm:rounded-3xl border-y sm:border border-neutral-800 shadow-2xl bg-neutral-950 group">
+      
+      <!-- Subtle ambient color glow -->
+      <div class="absolute -top-24 -left-24 w-72 h-72 bg-[#d4ff00]/10 blur-3xl rounded-full pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-72 h-72 bg-[#3fd4a4]/10 blur-3xl rounded-full pointer-events-none"></div>
+
+      <!-- Responsive Picture Element: Mobile optimized (272KB) -> Desktop optimized (934KB) -> Full PNG fallback -->
+      <picture>
+        <source media="(max-width: 640px)" srcset="/images/photos/web/banner-mobile.jpg" />
+        <source media="(min-width: 641px)" srcset="/images/photos/web/banner.jpg" />
+        <img
+          src="/images/photos/banner.png"
+          alt="26.TRUE community runners taking to Boston streets with joy and energy"
+          class="w-full h-auto object-cover object-center block transition-transform duration-700 group-hover:scale-[1.01]"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+
+      <!-- Sleek inner border highlight on tablet and desktop -->
+      <div class="absolute inset-0 sm:rounded-3xl ring-1 ring-inset ring-white/10 pointer-events-none"></div>
+    </div>
+  </div>
+</section>
