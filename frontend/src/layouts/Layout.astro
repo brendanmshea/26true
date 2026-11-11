@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import AnnouncementBanner from '../components/AnnouncementBanner.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { raceData } from '../data/raceData';
@@ -66,7 +65,6 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://26true.com');
     </style>
   </head>
   <body class="min-h-screen flex flex-col bg-black text-neutral-100">
-    <AnnouncementBanner />
     <Navbar />
     <main class="flex-grow">
       <slot />
