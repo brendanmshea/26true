@@ -4,13 +4,20 @@ const { general } = raceData;
 ---
 
 <section class="relative overflow-hidden bg-black pt-12 pb-20 lg:pt-20 lg:pb-28">
-  <!-- Dynamic Glow & Background Patterns -->
-  <div class="absolute inset-0 opacity-20 pointer-events-none">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gradient-to-tr from-[#d4ff00]/30 via-[#3fd4a4]/25 to-transparent blur-[140px] rounded-full"></div>
-    <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#3fd4a4]/15 blur-[120px] rounded-full"></div>
+  <!-- Section Photo Background with Dark Scrim & Gradients -->
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <img
+      src="/images/photos/web/1Q7A3679.jpg"
+      alt="26.TRUE runners touring Boston streets"
+      class="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity filter brightness-75 contrast-125 scale-105"
+    />
+    <!-- Heavy Dark Fade Mask to guarantee perfect copy legibility -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/75"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80"></div>
+    <div class="absolute top-0 left-1/4 w-[500px] h-[400px] bg-[#d4ff00]/15 blur-[140px] rounded-full"></div>
   </div>
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       
       <!-- Left Column: Copy & CTAs -->
@@ -19,13 +26,13 @@ const { general } = raceData;
         <!-- Badges -->
         <div class="flex flex-wrap items-center gap-2.5 mb-6">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black">
-            26.2 & 13.1
+            Year Seven &bull; 2027
           </span>
-          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-neutral-300 bg-neutral-900 border border-neutral-800">
+          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-neutral-300 bg-black/80 border border-neutral-800 backdrop-blur-md">
             <span class="w-1.5 h-1.5 rounded-full bg-[#3fd4a4]"></span>
-            {general.displayDate}
+            {general.raceDisplayDate}
           </span>
-          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-neutral-300 bg-neutral-900 border border-neutral-800">
+          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-neutral-300 bg-black/80 border border-neutral-800 backdrop-blur-md">
             {general.location}
           </span>
         </div>
@@ -33,13 +40,13 @@ const { general } = raceData;
         <!-- Main Headline using Edo Font -->
         <h1 class="font-edo text-5xl sm:text-7xl lg:text-8xl text-white tracking-normal uppercase leading-[0.95] mb-6">
           OUR CITY.<br />
-          <span class="text-[#d4ff00] drop-shadow-[0_2px_15px_rgba(212,255,0,0.3)]">
+          <span class="text-[#d4ff00] drop-shadow-[0_2px_20px_rgba(212,255,0,0.35)]">
             OUR WAY.
           </span>
         </h1>
 
-        <p class="text-base sm:text-lg text-neutral-300 max-w-xl mb-8 leading-relaxed font-normal">
-          An untimed, community-first marathon and half marathon created by <span class="text-[#3fd4a4] font-bold">PIONEERS Run Crew</span>. Running 100% within the city of Boston through Roxbury, Dorchester, Mattapan, JP, Hyde Park, and the South End.
+        <p class="text-base sm:text-lg text-neutral-200 max-w-xl mb-8 leading-relaxed font-normal">
+          An untimed, community-first marathon and half marathon created by <span class="text-[#3fd4a4] font-bold">PIONEERS Run Crew</span>. Running 100% inside Boston city limits through <strong class="text-white">Jamaica Plain, Roxbury, Mattapan, and Dorchester</strong>.
         </p>
 
         <!-- Action Buttons -->
@@ -48,42 +55,52 @@ const { general } = raceData;
             href={general.registrationUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-3 px-8 py-4 text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+            class="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
           >
-            <span>Register on RunSignup</span>
+            <span id="hero-btn-text">Register on RunSignup</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
             </svg>
           </a>
           <a
             href="/course"
-            class="inline-flex items-center justify-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 rounded-2xl transition-all"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-black/70 hover:bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-2xl backdrop-blur-md transition-all"
           >
-            <span>Explore Neighborhood Route</span>
+            <span>Explore Course & Cheer Map</span>
           </a>
         </div>
 
-        <!-- Countdown Card -->
-        <div class="bg-neutral-950/80 border border-neutral-800/90 rounded-2xl p-5 backdrop-blur-md max-w-lg">
-          <div class="text-[11px] uppercase tracking-widest text-neutral-400 font-bold mb-3 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span>
-            Countdown to Race Morning
+        <!-- Dynamic Two-Stage Countdown Card -->
+        <div class="bg-black/85 border border-neutral-800 rounded-3xl p-6 backdrop-blur-md max-w-lg shadow-2xl">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <div class="text-[11px] uppercase tracking-widest text-neutral-300 font-black flex items-center gap-2" id="countdown-label">
+              <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span>
+              Countdown to Registration Opening
+            </div>
+            <span class="text-[10px] font-bold uppercase text-[#3fd4a4]" id="countdown-sublabel">
+              Nov 20 @ 8 AM EST
+            </span>
           </div>
           
-          <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center" id="countdown-timer" data-target-date={general.date}>
-            <div class="bg-black border border-neutral-800/80 rounded-xl p-2.5 sm:p-3">
+          <div
+            class="grid grid-cols-4 gap-2 sm:gap-3 text-center"
+            id="countdown-timer"
+            data-reg-date={general.registrationOpenDate}
+            data-race-date={general.raceDate}
+          >
+            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-white" id="count-days">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Days</div>
             </div>
-            <div class="bg-black border border-neutral-800/80 rounded-xl p-2.5 sm:p-3">
+            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-white" id="count-hours">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Hours</div>
             </div>
-            <div class="bg-black border border-neutral-800/80 rounded-xl p-2.5 sm:p-3">
+            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-white" id="count-mins">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Mins</div>
             </div>
-            <div class="bg-black border border-neutral-800/80 rounded-xl p-2.5 sm:p-3">
+            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-[#d4ff00]" id="count-secs">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Secs</div>
             </div>
@@ -94,7 +111,7 @@ const { general } = raceData;
 
       <!-- Right Column: Visual Artwork (Locations Jacket Design & PIONEERS Host) -->
       <div class="lg:col-span-5 flex flex-col items-center justify-center">
-        <div class="relative w-full max-w-md bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center overflow-hidden group">
+        <div class="relative w-full max-w-md bg-black/85 border border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center backdrop-blur-md overflow-hidden group">
           
           <!-- Subtle glow ring -->
           <div class="absolute -top-20 -right-20 w-44 h-44 bg-[#d4ff00]/15 blur-3xl rounded-full"></div>
@@ -104,11 +121,11 @@ const { general } = raceData;
           <img
             src="/images/race_locations_logo.png"
             alt="26.TRUE Boston Neighborhoods Design"
-            class="w-full max-w-[340px] h-auto object-contain mb-6 drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300"
+            class="w-full max-w-[340px] h-auto object-contain mb-6 drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-300"
           />
 
           <!-- Hosted by Pioneers Badge -->
-          <div class="w-full pt-5 border-t border-neutral-800/80 flex items-center justify-between">
+          <div class="w-full pt-5 border-t border-neutral-800 flex items-center justify-between">
             <div class="text-left">
               <span class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400">Organized By</span>
               <span class="text-xs font-black uppercase text-white tracking-wider">PIONEERS Run Crew</span>
@@ -132,11 +149,49 @@ const { general } = raceData;
     const timerEl = document.getElementById('countdown-timer');
     if (!timerEl) return;
     
-    const targetDateStr = timerEl.getAttribute('data-target-date');
-    if (!targetDateStr) return;
+    const regDateStr = timerEl.getAttribute('data-reg-date');
+    const raceDateStr = timerEl.getAttribute('data-race-date');
+    if (!regDateStr || !raceDateStr) return;
 
-    const target = new Date(targetDateStr).getTime();
+    const regTarget = new Date(regDateStr).getTime();
+    const raceTarget = new Date(raceDateStr).getTime();
     const now = new Date().getTime();
+
+    const labelEl = document.getElementById('countdown-label');
+    const sublabelEl = document.getElementById('countdown-sublabel');
+    const btnTextEl = document.getElementById('hero-btn-text');
+
+    let target = regTarget;
+    let isPreReg = true;
+
+    if (now < regTarget) {
+      // Stage 1: Countdown to Registration
+      target = regTarget;
+      isPreReg = true;
+      if (labelEl) {
+        labelEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span> Countdown to Registration Opening';
+      }
+      if (sublabelEl) {
+        sublabelEl.innerText = 'Opens Nov 20 @ 8 AM EST';
+      }
+      if (btnTextEl) {
+        btnTextEl.innerText = 'Registration Opens Nov 20 @ 8 AM';
+      }
+    } else {
+      // Stage 2: Countdown to Race Morning
+      target = raceTarget;
+      isPreReg = false;
+      if (labelEl) {
+        labelEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#3fd4a4] animate-ping"></span> Countdown to Race Morning';
+      }
+      if (sublabelEl) {
+        sublabelEl.innerText = 'Saturday, April 17, 2027';
+      }
+      if (btnTextEl) {
+        btnTextEl.innerText = 'Register on RunSignup';
+      }
+    }
+
     const diff = target - now;
 
     const daysEl = document.getElementById('count-days');

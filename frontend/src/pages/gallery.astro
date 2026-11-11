@@ -3,12 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import { raceData } from '../data/raceData';
 
 const { gallery, general } = raceData;
-const categories = ['All', 'Race Day', 'Cheer Squads', 'Community', 'Finish Line'];
+const categories = ['All', '26.TRUE', 'PIONEERS', 'Cheer Squad', 'Finish Line'];
 ---
 
 <Layout
   title={`Photo Gallery — ${general.name}`}
-  description="Explore moments, cheer squads, and finish line celebrations from 26.TRUE in Boston."
+  description="Explore official photos, cheer squads, and finish line celebrations from 26.TRUE in Boston."
 >
   <!-- Header -->
   <section class="bg-black py-16 lg:py-24 border-b border-neutral-900">
@@ -21,7 +21,7 @@ const categories = ['All', 'Race Day', 'Cheer Squads', 'Community', 'Finish Line
           26.TRUE Photo Gallery
         </h1>
         <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
-          The emotion, the sweat, the drumlines, and the triumph. Every block of Boston showing up for each other.
+          The emotion, the sweat, the drumlines, and the finish line triumph across Jamaica Plain, Roxbury, Mattapan, and Dorchester.
         </p>
       </div>
     </div>
@@ -41,7 +41,7 @@ const categories = ['All', 'Race Day', 'Cheer Squads', 'Community', 'Finish Line
                 ? 'bg-[#d4ff00] text-black shadow-md shadow-[#d4ff00]/20'
                 : 'bg-neutral-950 text-neutral-300 hover:text-white border border-neutral-800'
             }`}
-            data-category={cat.toLowerCase().replace(' ', '-')}
+            data-category={cat.toLowerCase().replace('.', '').replace(' ', '-')}
           >
             {cat}
           </button>
@@ -52,7 +52,7 @@ const categories = ['All', 'Race Day', 'Cheer Squads', 'Community', 'Finish Line
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
         {gallery.map((photo) => (
           <div
-            class="gallery-item group relative overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 flex flex-col"
+            class="gallery-item group relative overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 flex flex-col hover:border-[#d4ff00]/40 transition-colors"
             data-category={photo.category}
           >
             <div class="relative aspect-[4/3] overflow-hidden bg-neutral-900">
@@ -71,12 +71,14 @@ const categories = ['All', 'Race Day', 'Cheer Squads', 'Community', 'Finish Line
             </div>
             
             <div class="p-6 flex flex-col justify-between flex-grow">
-              <p class="text-sm font-medium text-neutral-200 mb-4 leading-snug">
+              <p class="text-sm font-semibold text-white mb-4 leading-snug">
                 {photo.caption}
               </p>
-              <div class="flex items-center justify-between text-xs text-neutral-500 pt-3 border-t border-neutral-900 font-bold">
+              <div class="flex items-center justify-between text-xs text-neutral-400 pt-3 border-t border-neutral-900 font-bold">
                 <span class="uppercase tracking-wider text-[#3fd4a4]">{photo.category.replace('-', ' ')}</span>
-                <span>{photo.year}</span>
+                {photo.photographer && (
+                  <span class="text-neutral-500 text-[11px]">📷 {photo.photographer}</span>
+                )}
               </div>
             </div>
           </div>
@@ -91,7 +93,7 @@ const categories = ['All', 'Race Day', 'Cheer Squads', 'Community', 'Finish Line
         <h3 class="font-edo text-3xl sm:text-4xl text-white uppercase mt-2 mb-4">
           Share Your 26.TRUE Shots
         </h3>
-        <p class="text-sm text-neutral-400 mb-8 max-w-lg mx-auto">
+        <p class="text-sm text-neutral-300 mb-8 max-w-lg mx-auto font-normal">
           Did you snap photos of your crew, the cheer stations, or the finish line? Tag <strong class="text-white">@pioneersrc</strong> or send high-res photos to <a href={`mailto:${general.contactEmail}`} class="text-[#d4ff00] underline">{general.contactEmail}</a> to be featured in the official gallery.
         </p>
         <a

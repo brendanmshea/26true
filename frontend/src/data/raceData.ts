@@ -4,10 +4,11 @@ export interface RaceStat {
   subtext: string;
 }
 
-export interface CheerStation {
-  mile: number;
+export interface CheerZone {
+  number: number;
   neighborhood: string;
   location: string;
+  mile: string;
   vibe: string;
   amenities: string[];
 }
@@ -17,22 +18,29 @@ export interface GalleryImage {
   src: string;
   alt: string;
   caption: string;
+  photographer?: string;
   neighborhood: string;
   year: string;
-  category: 'race-day' | 'cheer-squad' | 'finish-line' | 'community';
+  category: '26true' | 'pioneers' | 'cheer-squad' | 'finish-line';
 }
 
-export interface HistoryMilestone {
+export interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+}
+
+export interface HistoryGrowthYear {
   year: string;
-  title: string;
-  summary: string;
-  details: string;
+  date: string;
+  stats: string;
+  highlight: string;
 }
 
 export interface FaqItem {
   question: string;
   answer: string;
-  category: 'About 26.TRUE' | 'Course & Route' | 'Registration & Bibs' | 'Cheer Squads & Volunteers';
+  category: 'About 26.TRUE' | 'Registration & 2027 Cohort' | 'Course & Route' | 'Cheer Zones & Volunteers';
 }
 
 export const raceData = {
@@ -40,297 +48,375 @@ export const raceData = {
     name: "26.TRUE",
     shortName: "26.TRUE",
     tagline: "Our City. Our Way.",
+    edition: "Year Seven — 2027",
     organizer: "PIONEERS Run Crew",
-    description: "26.TRUE is an untimed, community-first marathon and half marathon created by PIONEERS Run Crew to celebrate the culture, energy, and rich neighborhoods of Boston that the traditional marathon route bypasses.",
-    date: "2026-10-18T07:00:00-04:00",
-    displayDate: "Sunday, October 18, 2026",
+    description: "Established in 2021 by the leaders of PIONEERS Run Crew, 26.TRUE is a celebration of running and of Boston’s diverse neighborhoods and people. The only permitted marathon and half marathon courses running entirely within Boston city limits.",
+    
+    // Countdown targets:
+    registrationOpenDate: "2026-11-20T08:00:00-05:00", // Friday, Nov 20, 2026 @ 8:00 AM EST
+    registrationDisplayDate: "Friday, November 20, 2026 at 8:00 AM EST",
+    
+    raceDate: "2027-04-17T07:00:00-04:00", // Saturday, April 17, 2027 @ 7:00 AM EDT
+    raceDisplayDate: "Saturday, April 17, 2027 at 7:00 AM EDT",
+    
     location: "City of Boston, MA",
     neighborhoodsList: [
-      "Roxbury",
-      "Dorchester",
-      "Mattapan",
       "Jamaica Plain",
-      "Hyde Park",
-      "South End",
+      "Roxbury",
+      "Mattapan",
+      "Dorchester",
     ],
     registrationUrl: "https://runsignup.com",
-    registrationStatus: "Registration Opening Soon",
-    registrationPrice: "Community Accessible Pricing",
-    charityPartner: "PIONEERS Run Crew Foundation",
+    registrationStatus: "Opens Friday, Nov 20 @ 8 AM EST",
+    fieldCaps: {
+      marathon: 200,
+      marathonFirstTimers: 50,
+      halfMarathon: 300,
+      halfMarathonFirstTimers: 75,
+      waves: 5,
+      waveStrategy: "Reverse Wave Start — back of the pack, slower paced runners start first so all finish together",
+    },
+    coaches: [
+      {
+        name: "Trish Moran",
+        role: "Certified Run Coach",
+        note: "Leading free half & full marathon training plans for our 2027 cohort",
+      },
+      {
+        name: "Lindsey Thorne-Bingham",
+        role: "Certified Run Coach",
+        note: "Leading free half & full marathon training plans for our 2027 cohort",
+      },
+    ],
     contactEmail: "info@26true.com",
     volunteerEmail: "volunteer@26true.com",
   },
   
   announcement: {
     active: true,
-    badge: "26.TRUE 2026",
-    message: "26.TRUE 2026 course and registration details dropping soon. Follow along as we prepare to take over the city.",
-    linkText: "Stay Updated",
-    linkUrl: "#newsletter",
+    badge: "2027 Registration",
+    message: "Registration for the 2027 Marathon & Half Marathon opens Friday, November 20, 2026 at 8:00 AM EST!",
+    linkText: "Get Ready",
+    linkUrl: "#event-info",
   },
 
   stats: [
     {
-      label: "Race Distances",
+      label: "Course Distance",
       value: "26.2 & 13.1",
-      subtext: "Full Marathon & Half Marathon options",
+      subtext: "Only permitted courses running 100% inside Boston city limits",
     },
     {
-      label: "City Footprint",
-      value: "100% Boston",
-      subtext: "Entirely within city limits & historic neighborhoods",
+      label: "2027 Field Cap",
+      value: "500 Runners",
+      subtext: "200 full marathoners (50 first-timers) + 300 half (75 first-timers)",
     },
     {
       label: "Timing Format",
       value: "Untimed",
-      subtext: "No chip timing or cutoff pressure — purely about the culture",
+      subtext: "Reverse wave start — celebrating every pace and background",
     },
     {
-      label: "Cheer Squads",
-      value: "Citywide",
-      subtext: "Block parties, DJs, and live hype squads across the course",
+      label: "Cheer Zones",
+      value: "6 Major Zones",
+      subtext: "Stationed every 2–3 miles: 'If you're not running, you're cheering'",
     },
   ] as RaceStat[],
 
   pillars: [
     {
       title: "Our City, Our Way",
-      description: "Unlike suburban-to-downtown courses, 26.TRUE stays right inside Boston. We run through Roxbury, Dorchester, Mattapan, and Jamaica Plain — centering the vibrant communities that make this city breathe.",
+      description: "Unlike suburban-to-downtown courses that bypass Boston's neighborhoods, 26.TRUE stays 100% inside city limits through Jamaica Plain, Roxbury, Mattapan, and Dorchester.",
       icon: "map-pin",
       accent: "#d4ff00",
     },
     {
-      title: "Untimed & Community-Driven",
-      description: "No clock chasing, no chip mats, and no stress. Whether you run 3 hours or 6 hours, we move together. Every runner gets cheered with the same thunderous energy from start to finish.",
+      title: "Untimed & Inclusive",
+      description: "No clock chasing, no cutoffs, and no elitism. We run in 5 reverse waves with slower paced runners starting first, creating a collective, unified finish line celebration.",
       icon: "heart",
       accent: "#3fd4a4",
     },
     {
-      title: "Culture, DJs & Block Parties",
-      description: "The course is lined with grassroots cheer zones featuring live DJs, brass horns, local cookouts, and community leaders holding down the blocks to push you through every mile.",
+      title: "6 Energized Cheer Zones",
+      description: "Hosted by local running clubs, organizations, and brand partners every 2–3 miles with hydration, nutrition, brass horns, live DJs, and thunderous community support.",
       icon: "music",
       accent: "#d4ff00",
     },
     {
       title: "Founded by PIONEERS",
-      description: "Built in 2021 by PIONEERS Run Crew, Boston's premier Black- and Brown-led running community. As the crew says: 'You can't be what you can't see.'",
+      description: "Established in 2021 by PIONEERS Run Crew, a Dorchester-based running community of over 900 active members and 12,000 followers dedicated to equity and representation in running.",
       icon: "users",
       accent: "#3fd4a4",
     },
   ],
 
-  historyMilestones: [
+  testimonials: [
     {
-      year: "2017",
-      title: "The Birth of PIONEERS Run Crew",
-      summary: "Founded as Boston's first Black- and Brown-led running crew to carve out space and representation in endurance running.",
-      details: "PIONEERS Run Crew began with a clear purpose: to bridge the gap in distance running, diversify the sport, and provide an empowering, inclusive space for athletes of color across Greater Boston.",
+      quote: "As a back of the pack runner, I had the same support and experience as the first finishers. Breaking the ribbon like I was the first finisher was an experience I'll never forget.",
+      author: "2026 Marathon Finisher",
+      role: "Back of the Pack Runner",
     },
+    {
+      quote: "The cheer stations were giving me so much energy! Overall such a great crowd of runners, seeing people smile and encourage each other all the way! I really enjoyed that the field was so much more diverse and fun than any other events I have participated in.",
+      author: "2026 Finisher",
+      role: "First-Time Marathoner",
+    },
+    {
+      quote: "It was mind blowing to watch runners coming off the half marathon and immediately checking in to volunteer, or any of the runners who crossed the finish line and immediately hit the dance floor. It's such a beloved community!",
+      author: "2026 Volunteer",
+      role: "Finish Line Crew",
+    },
+    {
+      quote: "I LOVED that half the field of runners for both the half and marathon were people tackling the distance for the first time. It was so heartwarming to see people do this! This is the people's race in Boston.",
+      author: "2026 Volunteer",
+      role: "Cheer Zone Captain",
+    },
+  ] as Testimonial[],
+
+  growthYears: [
     {
       year: "2021",
-      title: "The First 26.TRUE Is Born",
-      summary: "When the traditional marathon moved virtual during COVID-19, PIONEERS chose to build their own 26.2.",
-      details: "Rather than running 26.2 miles through Hopkinton and western suburbs, the crew mapped out an entirely new route through Roxbury, Dorchester, and Mattapan. The inaugural 26.TRUE proved that the heart of Boston’s running spirit lives in its neighborhood streets.",
+      date: "October 9, 2021",
+      stats: "44 Registrants • 30 Finishers",
+      highlight: "The inaugural 26.TRUE. Proving that the heart and soul of Boston distance running lives in neighborhood streets.",
     },
     {
-      year: "2022–2023",
-      title: "'The Real Boston Marathon'",
-      summary: "Civic recognition and exponential growth across running crews nationwide.",
-      details: "Boston Mayor Michelle Wu celebrated 26.TRUE as 'the real Boston Marathon' for how genuinely it reflects the city's diversity. Crews from New York, Chicago, Philadelphia, and Atlanta traveled to Boston to celebrate the movement.",
+      year: "2022",
+      date: "April 16, 2022",
+      stats: "30 Registrants • 28 Finishers",
+      highlight: "Establishing the Patriots' Day weekend tradition on the Saturday before the commercial marathon.",
     },
     {
-      year: "2024–2026",
-      title: "The Tradition Continues",
-      summary: "Expanding to full and half marathon distances with thousands of supporters lining the streets.",
-      details: "Now an essential cornerstone of Boston’s athletic and cultural calendar, 26.TRUE unites hundreds of runners, dozens of community partners, and thousands of spectators in an unforgettable celebration of resilience, culture, and unity.",
+      year: "2023",
+      date: "April 15, 2023",
+      stats: "86 Registrants • 72 Finishers",
+      highlight: "Rapid word-of-mouth momentum across run crews nationwide.",
     },
-  ] as HistoryMilestone[],
+    {
+      year: "2024",
+      date: "April 13, 2024",
+      stats: "200 Registrants • 161 Finishers",
+      highlight: "Expanded field welcoming crews from NYC, Philly, Chicago, and Atlanta.",
+    },
+    {
+      year: "2025",
+      date: "April 19, 2025",
+      stats: "276 Registrants • 100 First-Time Marathoners • 216 Finishers",
+      highlight: "Built the signature 6-zone cheer station network along the course.",
+    },
+    {
+      year: "2026",
+      date: "April 18, 2026",
+      stats: "187 Marathon (43 first-timers, 158 finishers) + 333 Half Marathon (55 first-timers, 207 finishers)",
+      highlight: "Introduced the Half Marathon distance — community asked and it sold out in 36 hours!",
+    },
+    {
+      year: "2027",
+      date: "April 17, 2027",
+      stats: "500 Capped Field: 200 Marathon (50 first-timers) + 300 Half (75 first-timers)",
+      highlight: "Year Seven. Prioritizing quality over quantity, free coaching training plans, and five reverse waves.",
+    },
+  ] as HistoryGrowthYear[],
 
   course: {
-    tagline: "Through The Heart of Boston's Historic Neighborhoods",
+    tagline: "100% Within Boston City Limits",
+    googleMapsEmbedUrl: "https://www.google.com/maps/d/embed?mid=1eDX5xEsRifVGnlh3n2erNBIGduJH_NI&femb=1&ll=42.307675691093294%2C-71.09063&z=14",
+    googleMapsViewerUrl: "https://www.google.com/maps/d/viewer?mid=1eDX5xEsRifVGnlh3n2erNBIGduJH_NI&femb=1&ll=42.307675691093294%2C-71.09063&z=14",
+    stravaRouteUrl: "https://www.strava.com/routes/3422576664774367756",
+    
     neighborhoods: [
-      { name: "Roxbury", highlight: "Malcolm X Park, Nubian Square, Shelburne Community Center" },
-      { name: "Dorchester", highlight: "Dorchester Ave corridor, Franklin Park, Town Field" },
-      { name: "Mattapan", highlight: "River Street, Blue Hill Ave, Mattapan Square" },
-      { name: "Jamaica Plain", highlight: "Southwest Corridor Park, Centre Street, Jamaica Pond" },
-      { name: "Hyde Park", highlight: "Cleary Square, Mother Brook, Truman Parkway" },
-      { name: "South End", highlight: "Columbus Ave, Community Gardens, Historic Brownstones" },
+      { 
+        name: "Jamaica Plain", 
+        highlight: "Southwest Corridor path, Green Street, Centre Street, Jamaica Pond",
+        description: "Lush parkways and community cheer squads lining the paved paths.",
+      },
+      { 
+        name: "Roxbury", 
+        highlight: "Malcolm X Park, Nubian Square, Shelburne Community Center",
+        description: "The historic cultural heartbeat of Boston with drumlines and vibrant energy.",
+      },
+      { 
+        name: "Mattapan", 
+        highlight: "Mattapan Square, River Street, Blue Hill Ave corridor",
+        description: "High-energy community celebration with local DJs and neighborhood pride.",
+      },
+      { 
+        name: "Dorchester", 
+        highlight: "Franklin Park Playstead, Town Field, Dorchester Ave",
+        description: "Boston's largest neighborhood, home base of PIONEERS Run Crew, and the iconic Franklin Park stretch.",
+      },
     ],
-    cheerStations: [
+
+    cheerZones: [
       {
-        mile: 3.5,
+        number: 1,
         neighborhood: "Roxbury",
         location: "Malcolm X Park Plaza",
-        vibe: "Opening Mile Hype & Drumline",
-        amenities: ["Water", "Electrolytes", "Music", "Cheer Squad"],
+        mile: "Mile 3.5",
+        vibe: "Opening Hype, Live Drumline & Brass",
+        amenities: ["Hydration", "Electrolytes", "Bells & Noise Makers", "Safety Support"],
       },
       {
-        mile: 7.2,
+        number: 2,
         neighborhood: "Dorchester",
         location: "Town Field Park",
-        vibe: "Afrobeats & Caribbean Brass",
-        amenities: ["Water", "Bananas & Oranges", "First Aid"],
+        mile: "Mile 7.5",
+        vibe: "Afrobeats, Caribbean Sounds & Fruit Fuel",
+        amenities: ["Water", "Electrolytes", "Bananas & Oranges", "First Aid"],
       },
       {
-        mile: 11.0,
+        number: 3,
         neighborhood: "Mattapan",
         location: "Mattapan Square / River St",
-        vibe: "Community BBQ & DJ Set",
-        amenities: ["Water", "Electrolytes", "Energy Chews", "Restrooms"],
+        mile: "Mile 11.2",
+        vibe: "Community BBQ & Live DJ Power Boost",
+        amenities: ["Hydration", "Energy Chews", "Restrooms", "Hype Squad"],
       },
       {
-        mile: 13.1,
-        neighborhood: "Franklin Park",
-        location: "Playstead Halfway Checkpoint",
-        vibe: "Halfway Celebration & Crew Handoffs",
-        amenities: ["Water", "Drop Bags", "Medical", "Half Marathon Finish"],
+        number: 4,
+        neighborhood: "Dorchester / Franklin Park",
+        location: "Franklin Park Playstead Halfway Hub",
+        mile: "Mile 13.1",
+        vibe: "Halfway Celebration, Crew Handoffs & Half Finish",
+        amenities: ["Water", "Nuun", "Medical Tent", "Drop Bags", "Half Marathon Finish"],
       },
       {
-        mile: 17.5,
-        neighborhood: "Hyde Park",
-        location: "Cleary Square Crossing",
-        vibe: "Local Businesses & Youth Cheer Crews",
-        amenities: ["Water", "Electrolytes", "Sponges"],
-      },
-      {
-        mile: 21.0,
+        number: 5,
         neighborhood: "Jamaica Plain",
         location: "Southwest Corridor / Green St",
-        vibe: "The Wall Breakers Hype Tunnel",
-        amenities: ["Water", "Ice Sponges", "High Fives", "Energy Gels"],
+        mile: "Mile 20.5",
+        vibe: "The Wall Breakers Hype Tunnel & Sponges",
+        amenities: ["Cold Sponges", "Energy Gels", "High Fives", "Community DJ"],
       },
       {
-        mile: 24.5,
-        neighborhood: "South End",
-        location: "Columbus Ave & Mass Ave",
-        vibe: "The Final Push DJ Stage",
-        amenities: ["Water", "Crowd Noise", "Cold Towels"],
-      },
-      {
-        mile: 26.2,
-        neighborhood: "Roxbury / Finish Village",
+        number: 6,
+        neighborhood: "Roxbury / Finish Line",
         location: "Shelburne Community Center Park",
-        vibe: "Epic Finish Line Block Party & Cookout",
-        amenities: ["Finisher Medals", "Food Trucks", "Live DJ", "Recovery Zone"],
+        mile: "Mile 26.2",
+        vibe: "The Celebratory Finish Line Block Party",
+        amenities: ["Finisher Medals", "Finisher Jackets", "Post-Race Meal", "Live DJ & Dance Floor"],
       },
-    ] as CheerStation[],
+    ] as CheerZone[],
   },
 
   gallery: [
     {
       id: "photo-1",
-      src: "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1200&q=80",
-      alt: "Runners in motion through Boston streets",
-      caption: "Taking up space: Runners hitting the pavement as the morning sun breaks over Roxbury.",
-      neighborhood: "Roxbury",
-      year: "2024",
-      category: "race-day",
+      src: "/images/photos/web/1Q7A3679.jpg",
+      alt: "26.TRUE runners pacing through Boston streets",
+      caption: "Our City. Our Way: 26.TRUE runners in rhythm touring Boston's neighborhood corridors.",
+      photographer: "Official 26.TRUE Photography",
+      neighborhood: "Jamaica Plain",
+      year: "2026",
+      category: "26true",
     },
     {
       id: "photo-2",
-      src: "https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?auto=format&fit=crop&w=1200&q=80",
-      alt: "Cheer squad celebrating runners with horns and banners",
-      caption: "Unmatched energy: The Dorchester cheer squad holding down the corner with drums, horns, and pure love.",
-      neighborhood: "Dorchester",
-      year: "2024",
-      category: "cheer-squad",
+      src: "/images/photos/web/26true2026©CharlotteTuminelli-3075.jpg",
+      alt: "Runners smiling and celebrating on course",
+      caption: "Collective joy: Smiles, encouragement, and high energy across the field.",
+      photographer: "Charlotte Tuminelli",
+      neighborhood: "Roxbury",
+      year: "2026",
+      category: "26true",
     },
     {
       id: "photo-3",
-      src: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&fit=crop&w=1200&q=80",
-      alt: "PIONEERS Run Crew athletes pacing together",
-      caption: "Strength in numbers: PIONEERS Run Crew members locking into stride along Franklin Park.",
-      neighborhood: "Franklin Park",
-      year: "2023",
-      category: "community",
+      src: "/images/photos/web/20260418_26.True Marathon_@ShotByEK-187.JPG",
+      alt: "Runner in focus capturing grit and power",
+      caption: "Pure grit: Athletes claiming space and conquering the distance on their own terms.",
+      photographer: "@ShotByEK",
+      neighborhood: "Mattapan",
+      year: "2026",
+      category: "26true",
     },
     {
       id: "photo-4",
-      src: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=80",
-      alt: "Emotional finish line embrace",
-      caption: "Tears and triumph: Crossing the 26.TRUE finish line surrounded by family, crew, and city.",
-      neighborhood: "Roxbury",
-      year: "2024",
-      category: "finish-line",
+      src: "/images/photos/web/562A8170.jpg",
+      alt: "PIONEERS Run Crew community gathering",
+      caption: "You can't be what you can't see: PIONEERS Run Crew standing strong together in Dorchester.",
+      photographer: "PIONEERS Run Crew",
+      neighborhood: "Dorchester",
+      year: "2026",
+      category: "pioneers",
     },
     {
       id: "photo-5",
-      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80",
-      alt: "Athletes warming up before sunrise",
-      caption: "Race morning quiet: Pre-race breath and fellowship before the journey begins.",
-      neighborhood: "Malcolm X Park",
-      year: "2023",
-      category: "race-day",
-    },
-    {
-      id: "photo-6",
-      src: "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?auto=format&fit=crop&w=1200&q=80",
-      alt: "High fives along the spectator route",
-      caption: "Every neighborhood shows love: High fives and cold sponges in the heat of Mile 20.",
-      neighborhood: "Mattapan",
-      year: "2024",
+      src: "/images/photos/web/1Q7A3259.jpg",
+      alt: "Athletes crossing the streets with crowd cheering",
+      caption: "If you're not running, you're cheering: Neighborhood residents turning out for every runner.",
+      photographer: "Official 26.TRUE Photography",
+      neighborhood: "Dorchester",
+      year: "2026",
       category: "cheer-squad",
     },
     {
-      id: "photo-7",
-      src: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1200&q=80",
-      alt: "Runner celebrating on the final straightaway",
-      caption: "26.2 miles our way: Reclaiming the streets of Boston one stride at a time.",
-      neighborhood: "South End",
-      year: "2023",
+      id: "photo-6",
+      src: "/images/photos/web/26true2026©CharlotteTuminelli-3767.jpg",
+      alt: "Celebration at the finish line",
+      caption: "Breaking the ribbon: Every runner celebrated like a champion at the Shelburne finish line.",
+      photographer: "Charlotte Tuminelli",
+      neighborhood: "Roxbury",
+      year: "2026",
       category: "finish-line",
     },
     {
-      id: "photo-8",
-      src: "https://images.unsplash.com/photo-1526676037777-05a232554f77?auto=format&fit=crop&w=1200&q=80",
-      alt: "Community block party at the finish line",
-      caption: "The celebration continues: DJs, dancing, food, and community fellowship at the finish festival.",
-      neighborhood: "Roxbury",
-      year: "2024",
-      category: "community",
+      id: "photo-7",
+      src: "/images/photos/web/562A6072.jpg",
+      alt: "PIONEERS Run Crew members celebrating post-run",
+      caption: "Community, belonging, and connection: PIONEERS Run Crew celebrating post-run fellowship.",
+      photographer: "PIONEERS Run Crew",
+      neighborhood: "Dorchester",
+      year: "2026",
+      category: "pioneers",
     },
   ] as GalleryImage[],
 
   faqs: [
     {
       category: "About 26.TRUE",
-      question: "Is 26.TRUE a timed or certified race?",
-      answer: "No. 26.TRUE is an untimed, community-centered marathon and half marathon. We do not use timing chips, bib corrals, or strict time cutoffs. The event is intentionally built around collective support, representation, and celebrating the culture of our city.",
+      question: "What is 26.TRUE and how is it different?",
+      answer: "Established in 2021 by the leaders of PIONEERS Run Crew, 26.TRUE is an untimed celebration of distance running and of Boston's diverse neighborhoods and people. It is not a competitive race that centers elitism and the fastest, fittest runners. It is the only permitted marathon and half marathon that runs 100% entirely within Boston city limits through Jamaica Plain, Roxbury, Mattapan, and Dorchester.",
     },
     {
       category: "About 26.TRUE",
-      question: "Who organizes 26.TRUE?",
-      answer: "26.TRUE was founded and is organized by PIONEERS Run Crew, Boston's premier Black- and Brown-led running community established in 2017. The event is powered by dozens of passionate volunteers, local run crews, and community partners.",
+      question: "What is the reverse wave start?",
+      answer: "We run in five distinct waves, with our 'back of the pack', slower paced runners starting first! This reverse start structure ensures that faster and slower runners converge towards the finish line at similar times, allowing everyone to celebrate together at the epic finish festival.",
+    },
+    {
+      category: "Registration & 2027 Cohort",
+      question: "When does registration open for 2027?",
+      answer: "Registration opens on Friday, November 20, 2026 at 8:00 AM EST! The 2026 half marathon sold out in just 36 hours, so we recommend registering promptly when the portal goes live.",
+    },
+    {
+      category: "Registration & 2027 Cohort",
+      question: "How many spots are available?",
+      answer: "We prioritize quality over quantity and are intentional about growth. For 2027, the field is capped at 500 total runners: 200 full marathoners (prioritizing 50 first-timers) and 300 half-marathoners (prioritizing 75 first-timers).",
+    },
+    {
+      category: "Registration & 2027 Cohort",
+      question: "Are training plans provided?",
+      answer: "Yes! We have partnered with two phenomenal certified run coaches from our community — Trish Moran and Lindsey Thorne-Bingham — to develop comprehensive half and full marathon distance training plans. We are thrilled to offer this as a 100% free resource for our 2027 cohort.",
     },
     {
       category: "Course & Route",
-      question: "What route and neighborhoods does 26.TRUE cover?",
-      answer: "The course stays 100% within the city limits of Boston. The route winds through Roxbury, Dorchester, Mattapan, Hyde Park, Jamaica Plain, and the South End, highlighting iconic cultural landmarks like Malcolm X Park, Franklin Park, and Nubian Square.",
+      question: "What neighborhoods does the 26.TRUE course tour?",
+      answer: "The course runs entirely through the geographic heart of Boston, showcasing the beautiful, historic neighborhoods of Jamaica Plain, Roxbury, Mattapan, and Dorchester.",
     },
     {
       category: "Course & Route",
-      question: "Can I run the Half Marathon instead of the Full?",
-      answer: "Yes! 26.TRUE offers both the full 26.2-mile marathon and a 13.1-mile half marathon route. Both distances start together and experience the unforgettable neighborhood cheer energy.",
+      question: "Where can I view the exact course map and Strava route?",
+      answer: "You can explore the interactive Google Map and Strava route on our Course page! The map outlines all turn-by-turn streets and the 6 designated Cheer Zones.",
     },
     {
-      category: "Course & Route",
-      question: "Are there aid stations along the course?",
-      answer: "Yes. Community-run cheer and aid stations are stationed throughout the route providing water, electrolytes, fruit, energy snacks, medical first aid, and incredible DJ energy.",
+      category: "Cheer Zones & Volunteers",
+      question: "What are Cheer Zones and where are they located?",
+      answer: "Our mantra is: 'If you're not running, you're cheering!' We have 6 official Cheer Zones placed every 2–3 miles along the course, hosted by local running clubs, community organizations, and brand partners. They supply hydration, nutrition, brass horns, live DJs, and safety support.",
     },
     {
-      category: "Registration & Bibs",
-      question: "How does packet and bib pickup work?",
-      answer: "There is no corporate expo. Registered runners will receive detailed instructions via email on community-hosted bib pickup locations and dates in the week leading up to race weekend.",
-    },
-    {
-      category: "Cheer Squads & Volunteers",
-      question: "How can I volunteer or set up a cheer station?",
-      answer: "Community cheer stations and volunteer squads are the heartbeat of 26.TRUE! Whether you want to hand out water, DJ a corner, take photos, or bring a drumline, we want you involved. Reach out to volunteer@26true.com to join a crew.",
-    },
-    {
-      category: "Cheer Squads & Volunteers",
-      question: "Where are the best spots for spectators?",
-      answer: "Top spectator hubs include Malcolm X Park (Mile 3.5), Town Field in Dorchester (Mile 7.2), Mattapan Square (Mile 11), Franklin Park Playstead (Mile 13.1), and the Southwest Corridor at Green Street in JP (Mile 21).",
+      category: "Cheer Zones & Volunteers",
+      question: "How can I volunteer or host a cheer zone?",
+      answer: "We need over 100 passionate volunteers each year for water support, cheer zones, course marshaling, and finish line celebrations. Reach out to volunteer@26true.com to join the crew!",
     },
   ] as FaqItem[],
 };

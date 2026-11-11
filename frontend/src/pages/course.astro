@@ -7,11 +7,20 @@ const { course, general } = raceData;
 
 <Layout
   title={`Neighborhood Course Route — ${general.name}`}
-  description="Full course guide, neighborhood milestones, and cheer station guide for the 26.TRUE Marathon and Half Marathon."
+  description="Official Google Map and Strava route for 26.TRUE through Jamaica Plain, Roxbury, Mattapan, and Dorchester."
 >
-  <!-- Page Header -->
-  <section class="bg-black py-16 lg:py-24 border-b border-neutral-900 relative">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Page Header with Darkened Photo -->
+  <section class="relative bg-black py-16 lg:py-24 border-b border-neutral-900 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <img
+        src="/images/photos/web/1Q7A3679.jpg"
+        alt="26.TRUE Course"
+        class="w-full h-full object-cover opacity-20 filter grayscale contrast-125 brightness-50"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-4">
           100% City of Boston
@@ -19,25 +28,26 @@ const { course, general } = raceData;
         <h1 class="font-edo text-5xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal mb-4">
           The Neighborhood Route
         </h1>
-        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
-          Running through the cultural and community core of Boston. Covering full 26.2 marathon and 13.1 half marathon routes through Roxbury, Dorchester, Mattapan, Jamaica Plain, Hyde Park, and the South End.
+        <p class="text-base sm:text-lg text-neutral-200 leading-relaxed font-normal">
+          Running through the geographic and cultural heart of Boston. Covering full 26.2 marathon and 13.1 half marathon routes through <strong class="text-white">Jamaica Plain, Roxbury, Mattapan, and Dorchester</strong>.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Neighborhood Highlights Bar -->
+  <!-- The 4 Neighborhoods Cards -->
   <section class="bg-neutral-950 border-b border-neutral-900 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {course.neighborhoods.map((n) => (
-          <div class="bg-black border border-neutral-800 p-4 rounded-2xl flex flex-col justify-between">
+          <div class="bg-black border border-neutral-800 p-5 rounded-2xl flex flex-col justify-between hover:border-[#d4ff00]/40 transition-colors">
             <div>
-              <div class="font-edo text-xl text-white mb-1">{n.name}</div>
-              <div class="text-[11px] text-neutral-400 leading-tight">{n.highlight}</div>
+              <div class="font-edo text-2xl text-white mb-1">{n.name}</div>
+              <div class="text-xs font-semibold text-[#3fd4a4] mb-2">{n.highlight}</div>
+              <div class="text-xs text-neutral-400 leading-relaxed">{n.description}</div>
             </div>
-            <div class="mt-3 text-[10px] font-black uppercase tracking-wider text-[#3fd4a4]">
-              Neighborhood Stop
+            <div class="mt-4 pt-3 border-t border-neutral-900 text-[10px] font-black uppercase tracking-wider text-[#d4ff00]">
+              Official Neighborhood Sector
             </div>
           </div>
         ))}
@@ -45,94 +55,118 @@ const { course, general } = raceData;
     </div>
   </section>
 
-  <!-- Map Presentation & Artwork -->
+  <!-- Interactive Map Section (Embedded Google My Maps & Strava Route) -->
   <section class="py-16 bg-black">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
-        <div class="lg:col-span-5 space-y-6">
-          <div class="text-xs font-black uppercase tracking-widest text-[#d4ff00]">
-            The Journey
-          </div>
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+        <div>
+          <span class="text-xs font-black uppercase tracking-widest text-[#d4ff00] block mb-1">
+            Interactive Navigation
+          </span>
           <h2 class="font-edo text-3xl sm:text-4xl text-white uppercase">
-            Streets Full of Culture & Community
+            Official Course Map
           </h2>
-          <p class="text-sm text-neutral-300 leading-relaxed font-normal">
-            Every mile is an authentic celebration. You'll run past Malcolm X Park, through the vibrant commercial corridor of Nubian Square, down Dorchester Ave, across the scenic Franklin Park Playstead, along Mattapan Square, and through the Southwest Corridor path.
+          <p class="text-xs sm:text-sm text-neutral-400 mt-1">
+            Explore every street, turn, and Cheer Zone on the Google Map below or follow on Strava.
           </p>
-          <div class="p-5 rounded-2xl bg-neutral-950 border border-neutral-800">
-            <div class="text-xs font-black uppercase tracking-wider text-[#3fd4a4] mb-1">Untimed & Supported</div>
-            <div class="text-xs text-neutral-400">
-              Run at your pace. Our volunteers, sweep crews, and community cheer squads stay out until the final runner finishes their journey.
-            </div>
-          </div>
         </div>
 
-        <div class="lg:col-span-7">
-          <div class="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center">
-            <img
-              src="/images/race_locations_logo.png"
-              alt="26.TRUE Route Artwork"
-              class="w-full max-w-[400px] h-auto object-contain mb-4"
-            />
-            <span class="text-xs font-black uppercase tracking-widest text-[#d4ff00]">
-              Official 26.TRUE Course Footprint
-            </span>
-          </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <a
+            href={course.stravaRouteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-black hover:bg-neutral-900 border border-neutral-800 hover:border-[#fc4c02]/50 transition-colors"
+          >
+            <span class="text-[#fc4c02] font-black">Strava</span>
+            <span>View Strava Route</span>
+            <svg class="w-3.5 h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
+          <a
+            href={course.googleMapsViewerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] transition-colors"
+          >
+            <span>Open Google Maps</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </a>
         </div>
       </div>
 
-      <!-- Cheer Stations Table -->
-      <div class="pt-10 border-t border-neutral-900">
+      <!-- Embedded Google Map -->
+      <div class="w-full h-[550px] sm:h-[620px] rounded-3xl overflow-hidden border border-neutral-800 relative bg-neutral-950 shadow-2xl mb-16">
+        <iframe
+          src={course.googleMapsEmbedUrl}
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="26.TRUE Course Map (Google My Maps)"
+        ></iframe>
+      </div>
+
+      <!-- 6 Cheer Zones Guide -->
+      <div class="pt-8 border-t border-neutral-900">
         <div class="max-w-3xl mb-12">
           <div class="text-xs font-black uppercase tracking-widest text-[#d4ff00] mb-2">
-            Hype & Hydration
+            If You're Not Running, You're Cheering
           </div>
           <h2 class="font-edo text-3xl sm:text-4xl text-white uppercase mb-3">
-            Cheer Stations & Community Hubs
+            The 6 Course Cheer Zones
           </h2>
           <p class="text-sm text-neutral-300 leading-relaxed font-normal">
-            Powered by local run crews, neighborhood associations, DJs, and families holding down their blocks with music, water, fruit, and loud love.
+            Stationed every 2–3 miles and hosted by community organizations, local running clubs, and partners. Supplying hydration, nutrition, safety, noise makers, bubble machines, and pure joy.
           </p>
         </div>
 
-        <div class="bg-neutral-950 border border-neutral-800 rounded-3xl overflow-hidden shadow-2xl">
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-neutral-300">
-              <thead class="bg-neutral-900/90 text-xs font-black uppercase tracking-wider text-neutral-400 border-b border-neutral-800">
-                <tr>
-                  <th scope="col" class="py-4 px-6">Mile</th>
-                  <th scope="col" class="py-4 px-6">Neighborhood Hub</th>
-                  <th scope="col" class="py-4 px-6">Vibe & Amenities</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-neutral-900">
-                {course.cheerStations.map((station) => (
-                  <tr class="hover:bg-neutral-900/40 transition-colors">
-                    <td class="py-4 px-6 font-edo text-xl text-[#d4ff00] whitespace-nowrap">
-                      Mile {station.mile.toFixed(1)}
-                    </td>
-                    <td class="py-4 px-6">
-                      <div class="font-bold text-white text-base">{station.neighborhood}</div>
-                      <div class="text-xs text-neutral-400">{station.location}</div>
-                    </td>
-                    <td class="py-4 px-6">
-                      <div class="text-xs font-bold text-[#3fd4a4] mb-1.5">{station.vibe}</div>
-                      <div class="flex flex-wrap gap-1.5">
-                        {station.amenities.map((item) => (
-                          <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-neutral-900 text-neutral-300 border border-neutral-800">
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {course.cheerZones.map((zone) => (
+            <div class="bg-neutral-950 border border-neutral-800 rounded-3xl p-6 flex flex-col justify-between hover:border-[#3fd4a4]/40 transition-colors">
+              <div>
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-neutral-900">
+                  <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#d4ff00] text-black">
+                    Cheer Zone {zone.number}
+                  </span>
+                  <span class="font-edo text-lg text-[#3fd4a4]">
+                    {zone.mile}
+                  </span>
+                </div>
 
+                <div class="font-edo text-2xl text-white mb-1">
+                  {zone.neighborhood}
+                </div>
+                <div class="text-xs font-semibold text-neutral-400 mb-3 flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5 text-[#d4ff00] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                  <span>{zone.location}</span>
+                </div>
+                <div class="text-xs font-bold text-white mb-3">
+                  {zone.vibe}
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-neutral-900">
+                <div class="flex flex-wrap gap-1.5">
+                  {zone.amenities.map((item) => (
+                    <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-neutral-900 text-neutral-300 border border-neutral-800">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>

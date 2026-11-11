@@ -5,6 +5,7 @@ import RaceStats from '../components/RaceStats.astro';
 import HighlightsSection from '../components/HighlightsSection.astro';
 import PhotoStrip from '../components/PhotoStrip.astro';
 import CoursePreview from '../components/CoursePreview.astro';
+import TestimonialsSection from '../components/TestimonialsSection.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { raceData } from '../data/raceData';
 
@@ -12,31 +13,40 @@ const { general } = raceData;
 ---
 
 <Layout>
-  <!-- Hero with Live Countdown & Jacket Artwork -->
+  <!-- Hero with Live Two-Stage Countdown & Darkened Background Image -->
   <Hero />
 
-  <!-- 4 Untimed & Community Metrics -->
+  <!-- 4 Untimed & Community Metrics with Background Photo -->
   <RaceStats />
 
-  <!-- Why We Run 26.TRUE -->
+  <!-- Why We Run 26.TRUE / 4 Pillars with Background Photo -->
   <HighlightsSection />
 
   <!-- Photo Strip / Community Energy Showcase -->
   <PhotoStrip />
 
-  <!-- Boston Neighborhood Route Teaser -->
+  <!-- Boston Neighborhood Route & Embedded Google Map -->
   <CoursePreview />
+
+  <!-- Real Runner & Volunteer Voices with Background Photo -->
+  <TestimonialsSection />
 
   <!-- Top Frequently Asked Questions -->
   <FaqAccordion limit={4} />
 
-  <!-- Big Pre-Footer CTA -->
-  <section class="py-20 lg:py-28 bg-black border-t border-neutral-900 text-center relative overflow-hidden">
-    <div class="absolute inset-0 opacity-15 pointer-events-none">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#d4ff00] blur-[150px] rounded-full"></div>
+  <!-- Pre-Footer Registration CTA with PIONEERS Crew Photo Background -->
+  <section class="relative py-20 lg:py-28 bg-black border-t border-neutral-900 text-center overflow-hidden" id="event-info">
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <img
+        src="/images/photos/web/562A6072.jpg"
+        alt="PIONEERS Run Crew community"
+        class="w-full h-full object-cover object-center opacity-25 filter grayscale contrast-125 brightness-50"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#d4ff00]/15 blur-[150px] rounded-full"></div>
     </div>
     
-    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-6">
         {general.registrationStatus}
       </div>
@@ -45,16 +55,25 @@ const { general } = raceData;
         Ready To Run Boston Our Way?
       </h2>
       
-      <p class="text-base sm:text-lg text-neutral-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-        Experience 26.2 or 13.1 miles through the historic streets, sounds, and heartbeat of Boston. An unforgettable celebration of community, culture, and collective grit.
+      <p class="text-base sm:text-lg text-neutral-200 max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+        Join 500 runners for Year Seven on <strong class="text-white">{general.raceDisplayDate}</strong>. Featuring 200 full marathoners (prioritizing 50 first-timers) and 300 half-marathoners (prioritizing 75 first-timers) starting in five reverse waves.
       </p>
+
+      <div class="p-6 rounded-2xl bg-black/80 border border-neutral-800 backdrop-blur-md max-w-xl mx-auto mb-10 text-left">
+        <div class="text-[11px] font-black uppercase tracking-widest text-[#3fd4a4] mb-1">
+          Free 2027 Training Plans
+        </div>
+        <div class="text-xs text-neutral-300 leading-relaxed">
+          Developed in partnership with certified community run coaches <strong class="text-white">Trish Moran</strong> and <strong class="text-white">Lindsey Thorne-Bingham</strong> to help you cross the finish line feeling confident and supported.
+        </div>
+      </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a
           href={general.registrationUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
         >
           <span>Register on RunSignup</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,7 +82,7 @@ const { general } = raceData;
         </a>
         <a
           href="/history"
-          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-2xl transition-all"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-black/80 hover:bg-neutral-900 border border-neutral-800 rounded-2xl transition-all"
         >
           <span>Read The Origin Story</span>
         </a>

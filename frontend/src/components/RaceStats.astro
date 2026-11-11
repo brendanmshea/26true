@@ -3,18 +3,29 @@ import { raceData } from '../data/raceData';
 const { stats } = raceData;
 ---
 
-<section class="bg-black border-y border-neutral-900 py-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="relative bg-black border-y border-neutral-900 py-14 overflow-hidden">
+  <!-- Subtle Background Photo with Heavy Dark Fade -->
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <img
+      src="/images/photos/web/26true2026©CharlotteTuminelli-3075.jpg"
+      alt="26.TRUE runners"
+      class="w-full h-full object-cover object-center opacity-25 filter grayscale contrast-125 brightness-50"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black"></div>
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-xs"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       {stats.map((stat, idx) => (
-        <div class="relative bg-neutral-950/80 border border-neutral-800/80 rounded-2xl p-6 hover:border-[#d4ff00]/40 transition-all group">
+        <div class="relative bg-black/80 border border-neutral-800/90 rounded-2xl p-6 hover:border-[#d4ff00]/50 backdrop-blur-md transition-all group">
           <div class="text-[10px] font-black uppercase tracking-widest text-[#3fd4a4] mb-2">
             {stat.label}
           </div>
           <div class="font-edo text-3xl sm:text-4xl text-white tracking-wider mb-2 group-hover:text-[#d4ff00] transition-colors">
             {stat.value}
           </div>
-          <div class="text-xs text-neutral-400 leading-snug">
+          <div class="text-xs text-neutral-300 leading-snug font-medium">
             {stat.subtext}
           </div>
         </div>
