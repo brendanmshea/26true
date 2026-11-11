@@ -7,11 +7,12 @@ const { course } = raceData;
   <!-- Subtle Background Photo with Dark Scrim -->
   <div class="absolute inset-0 pointer-events-none z-0">
     <img
-      src="/images/photos/web/1Q7A3259.jpg"
-      alt="26.TRUE runners"
-      class="w-full h-full object-cover object-center opacity-20 filter grayscale contrast-125 brightness-50"
+      src="/images/photos/web/1Q7A3679.jpg"
+      alt="26.TRUE runners touring Boston corridors"
+      class="w-full h-full object-cover object-center opacity-20 filter brightness-50 contrast-125"
     />
-    <div class="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-black/80"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,32 +65,35 @@ const { course } = raceData;
         </div>
       </div>
 
-      <!-- Right Column: Featured Course Image (in place of race_locations_logo) -->
+      <!-- Right Column: Official 26.TRUE Race Logo Display Card -->
       <div class="lg:col-span-6 flex justify-center">
-        <div class="w-full max-w-lg bg-black/90 rounded-3xl border border-neutral-800 p-4 sm:p-5 shadow-2xl backdrop-blur-md overflow-hidden group hover:border-[#d4ff00]/40 transition-colors">
-          <div class="relative aspect-[16/11] rounded-2xl overflow-hidden bg-neutral-900 mb-4">
-            <img
-              src="/images/photos/web/1Q7A3679.jpg"
-              alt="26.TRUE Runners Touring Boston Corridors"
-              class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
-            <div class="absolute top-4 left-4">
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#d4ff00] text-black">
-                On The Course
-              </span>
-            </div>
-            <div class="absolute bottom-4 left-4 right-4">
-              <span class="text-[10px] font-bold text-[#3fd4a4] uppercase tracking-wider block mb-1">
-                Boston City Limits
-              </span>
-              <p class="text-sm font-bold text-white leading-snug">
-                Jamaica Plain &bull; Roxbury &bull; Mattapan &bull; Dorchester
-              </p>
-            </div>
+        <div class="w-full max-w-lg bg-black/90 rounded-3xl border border-neutral-800 p-6 sm:p-8 shadow-2xl backdrop-blur-md overflow-hidden group hover:border-[#d4ff00]/40 transition-all flex flex-col items-center text-center relative">
+          
+          <!-- Subtle neon glow accents -->
+          <div class="absolute -top-16 -right-16 w-44 h-44 bg-[#d4ff00]/15 blur-3xl rounded-full pointer-events-none"></div>
+          <div class="absolute -bottom-16 -left-16 w-44 h-44 bg-[#3fd4a4]/15 blur-3xl rounded-full pointer-events-none"></div>
+
+          <!-- Top Badge Bar -->
+          <div class="w-full flex items-center justify-between mb-4 pb-3 border-b border-neutral-900">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#d4ff00] text-black">
+              Official Identity
+            </span>
+            <span class="text-[11px] font-bold text-neutral-400">
+              Year Seven &bull; 2027
+            </span>
           </div>
 
-          <div class="w-full pt-3 border-t border-neutral-900 flex items-center justify-between text-xs">
+          <!-- Main Race Logo -->
+          <div class="relative py-6 px-4 flex items-center justify-center w-full">
+            <img
+              src="/images/race_logo.png"
+              alt="26.TRUE Marathon & Half Marathon Official Logo"
+              class="w-full max-w-[260px] sm:max-w-[300px] h-auto object-contain drop-shadow-[0_10px_30px_rgba(212,255,0,0.25)] group-hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+
+          <!-- Card Footer Info -->
+          <div class="w-full pt-4 border-t border-neutral-900 flex items-center justify-between text-xs">
             <span class="font-bold text-white flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-[#3fd4a4]"></span>
               6 Dedicated Cheer Zones Stationed Every 2–3 Miles
@@ -99,6 +103,7 @@ const { course } = raceData;
               &rarr;
             </a>
           </div>
+
         </div>
       </div>
 
