@@ -1,7 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { raceData } from '../data/raceData';
+import { getRaceData } from '../lib/sanity';
 
+const raceData = await getRaceData();
 const { gallery, general } = raceData;
 const categories = ['All', '26.TRUE', 'PIONEERS', 'Cheer Squad', 'Finish Line'];
 ---

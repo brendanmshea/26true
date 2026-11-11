@@ -7,8 +7,9 @@ import PhotoStrip from '../components/PhotoStrip.astro';
 import CoursePreview from '../components/CoursePreview.astro';
 import TestimonialsSection from '../components/TestimonialsSection.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
-import { raceData } from '../data/raceData';
+import { getRaceData } from '../lib/sanity';
 
+const raceData = await getRaceData();
 const { general } = raceData;
 ---
 

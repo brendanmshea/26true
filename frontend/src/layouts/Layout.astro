@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import { raceData } from '../data/raceData';
+import { getRaceData } from '../lib/sanity';
 
 interface Props {
   title?: string;
@@ -10,6 +10,7 @@ interface Props {
   image?: string;
 }
 
+const raceData = await getRaceData();
 const { general } = raceData;
 const {
   title = `${general.name} — ${general.tagline}`,
