@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { raceData } from '../data/raceData';
+
+const { course, general } = raceData;
+---
+
+<Layout
+  title={`Course & Elevation — ${general.name}`}
+  description="Full course map, elevation profile, and aid station breakdown for the 26True Marathon and Half Marathon."
+>
+  <!-- Page Header -->
+  <section class="bg-slate-950 py-16 lg:py-24 border-b border-slate-800 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-950 text-emerald-400 border border-emerald-500/30 mb-4">
+          USATF Certified #{course.usatfCert}
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight mb-4">
+          Course Map & Elevation
+        </h1>
+        <p class="text-lg text-slate-300 leading-relaxed">
+          The 26True course is engineered for speed, safety, and scenic beauty. A net-downhill route winding along paved parkways, historic riverfront bridges, and flat waterfront roads with minimal sharp turns.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Metrics Row -->
+  <section class="bg-slate-900/40 border-b border-slate-800 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Elevation Gain</div>
+          <div class="text-2xl font-black text-white">+{course.elevationGain}</div>
+          <div class="text-xs text-slate-400 mt-1">Gentle rolling climbs in miles 3–7</div>
+        </div>
+        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Elevation Loss</div>
+          <div class="text-2xl font-black text-emerald-400">-{course.elevationLoss}</div>
+          <div class="text-xs text-slate-400 mt-1">Net downhill (-140 ft)</div>
+        </div>
+        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Road Surface</div>
+          <div class="text-2xl font-black text-white">100% Paved</div>
+          <div class="text-xs text-slate-400 mt-1">Closed city parkways & bridges</div>
+        </div>
+        <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Course Time Limit</div>
+          <div class="text-2xl font-black text-white">6:00:00</div>
+          <div class="text-xs text-slate-400 mt-1">13:44 per mile pace cutoff</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Map Placeholder & GPX Download -->
+  <section class="py-16 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 class="text-2xl font-bold text-white uppercase tracking-tight">Interactive Course Route</h2>
+          <p class="text-sm text-slate-400">Marathon (Red route, 26.2 mi) and Half Marathon (Blue route, 13.1 mi)</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a
+            href={course.gpxDownloadUrl}
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white border border-slate-800 transition-colors"
+          >
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>Download GPX File</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Map Display Box -->
+      <div class="w-full h-96 sm:h-[480px] bg-slate-900 border border-slate-800 rounded-3xl relative overflow-hidden flex flex-col items-center justify-center p-6 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Interactive Course Map (RideWithGPS / Strava Embed)</h3>
+        <p class="text-sm text-slate-400 max-w-md mb-6">
+          Start: {course.startLocation} &bull; Finish: {course.finishLocation}. Full turn-by-turn interactive map with mile markers and live elevation scrubs.
+        </p>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">
+          Embed container ready for Sanity CMS map token or Strava/RideWithGPS iframe
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- All 12 Aid Stations Table -->
+  <section class="py-16 bg-slate-900/30 border-t border-slate-800" id="aid-stations">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-12">
+        <div class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">
+          Runner Support
+        </div>
+        <h2 class="text-3xl font-black text-white uppercase tracking-tight mb-3">
+          Aid Station Milestones & Nutrition
+        </h2>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          12 official aid stations positioned along the route. Every station features fresh cold water and Nuun Endurance (Lemon-Lime). Maurten Gel 100 stations are located at miles 6.8, 11.4, 15.3, 19.8, and 23.2.
+        </p>
+      </div>
+
+      <div class="bg-slate-950 border border-slate-800 rounded-3xl overflow-hidden shadow-xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-300">
+            <thead class="bg-slate-900/80 text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <tr>
+                <th scope="col" class="py-4 px-6 font-bold">Mile</th>
+                <th scope="col" class="py-4 px-6 font-bold">Location</th>
+                <th scope="col" class="py-4 px-6 font-bold">Available Amenities & Fuel</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80">
+              {course.aidStations.map((station) => (
+                <tr class="hover:bg-slate-900/40 transition-colors">
+                  <td class="py-4 px-6 font-mono font-bold text-emerald-400 text-base">
+                    Mile {station.mile.toFixed(1)}
+                  </td>
+                  <td class="py-4 px-6 font-medium text-white">
+                    {station.location}
+                  </td>
+                  <td class="py-4 px-6">
+                    <div class="flex flex-wrap gap-1.5">
+                      {station.amenities.map((item) => {
+                        const isMaurten = item.includes('Maurten');
+                        const isMed = item.includes('Medical') || item.includes('First Aid');
+                        return (
+                          <span
+                            class={`px-2.5 py-1 rounded-md text-xs font-semibold ${
+                              isMaurten
+                                ? 'bg-amber-950/80 text-amber-300 border border-amber-500/30'
+                                : isMed
+                                ? 'bg-red-950/80 text-red-300 border border-red-500/30'
+                                : 'bg-slate-900 text-slate-300 border border-slate-800'
+                            }`}
+                          >
+                            {item}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>

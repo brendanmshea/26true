@@ -1,0 +1,29 @@
+---
+import { raceData } from '../data/raceData';
+const { announcement } = raceData;
+
+if (!announcement || !announcement.active) {
+  // Not active
+}
+---
+
+{announcement && announcement.active && (
+  <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 text-white text-xs sm:text-sm font-medium py-2 px-4 shadow-sm relative z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="bg-black/25 uppercase font-bold text-[10px] tracking-wider px-2 py-0.5 rounded-full backdrop-blur-xs">
+          {announcement.badge}
+        </span>
+        <span>{announcement.message}</span>
+      </div>
+      {announcement.linkText && (
+        <a 
+          href={announcement.linkUrl} 
+          class="shrink-0 font-bold underline hover:text-black/80 transition-colors flex items-center gap-1"
+        >
+          {announcement.linkText} &rarr;
+        </a>
+      )}
+    </div>
+  </div>
+)}
