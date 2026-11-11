@@ -106,7 +106,7 @@ const { general, growthYears } = raceData;
         </div>
 
         <div class="space-y-10">
-          {growthYears.map((gy) => (
+          {(growthYears || []).map((gy) => (
             <div class="relative pl-8 sm:pl-12 border-l-2 border-[#d4ff00]/40 group">
               <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-black border-2 border-[#d4ff00] group-hover:bg-[#d4ff00] transition-colors"></div>
               

@@ -51,7 +51,7 @@ const categories = ['All', '26.TRUE', 'PIONEERS', 'Cheer Squad', 'Finish Line'];
 
       <!-- Photo Cards Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
-        {gallery.map((photo) => (
+        {(gallery || []).map((photo) => (
           <div
             class="gallery-item group relative overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 flex flex-col hover:border-[#d4ff00]/40 transition-colors"
             data-category={photo.category}

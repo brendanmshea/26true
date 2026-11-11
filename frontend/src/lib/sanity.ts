@@ -53,6 +53,7 @@ export async function getRaceData() {
       ]);
 
       return {
+        ...localRaceData,
         general: raceInfo
           ? {
               ...localRaceData.general,
