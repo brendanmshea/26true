@@ -53,7 +53,7 @@ const { general } = raceData;
         </p>
 
         <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-10">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
           <a
             href={general.registrationUrl}
             target="_blank"
@@ -73,8 +73,13 @@ const { general } = raceData;
           </a>
         </div>
 
-        <!-- Dynamic Two-Stage Countdown Card -->
-        <div class="bg-black/85 border border-neutral-800 rounded-3xl p-6 backdrop-blur-md max-w-lg shadow-2xl">
+      </div>
+
+      <!-- Right Column: Countdown Widget & 26.TRUE Race Logo -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center gap-6">
+        
+        <!-- Dynamic Two-Stage Countdown Card (positioned above the hero image) -->
+        <div class="w-full max-w-md bg-black/85 border border-neutral-800 rounded-3xl p-5 sm:p-6 backdrop-blur-md shadow-2xl">
           <div class="flex items-center justify-between gap-2 mb-3">
             <div class="text-[11px] uppercase tracking-widest text-neutral-300 font-black flex items-center gap-2" id="countdown-label">
               <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span>
@@ -110,11 +115,8 @@ const { general } = raceData;
           </div>
         </div>
 
-      </div>
-
-      <!-- Right Column: 26.TRUE Race Logo -->
-      <div class="lg:col-span-5 flex items-center justify-center">
-        <div class="relative w-full max-w-lg flex items-center justify-center p-2 sm:p-4">
+        <!-- 26.TRUE Race Logo -->
+        <div class="relative w-full max-w-md flex items-center justify-center p-2">
           <!-- Subtle ambient glow -->
           <div class="absolute w-72 h-72 bg-[#d4ff00]/15 blur-3xl rounded-full pointer-events-none"></div>
           <div class="absolute w-56 h-56 bg-[#3fd4a4]/15 blur-3xl rounded-full pointer-events-none"></div>
@@ -122,9 +124,10 @@ const { general } = raceData;
           <img
             src="/images/race_logo.png"
             alt="26.TRUE Marathon & Half Marathon Official Logo"
-            class="relative z-10 w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[460px] h-auto object-contain drop-shadow-[0_15px_45px_rgba(212,255,0,0.25)] transition-transform duration-500 hover:scale-105"
+            class="relative z-10 w-full max-w-[320px] sm:max-w-[380px] h-auto object-contain drop-shadow-[0_15px_45px_rgba(212,255,0,0.25)] transition-transform duration-500 hover:scale-105"
           />
         </div>
+
       </div>
 
     </div>
@@ -162,7 +165,7 @@ const { general } = raceData;
         sublabelEl.innerText = 'Opens Nov 20 @ 8 AM EST';
       }
       if (btnTextEl) {
-        btnTextEl.innerText = 'Registration Opens Nov 20 @ 8 AM';
+        btnTextEl.innerText = 'Registration Opens Nov 20';
       }
     } else {
       // Stage 2: Countdown to Race Morning
