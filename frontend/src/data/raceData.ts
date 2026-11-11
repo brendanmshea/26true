@@ -352,7 +352,7 @@ export const raceData = {
     },
     {
       id: "photo-6",
-      src: "/images/photos/web/26true2026©CharlotteTuminelli-3767.jpg",
+      src: "/images/photos/web/26true2026©CharlotteTuminelli-3129.jpg",
       alt: "Celebration at the finish line",
       caption: "Breaking the ribbon: Every runner celebrated like a champion at the Shelburne finish line.",
       photographer: "Charlotte Tuminelli",
