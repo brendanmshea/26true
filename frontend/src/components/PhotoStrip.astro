@@ -2,7 +2,7 @@
 import { getRaceData } from '../lib/sanity';
 const raceData = await getRaceData();
 const { gallery } = raceData;
-const homePhotos = gallery.slice(0, 6);
+const homePhotos = (gallery || []).slice(0, 6);
 ---
 
 <section class="py-20 lg:py-28 bg-black border-t border-neutral-900">
@@ -30,7 +30,7 @@ const homePhotos = gallery.slice(0, 6);
 
     <!-- Responsive Photo Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {homePhotos.map((photo) => (
+      {(homePhotos || []).map((photo) => (
         <a
           href="/gallery"
           class="group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3]"

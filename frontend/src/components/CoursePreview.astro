@@ -33,7 +33,7 @@ const { course } = raceData;
 
         <!-- The 4 Neighborhood pills -->
         <div class="grid grid-cols-2 gap-3 pt-2">
-          {course.neighborhoods.map((n) => (
+          {(course?.neighborhoods || []).map((n) => (
             <div class="p-3.5 rounded-2xl bg-black/85 border border-neutral-800 backdrop-blur-md">
               <span class="font-edo text-lg text-white block">{n.name}</span>
               <span class="text-[11px] text-neutral-400 leading-tight block mt-0.5">{n.highlight}</span>

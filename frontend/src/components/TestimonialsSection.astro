@@ -30,7 +30,7 @@ const { testimonials } = raceData;
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-      {testimonials.map((t) => (
+      {(testimonials || []).map((t) => (
         <div class="bg-black/85 border border-neutral-800 rounded-3xl p-8 flex flex-col justify-between backdrop-blur-md hover:border-[#d4ff00]/40 transition-colors">
           <div class="mb-6">
             <svg class="w-8 h-8 text-[#d4ff00] mb-4 opacity-75" fill="currentColor" viewBox="0 0 24 24">

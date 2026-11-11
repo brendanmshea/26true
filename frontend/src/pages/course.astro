@@ -84,7 +84,7 @@ const { course, general } = raceData;
   <section class="bg-neutral-950 border-b border-neutral-900 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {course.neighborhoods.map((n) => (
+        {(course?.neighborhoods || []).map((n) => (
           <div class="bg-black border border-neutral-800 p-5 rounded-2xl flex flex-col justify-between hover:border-[#d4ff00]/40 transition-colors">
             <div>
               <div class="font-edo text-2xl text-white mb-1">{n.name}</div>
@@ -203,7 +203,7 @@ const { course, general } = raceData;
               {zone.amenities && zone.amenities.length > 0 && (
                 <div class="mt-4 pt-3 border-t border-neutral-900">
                   <div class="flex flex-wrap gap-1.5">
-                    {zone.amenities.map((item) => (
+                    {(zone.amenities || []).map((item) => (
                       <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-neutral-900 text-neutral-300 border border-neutral-800">
                         {item}
                       </span>
