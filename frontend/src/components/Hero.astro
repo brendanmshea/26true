@@ -4,62 +4,51 @@ const raceData = await getRaceData();
 const { general } = raceData;
 ---
 
-<section class="relative overflow-hidden bg-black pt-12 pb-20 lg:pt-20 lg:pb-28">
-  <!-- Section Photo Background with Dark Scrim & Gradients -->
-  <div class="absolute inset-0 pointer-events-none z-0">
-    <img
-      src="/images/photos/web/1Q7A3259.jpg"
-      alt="26.TRUE athlete running Boston streets"
-      class="w-full h-full object-cover object-[center_30%] lg:object-[75%_35%] opacity-25 filter brightness-50 contrast-125 scale-105 transition-all duration-700"
-    />
-    <!-- Heavy Dark Fade Mask to guarantee 100% copy legibility -->
-    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-black/70"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black"></div>
-    <!-- Ambient Neon Glow -->
-    <div class="absolute top-1/4 right-1/4 w-[450px] h-[450px] bg-[#d4ff00]/10 blur-[150px] rounded-full"></div>
-    <div class="absolute bottom-10 left-10 w-[350px] h-[350px] bg-[#3fd4a4]/10 blur-[130px] rounded-full"></div>
+<section class="relative overflow-hidden bg-black pt-6 sm:pt-8 lg:pt-10 pb-16 lg:pb-20">
+  <!-- Subtle Ambient Glow -->
+  <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-12 right-1/4 w-[450px] h-[450px] bg-[#d4ff00]/10 blur-[150px] rounded-full"></div>
+    <div class="absolute bottom-0 left-10 w-[350px] h-[350px] bg-[#3fd4a4]/10 blur-[130px] rounded-full"></div>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
       
-      <!-- Left Column: Copy & CTAs -->
+      <!-- Left Column: Copy -->
       <div class="lg:col-span-7 text-left">
         
-        <!-- Badges -->
-        <div class="flex flex-wrap items-center gap-2.5 mb-6">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black">
-            Year Seven &bull; 2027
-          </span>
-          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-neutral-300 bg-black/80 border border-neutral-800 backdrop-blur-md">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#3fd4a4]"></span>
+        <!-- Race Date Badge -->
+        <div class="flex items-center gap-2.5 mb-3 sm:mb-4">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold text-neutral-200 bg-neutral-900/90 border border-neutral-800 backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-[#3fd4a4] animate-pulse"></span>
             {general.raceDisplayDate}
-          </span>
-          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-neutral-300 bg-black/80 border border-neutral-800 backdrop-blur-md">
-            {general.location}
           </span>
         </div>
 
         <!-- Main Headline using Edo Font -->
-        <h1 class="font-edo text-5xl sm:text-7xl lg:text-8xl text-white tracking-normal uppercase leading-[0.95] mb-6">
+        <h1 class="font-edo text-5xl sm:text-7xl lg:text-8xl text-white tracking-normal uppercase leading-[0.95] mb-4 sm:mb-5">
           OUR CITY.<br />
           <span class="text-[#d4ff00] drop-shadow-[0_2px_20px_rgba(212,255,0,0.35)]">
             OUR WAY.
           </span>
         </h1>
 
-        <p class="text-base sm:text-lg text-neutral-200 max-w-xl mb-8 leading-relaxed font-normal">
+        <p class="text-base sm:text-lg text-neutral-200 max-w-xl leading-relaxed font-normal">
           An untimed, community-first marathon and half marathon created by <span class="text-[#3fd4a4] font-bold">PIONEERS Run Crew</span>. Running 100% inside Boston city limits through <strong class="text-white">Jamaica Plain, Roxbury, Mattapan, and Dorchester</strong>.
         </p>
 
+      </div>
+
+      <!-- Right Column: CTAs, Countdown Widget & Race Logo -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center gap-5">
+        
         <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        <div class="w-full max-w-md flex flex-col sm:flex-row gap-3">
           <a
             href={general.registrationUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+            class="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-center"
           >
             <span id="hero-btn-text">Register on Movemint</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,19 +57,14 @@ const { general } = raceData;
           </a>
           <a
             href="/course"
-            class="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-black/70 hover:bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-2xl backdrop-blur-md transition-all"
+            class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 rounded-2xl backdrop-blur-md transition-all text-center"
           >
-            <span>Explore Course & Cheer Map</span>
+            <span>Explore Course</span>
           </a>
         </div>
 
-      </div>
-
-      <!-- Right Column: Countdown Widget & 26.TRUE Race Logo -->
-      <div class="lg:col-span-5 flex flex-col items-center justify-center gap-6">
-        
-        <!-- Dynamic Two-Stage Countdown Card (positioned above the hero image) -->
-        <div class="w-full max-w-md bg-black/85 border border-neutral-800 rounded-3xl p-5 sm:p-6 backdrop-blur-md shadow-2xl">
+        <!-- Dynamic Two-Stage Countdown Widget -->
+        <div class="w-full max-w-md bg-neutral-950/85 border border-neutral-800 rounded-3xl p-5 sm:p-6 backdrop-blur-md shadow-2xl">
           <div class="flex items-center justify-between gap-2 mb-3">
             <div class="text-[11px] uppercase tracking-widest text-neutral-300 font-black flex items-center gap-2" id="countdown-label">
               <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span>
@@ -97,38 +81,24 @@ const { general } = raceData;
             data-reg-date={general.registrationOpenDate}
             data-race-date={general.raceDate}
           >
-            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
+            <div class="bg-neutral-900/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-white" id="count-days">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Days</div>
             </div>
-            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
+            <div class="bg-neutral-900/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-white" id="count-hours">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Hours</div>
             </div>
-            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
+            <div class="bg-neutral-900/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-white" id="count-mins">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Mins</div>
             </div>
-            <div class="bg-neutral-950/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
+            <div class="bg-neutral-900/90 border border-neutral-800 rounded-xl p-2.5 sm:p-3">
               <div class="font-edo text-2xl sm:text-3xl text-[#d4ff00]" id="count-secs">--</div>
               <div class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">Secs</div>
             </div>
           </div>
         </div>
-
-        <!-- 26.TRUE Race Logo -->
-        <div class="relative w-full max-w-md flex items-center justify-center p-2">
-          <!-- Subtle ambient glow -->
-          <div class="absolute w-72 h-72 bg-[#d4ff00]/15 blur-3xl rounded-full pointer-events-none"></div>
-          <div class="absolute w-56 h-56 bg-[#3fd4a4]/15 blur-3xl rounded-full pointer-events-none"></div>
-
-          <img
-            src="/images/race_logo.png"
-            alt="26.TRUE Marathon & Half Marathon Official Logo"
-            class="relative z-10 w-full max-w-[320px] sm:max-w-[380px] h-auto object-contain drop-shadow-[0_15px_45px_rgba(212,255,0,0.25)] transition-transform duration-500 hover:scale-105"
-          />
-        </div>
-
       </div>
 
     </div>

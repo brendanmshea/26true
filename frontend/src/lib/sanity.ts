@@ -169,7 +169,8 @@ export async function getRaceData() {
         testimonials: testimonials && testimonials.length > 0 ? testimonials : localRaceData.testimonials,
         gallery:
           gallery && gallery.length > 0
-            ? gallery.map((item: any) => ({
+            ? gallery.map((item: any, idx: number) => ({
+                id: item._id || `photo-${idx + 1}`,
                 src: builder && item.image ? builder.image(item.image).width(1600).url() : '',
                 alt: item.caption || '26.TRUE Photo',
                 caption: item.caption || '',
@@ -177,6 +178,8 @@ export async function getRaceData() {
                 category: item.category || '26.TRUE',
                 neighborhood: item.neighborhood || 'Boston',
                 photographer: item.photographer || '',
+                featuredOnHome: Boolean(item.featuredOnHome),
+                order: typeof item.order === 'number' ? item.order : idx + 1,
               }))
             : localRaceData.gallery,
       };

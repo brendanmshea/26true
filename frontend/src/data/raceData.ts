@@ -22,6 +22,8 @@ export interface GalleryImage {
   neighborhood: string;
   year: string;
   category: '26true' | 'pioneers' | 'cheer-squad' | 'finish-line';
+  featuredOnHome?: boolean;
+  order?: number;
 }
 
 export interface Testimonial {
@@ -328,6 +330,8 @@ export const raceData = {
       neighborhood: "Jamaica Plain",
       year: "2026",
       category: "26true",
+      featuredOnHome: true,
+      order: 1,
     },
     {
       id: "photo-2",
@@ -338,6 +342,8 @@ export const raceData = {
       neighborhood: "Roxbury",
       year: "2026",
       category: "26true",
+      featuredOnHome: true,
+      order: 2,
     },
     {
       id: "photo-3",
@@ -348,6 +354,8 @@ export const raceData = {
       neighborhood: "Mattapan",
       year: "2026",
       category: "26true",
+      featuredOnHome: true,
+      order: 3,
     },
     {
       id: "photo-4",
@@ -358,6 +366,8 @@ export const raceData = {
       neighborhood: "Dorchester",
       year: "2026",
       category: "pioneers",
+      featuredOnHome: true,
+      order: 4,
     },
     {
       id: "photo-5",
@@ -368,6 +378,8 @@ export const raceData = {
       neighborhood: "Dorchester",
       year: "2026",
       category: "cheer-squad",
+      featuredOnHome: true,
+      order: 5,
     },
     {
       id: "photo-6",
@@ -378,6 +390,8 @@ export const raceData = {
       neighborhood: "Roxbury",
       year: "2026",
       category: "finish-line",
+      featuredOnHome: true,
+      order: 6,
     },
     {
       id: "photo-7",
@@ -388,6 +402,8 @@ export const raceData = {
       neighborhood: "Dorchester",
       year: "2026",
       category: "pioneers",
+      featuredOnHome: false,
+      order: 7,
     },
   ] as GalleryImage[],
 

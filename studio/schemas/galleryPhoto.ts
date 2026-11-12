@@ -46,6 +46,13 @@ export default defineType({
       initialValue: '2026',
     }),
     defineField({
+      name: 'featuredOnHome',
+      title: 'Feature in Homepage Photostrip',
+      type: 'boolean',
+      description: 'Toggle on to feature this photograph in the 6-photo homepage showcase grid.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'photographer',
       title: 'Photographer Credit',
       type: 'string',
@@ -55,9 +62,30 @@ export default defineType({
       name: 'order',
       title: 'Display Order',
       type: 'number',
+      description: 'Controls order in gallery and priority/slot in the homepage photostrip (1 = featured large card).',
       initialValue: 10,
     }),
   ],
+  preview: {
+    select: {
+      title: 'caption',
+      media: 'image',
+      featured: 'featuredOnHome',
+      order: 'order',
+      photographer: 'photographer',
+    },
+    prepare({ title, media, featured, order, photographer }) {
+      const parts = [];
+      if (featured) parts.push('⭐ Homepage Photostrip');
+      if (order !== undefined) parts.push(`Order: ${order}`);
+      if (photographer) parts.push(`By ${photographer}`);
+      return {
+        title: title || 'Untitled Photograph',
+        subtitle: parts.length > 0 ? parts.join(' • ') : undefined,
+        media,
+      };
+    },
+  },
   orderings: [
     {
       title: 'Display Order',

@@ -2,6 +2,13 @@
 import { getRaceData } from '../lib/sanity';
 const raceData = await getRaceData();
 const { course } = raceData;
+
+const neighborhoodImages: Record<string, string> = {
+  'Jamaica Plain': '/images/photos/web/1Q7A3679.jpg',
+  'Roxbury': '/images/photos/web/26true2026©CharlotteTuminelli-3075.jpg',
+  'Mattapan': '/images/photos/web/20260418_26.True Marathon_@ShotByEK-187.JPG',
+  'Dorchester': '/images/photos/web/562A8170.jpg',
+};
 ---
 
 <section class="relative py-20 lg:py-28 bg-black border-y border-neutral-900 overflow-hidden">
@@ -31,14 +38,28 @@ const { course } = raceData;
           26.TRUE is an authentic tour of Boston. We run entirely within city limits through <strong class="text-white">Jamaica Plain, Roxbury, Mattapan, and Dorchester</strong> — passing historic parks, community landmarks, and vibrant Cheer Zones with live music and block-party energy.
         </p>
 
-        <!-- The 4 Neighborhood pills -->
+        <!-- The 4 Neighborhood visual cards -->
         <div class="grid grid-cols-2 gap-3 pt-2">
-          {(course?.neighborhoods || []).map((n) => (
-            <div class="p-3.5 rounded-2xl bg-black/85 border border-neutral-800 backdrop-blur-md">
-              <span class="font-edo text-lg text-white block">{n.name}</span>
-              <span class="text-[11px] text-neutral-400 leading-tight block mt-0.5">{n.highlight}</span>
-            </div>
-          ))}
+          {(course?.neighborhoods || []).map((n) => {
+            const photo = neighborhoodImages[n.name] || '/images/photos/web/1Q7A3679.jpg';
+
+            return (
+              <div class="group relative overflow-hidden rounded-2xl p-4 border border-neutral-800 bg-neutral-950 shadow-lg hover:border-[#d4ff00]/50 transition-all hover:-translate-y-0.5">
+                <img
+                  src={photo}
+                  alt={n.name}
+                  class="absolute inset-0 w-full h-full object-cover object-center filter brightness-60 contrast-125 transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/40"></div>
+                
+                <div class="relative z-10">
+                  <span class="font-edo text-lg text-white block group-hover:text-[#d4ff00] transition-colors drop-shadow">{n.name}</span>
+                  <span class="text-[11px] text-neutral-200 leading-tight block mt-0.5 font-normal drop-shadow">{n.highlight}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <div class="flex flex-wrap items-center gap-4 pt-4">
