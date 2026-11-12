@@ -55,7 +55,8 @@ export default defineType({
       name: 'registrationUrl',
       title: 'Registration Platform URL',
       type: 'url',
-      description: 'RunSignup link',
+      description: 'Movemint registration link (e.g. https://www.movemint.cc/events/Uwj1WJY)',
+      initialValue: 'https://www.movemint.cc/events/Uwj1WJY',
     }),
     defineField({
       name: 'totalCap',

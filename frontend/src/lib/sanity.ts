@@ -64,7 +64,10 @@ export async function getRaceData() {
               raceDisplayDate: raceInfo.raceDisplayDate || localRaceData.general.raceDisplayDate,
               location: raceInfo.location || localRaceData.general.location,
               registrationOpenDate: raceInfo.registrationOpenDate || localRaceData.general.registrationOpenDate,
-              registrationUrl: raceInfo.registrationUrl || localRaceData.general.registrationUrl,
+              registrationUrl:
+                raceInfo.registrationUrl && raceInfo.registrationUrl !== 'https://runsignup.com'
+                  ? raceInfo.registrationUrl
+                  : localRaceData.general.registrationUrl,
               fieldCap: {
                 total: raceInfo.totalCap || localRaceData.general.fieldCap.total,
                 full: raceInfo.fullCap || localRaceData.general.fieldCap.full,

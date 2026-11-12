@@ -68,7 +68,7 @@ export const raceData = {
       "Mattapan",
       "Dorchester",
     ],
-    registrationUrl: "https://runsignup.com",
+    registrationUrl: "https://www.movemint.cc/events/Uwj1WJY",
     registrationStatus: "Opens Friday, Nov 20 @ 8 AM EST",
     fieldCaps: {
       marathon: 200,
