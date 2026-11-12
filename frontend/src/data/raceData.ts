@@ -152,7 +152,7 @@ export const raceData = {
       linkLabel: "Explore the course",
     },
     {
-      title: "6 Energized Cheer Zones",
+      title: "Cheer Zones",
       description: "Hosted by local running clubs, organizations, and brand partners every 2–3 miles with hydration, nutrition, brass horns, live DJs, and thunderous community support.",
       icon: "music",
       accent: "#d4ff00",
