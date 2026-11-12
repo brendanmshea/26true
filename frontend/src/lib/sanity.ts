@@ -48,7 +48,7 @@ export async function getRaceData() {
         sanityClient.fetch(`*[_type == "neighborhood"] | order(order asc)`),
         sanityClient.fetch(`*[_type == "pillar"] | order(number asc)`),
         sanityClient.fetch(`*[_type == "cheerZone"] | order(order asc)`),
-        sanityClient.fetch(`*[_type == "faq"] | order(order asc)`),
+        sanityClient.fetch(`*[_type == "faq"] | order(order asc, _createdAt asc)`),
         sanityClient.fetch(`*[_type == "testimonial"]`),
         sanityClient.fetch(`*[_type == "galleryPhoto"] | order(order asc)`),
       ]);

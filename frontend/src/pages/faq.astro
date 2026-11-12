@@ -5,6 +5,7 @@ import { renderMarkdown } from '../lib/markdown';
 
 const raceData = await getRaceData();
 const { faqs, general } = raceData;
+const sortedFaqs = [...(faqs || [])].sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999));
 const categories = ['All', 'About 26.TRUE', 'Course & Route', 'Registration & Bibs', 'Cheer Squads & Volunteers'];
 ---
 
@@ -50,7 +51,7 @@ const categories = ['All', 'About 26.TRUE', 'Course & Route', 'Registration & Bi
 
       <!-- FAQ Items List -->
       <div class="space-y-4" id="faq-list">
-        {(faqs || []).map((faq) => (
+        {(sortedFaqs || []).map((faq) => (
           <details
             class="faq-item group bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden transition-all [&[open]]:border-[#d4ff00]/40"
             data-category={faq.category}

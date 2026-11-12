@@ -40,7 +40,9 @@ export interface HistoryGrowthYear {
 export interface FaqItem {
   question: string;
   answer: string;
-  category: 'About 26.TRUE' | 'Registration & 2027 Cohort' | 'Course & Route' | 'Cheer Zones & Volunteers';
+  category: string;
+  order?: number;
+  showOnHome?: boolean;
 }
 
 export const raceData = {

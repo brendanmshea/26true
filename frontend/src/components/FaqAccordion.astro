@@ -9,7 +9,17 @@ interface Props {
 }
 
 const { limit } = Astro.props;
-const displayFaqs = limit ? (faqs || []).slice(0, limit) : (faqs || []);
+
+// Filter for FAQs explicitly selected for homepage display in Sanity Studio
+const homeFaqs = (faqs || []).filter((f: any) => f.showOnHome === true);
+
+// If any are toggled "Show on Homepage", show those; otherwise fall back to first `limit`
+const displayFaqs = homeFaqs.length > 0
+  ? homeFaqs
+  : (limit ? (faqs || []).slice(0, limit) : (faqs || []));
+
+// Sort by numerical display order
+displayFaqs.sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999));
 ---
 
 <section class="py-20 lg:py-28 bg-black">
