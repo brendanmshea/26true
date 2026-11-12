@@ -102,7 +102,39 @@ export async function getRaceData() {
               : localRaceData.course.cheerZones,
         },
 
-        pillars: pillars && pillars.length > 0 ? pillars : localRaceData.pillars,
+        pillars:
+          pillars && pillars.length > 0
+            ? pillars.map((p: any) => {
+                const targetUrl =
+                  p.linkUrl === 'custom' && p.customLinkUrl
+                    ? p.customLinkUrl
+                    : p.linkUrl ||
+                      (p.number === 2 || p.number === 3 || /untimed|cheer/i.test(p.title)
+                        ? '/course'
+                        : '/history');
+
+                let targetLabel = p.linkLabel?.trim();
+                if (!targetLabel) {
+                  if (targetUrl === '/course' || targetUrl.startsWith('/course')) {
+                    targetLabel = /cheer/i.test(p.title) ? 'Explore cheer zones' : 'Explore the course';
+                  } else if (targetUrl === '/history' || targetUrl.startsWith('/history')) {
+                    targetLabel = 'Read the history';
+                  } else if (targetUrl === '/faq' || targetUrl.startsWith('/faq')) {
+                    targetLabel = 'Read the FAQ';
+                  } else if (targetUrl === '/gallery' || targetUrl.startsWith('/gallery')) {
+                    targetLabel = 'View gallery';
+                  } else {
+                    targetLabel = 'Learn more';
+                  }
+                }
+
+                return {
+                  ...p,
+                  linkUrl: targetUrl,
+                  linkLabel: targetLabel,
+                };
+              })
+            : localRaceData.pillars,
         faqs:
           faqs && faqs.length > 0
             ? faqs.map((f: any) => {

@@ -30,29 +30,45 @@ const { pillars } = raceData;
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {(pillars || []).map((item, index) => (
-        <div class="bg-black/85 border border-neutral-800/80 hover:border-neutral-700 rounded-3xl p-8 flex flex-col justify-between backdrop-blur-md transition-all hover:-translate-y-1 group">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-neutral-900/90 border border-neutral-800 text-[#d4ff00] flex items-center justify-center font-edo text-xl mb-6 group-hover:border-[#d4ff00]/50 transition-colors">
-              0{index + 1}
+      {(pillars || []).map((item, index) => {
+        const linkUrl = item.linkUrl || '/history';
+        const linkLabel = item.linkLabel || 'Read the history';
+        const isExternal = linkUrl.startsWith('http');
+
+        return (
+          <div class="bg-black/85 border border-neutral-800/80 hover:border-neutral-700 rounded-3xl p-8 flex flex-col justify-between backdrop-blur-md transition-all hover:-translate-y-1 group">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-neutral-900/90 border border-neutral-800 text-[#d4ff00] flex items-center justify-center font-edo text-xl mb-6 group-hover:border-[#d4ff00]/50 transition-colors">
+                0{index + 1}
+              </div>
+              <h3 class="font-edo text-2xl text-white mb-3 tracking-normal group-hover:text-[#3fd4a4] transition-colors">
+                <a
+                  href={linkUrl}
+                  class="hover:underline"
+                  {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  {item.title}
+                </a>
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                {item.description}
+              </p>
             </div>
-            <h3 class="font-edo text-2xl text-white mb-3 tracking-normal group-hover:text-[#3fd4a4] transition-colors">
-              {item.title}
-            </h3>
-            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-              {item.description}
-            </p>
+            <div class="mt-8 pt-4 border-t border-neutral-900 flex items-center gap-2 text-xs font-bold text-[#d4ff00]">
+              <a
+                href={linkUrl}
+                class="hover:underline flex items-center gap-1.5 group-hover:gap-2 transition-all"
+                {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                <span>{linkLabel}</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
           </div>
-          <div class="mt-8 pt-4 border-t border-neutral-900 flex items-center gap-2 text-xs font-bold text-[#d4ff00]">
-            <a href="/history" class="hover:underline flex items-center gap-1.5">
-              <span>Read the history</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
 
   </div>

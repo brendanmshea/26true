@@ -45,6 +45,15 @@ export interface FaqItem {
   showOnHome?: boolean;
 }
 
+export interface PillarItem {
+  title: string;
+  description: string;
+  icon?: string;
+  accent?: string;
+  linkUrl?: string;
+  linkLabel?: string;
+}
+
 export const raceData = {
   general: {
     name: "26.TRUE",
@@ -131,26 +140,34 @@ export const raceData = {
       description: "Unlike suburban-to-downtown courses that bypass Boston's neighborhoods, 26.TRUE stays 100% inside city limits through Jamaica Plain, Roxbury, Mattapan, and Dorchester.",
       icon: "map-pin",
       accent: "#d4ff00",
+      linkUrl: "/history",
+      linkLabel: "Read the history",
     },
     {
       title: "Untimed & Inclusive",
       description: "No clock chasing, no cutoffs, and no elitism. We run in 5 reverse waves with slower paced runners starting first, creating a collective, unified finish line celebration.",
       icon: "heart",
       accent: "#3fd4a4",
+      linkUrl: "/course",
+      linkLabel: "Explore the course",
     },
     {
       title: "6 Energized Cheer Zones",
       description: "Hosted by local running clubs, organizations, and brand partners every 2–3 miles with hydration, nutrition, brass horns, live DJs, and thunderous community support.",
       icon: "music",
       accent: "#d4ff00",
+      linkUrl: "/course",
+      linkLabel: "Explore cheer zones",
     },
     {
       title: "Founded by PIONEERS",
       description: "Established in 2021 by PIONEERS Run Crew, a Dorchester-based running community of over 900 active members and 12,000 followers dedicated to equity and representation in running.",
       icon: "users",
       accent: "#3fd4a4",
+      linkUrl: "/history",
+      linkLabel: "Read the history",
     },
-  ],
+  ] as PillarItem[],
 
   testimonials: [
     {
