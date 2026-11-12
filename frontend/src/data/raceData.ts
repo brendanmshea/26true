@@ -205,7 +205,7 @@ export const raceData = {
       year: "2022",
       date: "April 16, 2022",
       stats: "30 Registrants • 28 Finishers",
-      highlight: "Establishing the Patriots' Day weekend tradition on the Saturday before the commercial marathon.",
+      highlight: "Establishing the Patriots' Day weekend tradition on the Saturday before the BAA marathon.",
     },
     {
       year: "2023",
