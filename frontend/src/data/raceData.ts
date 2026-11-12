@@ -63,7 +63,7 @@ export const raceData = {
     tagline: "Our City. Our Way.",
     edition: "Year Seven — 2027",
     organizer: "PIONEERS Run Crew",
-    description: "Established in 2021 by the leaders of PIONEERS Run Crew, 26.TRUE is a celebration of running and of Boston’s diverse neighborhoods and people. The only permitted marathon and half marathon courses running entirely within Boston city limits.",
+    description: "Established in 2021 by the leaders of PIONEERS Run Crew, 26.TRUE is a celebration of running and of Boston’s diverse neighborhoods and people. The only fully permitted marathon running entirely within Boston city limits.",
 
     // Countdown targets:
     registrationOpenDate: "2026-11-20T08:00:00-05:00", // Friday, Nov 20, 2026 @ 8:00 AM EST
@@ -235,7 +235,7 @@ export const raceData = {
       year: "2027",
       date: "April 17, 2027",
       stats: "500 Capped Field: 200 Marathon (50 first-timers) + 300 Half (75 first-timers)",
-      highlight: "Year Seven. Prioritizing quality over quantity, free coaching training plans, and five reverse waves.",
+      highlight: "Year Seven. Prioritizing quality over quantity, free coaching training plans, and great vibes!",
     },
   ] as HistoryGrowthYear[],
 
