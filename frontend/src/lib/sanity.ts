@@ -81,6 +81,8 @@ export async function getRaceData() {
                 marathon: raceInfo.fullCap || localRaceData.general.fieldCaps?.marathon,
                 halfMarathon: raceInfo.halfCap || localRaceData.general.fieldCaps?.halfMarathon,
               },
+              contactEmail: raceInfo.contactEmail || localRaceData.general.contactEmail,
+              volunteerEmail: raceInfo.volunteerEmail || localRaceData.general.volunteerEmail,
             }
           : localRaceData.general,
 

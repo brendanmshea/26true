@@ -93,5 +93,19 @@ export default defineType({
       of: [{ type: 'string' }],
       initialValue: ['Trish Moran', 'Lindsey Thorne-Bingham'],
     }),
+    defineField({
+      name: 'contactEmail',
+      title: 'Contact / Info Email',
+      type: 'string',
+      description: 'General information email (e.g. 26.true@pioneersrc.com)',
+      initialValue: '26.true@pioneersrc.com',
+    }),
+    defineField({
+      name: 'volunteerEmail',
+      title: 'Volunteer Coordinator Email',
+      type: 'string',
+      description: 'Volunteer contact email (e.g. volunteer@26true.com)',
+      initialValue: 'volunteer@26true.com',
+    }),
   ],
 });

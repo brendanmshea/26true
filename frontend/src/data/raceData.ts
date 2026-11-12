@@ -99,7 +99,7 @@ export const raceData = {
         note: "Leading free half & full marathon training plans for our 2027 cohort",
       },
     ],
-    contactEmail: "info@26true.com",
+    contactEmail: "26.true@pioneersrc.com",
     volunteerEmail: "volunteer@26true.com",
   },
   
