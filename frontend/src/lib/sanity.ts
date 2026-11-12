@@ -26,6 +26,8 @@ export function urlFor(source: SanityImageSource) {
 }
 
 let cachedPromise: Promise<any> | null = null;
+let lastFetchTime = 0;
+const DEV_CACHE_TTL_MS = 2000; // 2s cache in dev mode so simultaneous component queries share results, while page refresh gets fresh data
 
 /**
  * Fetch race data from Sanity if configured; otherwise gracefully return local static data.
@@ -36,11 +38,17 @@ export async function getRaceData() {
     return localRaceData;
   }
 
-  // Cache during production builds to avoid redundant queries; in dev mode, fetch fresh data on every request
-  if (import.meta.env.PROD && cachedPromise) {
-    return cachedPromise;
+  const now = Date.now();
+  if (cachedPromise) {
+    if (import.meta.env.PROD) {
+      return cachedPromise;
+    }
+    if (now - lastFetchTime < DEV_CACHE_TTL_MS) {
+      return cachedPromise;
+    }
   }
 
+  lastFetchTime = now;
   cachedPromise = (async () => {
     try {
       const [raceInfo, neighborhoods, pillars, cheerZones, faqs, testimonials, gallery] = await Promise.all([
@@ -68,12 +76,10 @@ export async function getRaceData() {
                 raceInfo.registrationUrl && raceInfo.registrationUrl !== 'https://runsignup.com'
                   ? raceInfo.registrationUrl
                   : localRaceData.general.registrationUrl,
-              fieldCap: {
-                total: raceInfo.totalCap || localRaceData.general.fieldCap.total,
-                full: raceInfo.fullCap || localRaceData.general.fieldCap.full,
-                half: raceInfo.halfCap || localRaceData.general.fieldCap.half,
-                firstTimeFullTarget: raceInfo.firstTimeFullTarget || localRaceData.general.fieldCap.firstTimeFullTarget,
-                firstTimeHalfTarget: raceInfo.firstTimeHalfTarget || localRaceData.general.fieldCap.firstTimeHalfTarget,
+              fieldCaps: {
+                ...localRaceData.general.fieldCaps,
+                marathon: raceInfo.fullCap || localRaceData.general.fieldCaps?.marathon,
+                halfMarathon: raceInfo.halfCap || localRaceData.general.fieldCaps?.halfMarathon,
               },
             }
           : localRaceData.general,
@@ -130,7 +136,7 @@ export async function getRaceData() {
         gallery:
           gallery && gallery.length > 0
             ? gallery.map((item: any) => ({
-                src: builder ? builder.image(item.image).width(1600).url() : '',
+                src: builder && item.image ? builder.image(item.image).width(1600).url() : '',
                 alt: item.caption || '26.TRUE Photo',
                 caption: item.caption || '',
                 year: item.year || '2026',
