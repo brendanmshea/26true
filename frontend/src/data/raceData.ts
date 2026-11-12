@@ -64,14 +64,14 @@ export const raceData = {
     edition: "Year Seven — 2027",
     organizer: "PIONEERS Run Crew",
     description: "Established in 2021 by the leaders of PIONEERS Run Crew, 26.TRUE is a celebration of running and of Boston’s diverse neighborhoods and people. The only permitted marathon and half marathon courses running entirely within Boston city limits.",
-    
+
     // Countdown targets:
     registrationOpenDate: "2026-11-20T08:00:00-05:00", // Friday, Nov 20, 2026 @ 8:00 AM EST
     registrationDisplayDate: "Friday, November 20, 2026 at 8:00 AM EST",
-    
+
     raceDate: "2027-04-17T07:00:00-04:00", // Saturday, April 17, 2027 @ 7:00 AM EDT
     raceDisplayDate: "Saturday, April 17, 2027 at 7:00 AM EDT",
-    
+
     location: "City of Boston, MA",
     neighborhoodsList: [
       "Jamaica Plain",
@@ -102,9 +102,9 @@ export const raceData = {
       },
     ],
     contactEmail: "26.true@pioneersrc.com",
-    volunteerEmail: "volunteer@26true.com",
+    volunteerEmail: "26.true@pioneersrc.com",
   },
-  
+
   announcement: {
     active: true,
     badge: "2027 Registration",
@@ -244,25 +244,25 @@ export const raceData = {
     googleMapsEmbedUrl: "https://www.google.com/maps/d/embed?mid=1eDX5xEsRifVGnlh3n2erNBIGduJH_NI&femb=1&ll=42.307675691093294%2C-71.09063&z=14",
     googleMapsViewerUrl: "https://www.google.com/maps/d/viewer?mid=1eDX5xEsRifVGnlh3n2erNBIGduJH_NI&femb=1&ll=42.307675691093294%2C-71.09063&z=14",
     stravaRouteUrl: "https://www.strava.com/routes/3422576664774367756",
-    
+
     neighborhoods: [
-      { 
-        name: "Jamaica Plain", 
+      {
+        name: "Jamaica Plain",
         highlight: "Southwest Corridor path, Green Street, Centre Street, Jamaica Pond",
         description: "Lush parkways and community cheer squads lining the paved paths.",
       },
-      { 
-        name: "Roxbury", 
+      {
+        name: "Roxbury",
         highlight: "Malcolm X Park, Nubian Square, Shelburne Community Center",
         description: "The historic cultural heartbeat of Boston with drumlines and vibrant energy.",
       },
-      { 
-        name: "Mattapan", 
+      {
+        name: "Mattapan",
         highlight: "Mattapan Square, River Street, Blue Hill Ave corridor",
         description: "High-energy community celebration with local DJs and neighborhood pride.",
       },
-      { 
-        name: "Dorchester", 
+      {
+        name: "Dorchester",
         highlight: "Franklin Park Playstead, Town Field, Dorchester Ave",
         description: "Boston's largest neighborhood, home base of PIONEERS Run Crew, and the iconic Franklin Park stretch.",
       },
@@ -451,7 +451,7 @@ export const raceData = {
     {
       category: "Cheer Zones & Volunteers",
       question: "How can I volunteer or host a cheer zone?",
-      answer: "We need over 100 passionate volunteers each year for water support, cheer zones, course marshaling, and finish line celebrations. Reach out to volunteer@26true.com to join the crew!",
+      answer: "We need over 100 passionate volunteers each year for water support, cheer zones, course marshaling, and finish line celebrations. Reach out to 26.true@pioneersrc.com to join the crew!",
     },
   ] as FaqItem[],
 };

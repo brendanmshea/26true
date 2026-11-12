@@ -104,8 +104,8 @@ export default defineType({
       name: 'volunteerEmail',
       title: 'Volunteer Coordinator Email',
       type: 'string',
-      description: 'Volunteer contact email (e.g. volunteer@26true.com)',
-      initialValue: 'volunteer@26true.com',
+      description: 'Volunteer contact email (e.g. 26.true@pioneersrc.com)',
+      initialValue: '26.true@pioneersrc.com',
     }),
   ],
 });
