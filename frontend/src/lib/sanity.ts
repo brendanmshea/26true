@@ -94,7 +94,35 @@ export async function getRaceData() {
         },
 
         pillars: pillars && pillars.length > 0 ? pillars : localRaceData.pillars,
-        faqs: faqs && faqs.length > 0 ? faqs : localRaceData.faqs,
+        faqs:
+          faqs && faqs.length > 0
+            ? faqs.map((f: any) => {
+                let cat = f.category || '';
+                // Standardize category names
+                if (cat === 'General' || cat === 'General & Registration') {
+                  if (/volunteer/i.test(f.question)) {
+                    cat = 'Cheer Zones & Volunteers';
+                  } else if (/registration|bib|packet/i.test(f.question)) {
+                    cat = 'Registration & Bibs';
+                  } else {
+                    cat = 'About 26.TRUE';
+                  }
+                } else if (cat === 'Course' || cat === 'Course & Route') {
+                  cat = 'Course & Route';
+                } else if (cat === 'Logistics' || cat === 'Logistics & Waves') {
+                  cat = 'Course & Route';
+                } else if (cat === 'Community' || /cheer/i.test(cat) || /volunteer/i.test(cat)) {
+                  cat = 'Cheer Zones & Volunteers';
+                }
+                return {
+                  ...f,
+                  category: cat || 'About 26.TRUE',
+                };
+              })
+            : localRaceData.faqs.map((f: any) => ({
+                ...f,
+                category: f.category === 'Cheer Squads & Volunteers' ? 'Cheer Zones & Volunteers' : f.category,
+              })),
         testimonials: testimonials && testimonials.length > 0 ? testimonials : localRaceData.testimonials,
         gallery:
           gallery && gallery.length > 0

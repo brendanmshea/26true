@@ -6,7 +6,7 @@ import { renderMarkdown } from '../lib/markdown';
 const raceData = await getRaceData();
 const { faqs, general } = raceData;
 const sortedFaqs = [...(faqs || [])].sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999));
-const categories = ['All', 'About 26.TRUE', 'Course & Route', 'Registration & Bibs', 'Cheer Squads & Volunteers'];
+const categories = ['All', 'About 26.TRUE', 'Course & Route', 'Registration & Bibs', 'Cheer Zones & Volunteers'];
 ---
 
 <Layout
@@ -16,15 +16,9 @@ const categories = ['All', 'About 26.TRUE', 'Course & Route', 'Registration & Bi
   <section class="bg-black py-16 lg:py-24 border-b border-neutral-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black mb-4">
-          Community Guide
-        </div>
         <h1 class="font-edo text-5xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal mb-4">
           Frequently Asked Questions
         </h1>
-        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
-          Clear answers about the untimed format, Boston neighborhood route, cheer stations, and community bib pickup.
-        </p>
       </div>
     </div>
   </section>
@@ -98,30 +92,36 @@ const categories = ['All', 'About 26.TRUE', 'Course & Route', 'Registration & Bi
 </Layout>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>('.faq-filter-btn');
-  const items = document.querySelectorAll<HTMLElement>('.faq-item');
+  function initFaqFilter() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.faq-filter-btn');
+    const items = document.querySelectorAll<HTMLElement>('.faq-item');
 
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const selected = btn.getAttribute('data-category');
+    buttons.forEach((btn) => {
+      // Remove any previously attached duplicate listeners by cloning
+      btn.onclick = () => {
+        const selected = (btn.getAttribute('data-category') || 'All').trim().toLowerCase();
 
-      // Update button styles
-      buttons.forEach((b) => {
-        b.classList.remove('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
-        b.classList.add('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
-      });
-      btn.classList.remove('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
-      btn.classList.add('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
+        // Update button styles
+        buttons.forEach((b) => {
+          b.classList.remove('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
+          b.classList.add('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
+        });
+        btn.classList.remove('bg-neutral-950', 'text-neutral-300', 'border', 'border-neutral-800');
+        btn.classList.add('bg-[#d4ff00]', 'text-black', 'shadow-md', 'shadow-[#d4ff00]/20');
 
-      // Filter items
-      items.forEach((item) => {
-        const itemCat = item.getAttribute('data-category');
-        if (selected === 'All' || itemCat === selected) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
+        // Filter FAQ items
+        items.forEach((item) => {
+          const itemCat = (item.getAttribute('data-category') || '').trim().toLowerCase();
+          if (selected === 'all' || itemCat === selected) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      };
     });
-  });
+  }
+
+  initFaqFilter();
+  document.addEventListener('astro:page-load', initFaqFilter);
 </script>

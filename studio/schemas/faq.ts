@@ -25,13 +25,13 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'General & Registration', value: 'General' },
-          { title: 'Course & Route', value: 'Course' },
-          { title: 'Logistics & Waves', value: 'Logistics' },
-          { title: 'Cheer Squads & Volunteering', value: 'Community' },
+          { title: 'About 26.TRUE', value: 'About 26.TRUE' },
+          { title: 'Course & Route', value: 'Course & Route' },
+          { title: 'Registration & Bibs', value: 'Registration & Bibs' },
+          { title: 'Cheer Zones & Volunteers', value: 'Cheer Zones & Volunteers' },
         ],
       },
-      initialValue: 'General',
+      initialValue: 'About 26.TRUE',
     }),
     defineField({
       name: 'showOnHome',
