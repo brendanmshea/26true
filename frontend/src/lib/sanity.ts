@@ -36,7 +36,8 @@ export async function getRaceData() {
     return localRaceData;
   }
 
-  if (cachedPromise) {
+  // Cache during production builds to avoid redundant queries; in dev mode, fetch fresh data on every request
+  if (import.meta.env.PROD && cachedPromise) {
     return cachedPromise;
   }
 
