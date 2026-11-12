@@ -1,5 +1,6 @@
 ---
 import { getRaceData } from '../lib/sanity';
+import { renderMarkdown } from '../lib/markdown';
 const raceData = await getRaceData();
 const { faqs, general } = raceData;
 
@@ -39,9 +40,10 @@ const displayFaqs = limit ? (faqs || []).slice(0, limit) : (faqs || []);
               </svg>
             </span>
           </summary>
-          <div class="px-6 pb-6 text-sm text-neutral-300 leading-relaxed border-t border-neutral-900 pt-4">
-            {faq.answer}
-          </div>
+          <div
+            class="prose-faq px-6 pb-6 text-sm leading-relaxed border-t border-neutral-900 pt-4"
+            set:html={renderMarkdown(faq.answer)}
+          />
         </details>
       ))}
     </div>

@@ -15,7 +15,8 @@ export default defineType({
       name: 'answer',
       title: 'Answer',
       type: 'text',
-      rows: 4,
+      description: 'Supports Markdown formatting (e.g. * bullet lists, **bold**, [links](https://...))',
+      rows: 6,
       validation: (Rule) => Rule.required(),
     }),
     defineField({
