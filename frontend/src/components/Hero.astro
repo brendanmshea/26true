@@ -68,11 +68,8 @@ const { general } = raceData;
           <div class="flex items-center justify-between gap-2 mb-3">
             <div class="text-[11px] uppercase tracking-widest text-neutral-300 font-black flex items-center gap-2" id="countdown-label">
               <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span>
-              Countdown to Registration Opening
+              Registration Opens in:
             </div>
-            <span class="text-[10px] font-bold uppercase text-[#3fd4a4]" id="countdown-sublabel">
-              Nov 20 @ 8 AM EST
-            </span>
           </div>
           
           <div
@@ -130,7 +127,7 @@ const { general } = raceData;
       target = regTarget;
       isPreReg = true;
       if (labelEl) {
-        labelEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span> Countdown to Registration Opening';
+        labelEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-ping"></span> Registration Opens In:';
       }
       if (sublabelEl) {
         sublabelEl.innerText = 'Opens Nov 20 @ 8 AM EST';
@@ -143,7 +140,7 @@ const { general } = raceData;
       target = raceTarget;
       isPreReg = false;
       if (labelEl) {
-        labelEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#3fd4a4] animate-ping"></span> Countdown to Race Morning';
+        labelEl.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#3fd4a4] animate-ping"></span> Countdown to Race Day';
       }
       if (sublabelEl) {
         sublabelEl.innerText = 'Saturday, April 17, 2027';
