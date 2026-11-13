@@ -25,6 +25,8 @@ export interface GalleryImage {
   featuredOnHome?: boolean;
   featuredOnCourse1?: boolean;
   featuredOnCourse2?: boolean;
+  featuredOnRace1?: boolean;
+  featuredOnRace2?: boolean;
   order?: number;
 }
 
@@ -334,6 +336,7 @@ export const raceData = {
       category: "Runners",
       featuredOnHome: true,
       featuredOnCourse1: true,
+      featuredOnRace1: true,
       order: 1,
     },
     {
@@ -347,6 +350,7 @@ export const raceData = {
       category: "Runners",
       featuredOnHome: true,
       featuredOnCourse1: true,
+      featuredOnRace1: true,
       order: 2,
     },
     {
@@ -360,6 +364,7 @@ export const raceData = {
       category: "Runners",
       featuredOnHome: true,
       featuredOnCourse1: true,
+      featuredOnRace1: true,
       order: 3,
     },
     {
@@ -373,6 +378,7 @@ export const raceData = {
       category: "Block Party",
       featuredOnHome: true,
       featuredOnCourse2: true,
+      featuredOnRace2: true,
       order: 4,
     },
     {
@@ -413,7 +419,34 @@ export const raceData = {
       featuredOnHome: false,
       featuredOnCourse1: false,
       featuredOnCourse2: false,
+      featuredOnRace2: true,
       order: 7,
+    },
+    {
+      id: "photo-8",
+      src: "/images/photos/block_party_banner.jpg",
+      alt: "26.TRUE finish line celebration and block party gathering",
+      caption: "Immaculate vibes: The Finish Line Block Party celebrating runners, friends, and community.",
+      photographer: "Official 26.TRUE Photography",
+      neighborhood: "Roxbury",
+      year: "2026",
+      category: "Block Party",
+      featuredOnHome: false,
+      featuredOnRace2: true,
+      order: 8,
+    },
+    {
+      id: "photo-9",
+      src: "/images/photos/block_party_2_banner.jpg",
+      alt: "Supporters and cheer squad celebrating at the finish festival",
+      caption: "A party for the whole city: Friends, families, and neighbors turning out to celebrate together.",
+      photographer: "Official 26.TRUE Photography",
+      neighborhood: "Roxbury",
+      year: "2026",
+      category: "Block Party",
+      featuredOnHome: false,
+      featuredOnRace2: true,
+      order: 9,
     },
   ] as GalleryImage[],
 

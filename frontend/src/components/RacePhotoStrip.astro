@@ -1,0 +1,545 @@
+---
+// RacePhotoStrip.astro - 3-Photo showcase for Race page
+// Mobile: Edge-to-edge interactive carousel flush against neighbor sections
+// Desktop: 3-column responsive grid layout
+import { getRaceData } from '../lib/sanity';
+
+interface Props {
+  strip?: 1 | 2;
+}
+
+const { strip = 1 } = Astro.props;
+
+const raceData = await getRaceData();
+const { gallery = [] } = raceData;
+
+// Strip 1: 3 photos (between Race Info & Inclusions and Block Party)
+const featured1 = (gallery || [])
+  .filter((p: any) => p.featuredOnRace1 === true)
+  .sort((a: any, b: any) => (a.order ?? 10) - (b.order ?? 10));
+
+const unfeatured1 = (gallery || [])
+  .filter((p: any) => !p.featuredOnRace1)
+  .sort((a: any, b: any) => (a.order ?? 10) - (b.order ?? 10));
+
+const strip1Photos = (
+  featured1.length >= 3
+    ? featured1.slice(0, 3)
+    : [...featured1, ...unfeatured1].slice(0, 3)
+);
+
+// Strip 2: 3 photos (focusing on the Block Party)
+const featured2 = (gallery || [])
+  .filter((p: any) => p.featuredOnRace2 === true)
+  .sort((a: any, b: any) => (a.order ?? 10) - (b.order ?? 10));
+
+const unfeatured2 = (gallery || [])
+  .filter((p: any) => !p.featuredOnRace2 && !strip1Photos.some((s: any) => s.id === p.id))
+  .sort((a: any, b: any) => {
+    // Prioritize Block Party category
+    const aBlock = a.category === 'Block Party' ? 0 : 1;
+    const bBlock = b.category === 'Block Party' ? 0 : 1;
+    if (aBlock !== bBlock) return aBlock - bBlock;
+    return (a.order ?? 10) - (b.order ?? 10);
+  });
+
+const strip2Photos = (
+  featured2.length >= 3
+    ? featured2.slice(0, 3)
+    : [...featured2, ...unfeatured2].slice(0, 3)
+);
+
+const displayPhotos = strip === 1 ? strip1Photos : strip2Photos;
+const startIndex = strip === 1 ? 0 : 3;
+const allRacePhotos = [...strip1Photos, ...strip2Photos];
+---
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<section aria-label={`26.TRUE Race Photo Showcase Part ${strip}`} class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+  <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+    
+    <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
+    <div class="block sm:hidden relative w-full race-carousel-container select-none overflow-hidden border-b border-neutral-900 sm:border-b-0" data-carousel-id={`race-strip-${strip}`}>
+      <div
+        class="race-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
+        tabindex="0"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={`26.TRUE Race Photo Showcase Part ${strip} Carousel`}
+      >
+        {displayPhotos.map((photo: any, idx: number) => {
+          const originalIndex = startIndex + idx;
+          return (
+            <div class="w-full shrink-0 snap-center">
+              <button
+                type="button"
+                class="race-photo-open-btn group relative block overflow-hidden bg-neutral-950 aspect-[16/10] w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                data-race-photo-index={originalIndex}
+                aria-label={`View photo ${originalIndex + 1} in large view`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  class="h-full w-full object-cover object-center"
+                />
+                <!-- Scrim overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+                <!-- Top-Right Expand Icon Badge -->
+                <div class="absolute top-3.5 right-3.5 pointer-events-none z-10">
+                  <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                    </svg>
+                  </span>
+                </div>
+
+                <!-- Top-Left Photographer Badge -->
+                {photo.photographer && (
+                  <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                      📷 {photo.photographer}
+                    </span>
+                  </div>
+                )}
+              </button>
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- Scrim gradient for controls -->
+      <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
+
+      <!-- Navigation Arrows (Mobile) -->
+      {displayPhotos.length > 1 && (
+        <>
+          <button
+            type="button"
+            class="race-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+            aria-label="Previous photo"
+          >
+            <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            class="race-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+            aria-label="Next photo"
+          >
+            <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
+            </svg>
+          </button>
+
+          <!-- Dot Indicators (Mobile) -->
+          <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
+            {displayPhotos.map((_: any, index: number) => (
+              <button
+                type="button"
+                class={`race-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
+                  index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
+                }`}
+                data-dot-index={index}
+                aria-label={`Go to photo ${index + 1}`}
+                aria-current={index === 0 ? "true" : "false"}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+
+    <!-- Desktop Grid (sm and up) -->
+    <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id={`race-photo-grid-${strip}`}>
+      {displayPhotos.map((photo: any, idx: number) => {
+        const originalIndex = startIndex + idx;
+        return (
+          <button
+            type="button"
+            class="race-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+            data-race-photo-index={originalIndex}
+            aria-label={`View photo ${originalIndex + 1} in large view`}
+          >
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              loading="lazy"
+              class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            
+            <!-- Hover Expand Badge -->
+            <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+              <div class="flex items-center justify-end">
+                <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                  </svg>
+                </span>
+              </div>
+              
+              {photo.photographer && (
+                <div>
+                  <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                    📷 {photo.photographer}
+                  </span>
+                </div>
+              )}
+            </div>
+          </button>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+{strip === 2 && (
+  <>
+    <!-- Curated Race Photos Data for Lightbox Modal -->
+    <script id="race-showcase-data" type="application/json" set:html={JSON.stringify(allRacePhotos)} />
+
+    <!-- Lightbox Modal for Race Page Photos -->
+    <div
+      id="race-photo-lightbox"
+      class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 select-none items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo Lightbox"
+    >
+      <div id="race-lightbox-backdrop" class="absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
+
+      <!-- Top bar -->
+      <div class="absolute top-0 inset-x-0 z-30 p-4 sm:p-6 flex items-center justify-between pointer-events-none">
+        <div class="pointer-events-auto flex items-center gap-2.5 px-4 py-2 rounded-full bg-neutral-900/90 border border-neutral-800 text-xs font-bold text-neutral-300 shadow-xl">
+          <span class="text-[#d4ff00] uppercase tracking-wider font-black">26.TRUE</span>
+          <span id="race-lightbox-counter" class="text-white">1 / 6</span>
+        </div>
+
+        <button
+          id="race-lightbox-close"
+          type="button"
+          class="pointer-events-auto w-11 h-11 rounded-full bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+          aria-label="Close photo view (Esc)"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Previous Button -->
+      <button
+        id="race-lightbox-prev"
+        type="button"
+        class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/85 hover:bg-neutral-900 border border-neutral-700/80 text-white hover:text-[#d4ff00] flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+        aria-label="Previous photo (Left arrow)"
+      >
+        <svg class="w-6 h-6 sm:w-7 sm:h-7 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <!-- Next Button -->
+      <button
+        id="race-lightbox-next"
+        type="button"
+        class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/85 hover:bg-neutral-900 border border-neutral-700/80 text-white hover:text-[#d4ff00] flex items-center justify-center transition-all hover:scale-110 active:scale-95 shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+        aria-label="Next photo (Right arrow)"
+      >
+        <svg class="w-6 h-6 sm:w-7 sm:h-7 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7"/>
+        </svg>
+      </button>
+
+      <!-- Main Image Presentation Stage -->
+      <div class="relative z-20 w-full h-full flex flex-col items-center justify-center p-4 sm:p-12 pointer-events-none">
+        <div class="relative pointer-events-auto max-h-[82vh] max-w-[90vw] flex flex-col items-center">
+          <img
+            id="race-lightbox-img"
+            src=""
+            alt=""
+            class="max-h-[76vh] sm:max-h-[80vh] max-w-[92vw] sm:max-w-[85vw] object-contain rounded-2xl shadow-2xl border border-neutral-800/80 transition-transform duration-200"
+          />
+          <div id="race-lightbox-photographer" class="mt-3 text-center text-xs font-semibold text-neutral-400"></div>
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
+<script>
+  // Mobile Carousels Controller for Race Page
+  function setupRaceCarousels() {
+    const containers = Array.from(document.querySelectorAll<HTMLElement>('.race-carousel-container'));
+
+    containers.forEach((container) => {
+      const track = container.querySelector<HTMLElement>('.race-carousel-track');
+      const prevBtn = container.querySelector<HTMLButtonElement>('.race-carousel-prev');
+      const nextBtn = container.querySelector<HTMLButtonElement>('.race-carousel-next');
+      const dots = Array.from(container.querySelectorAll<HTMLButtonElement>('.race-carousel-dot'));
+
+      if (!track || dots.length <= 1) return;
+
+      let startX = 0;
+      let startY = 0;
+      let isDragging = false;
+
+      track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = false;
+        container.dataset.swiping = 'false';
+      }, { passive: true });
+
+      track.addEventListener('touchmove', (e) => {
+        const dx = Math.abs(e.touches[0].clientX - startX);
+        const dy = Math.abs(e.touches[0].clientY - startY);
+        if (dx > 8 || dy > 8) {
+          isDragging = true;
+          container.dataset.swiping = 'true';
+        }
+      }, { passive: true });
+
+      track.addEventListener('touchend', () => {
+        if (isDragging) {
+          setTimeout(() => {
+            container.dataset.swiping = 'false';
+          }, 120);
+        }
+      });
+
+      // Update dots on scroll
+      let scrollRaf: number | null = null;
+      function updateDots() {
+        if (!track) return;
+        const width = track.clientWidth || 1;
+        const currentIdx = Math.round(track.scrollLeft / width);
+
+        dots.forEach((dot, idx) => {
+          const isActive = idx === currentIdx;
+          if (isActive) {
+            dot.classList.remove('w-1.5', 'bg-white/40');
+            dot.classList.add('w-5', 'bg-[#d4ff00]');
+            dot.setAttribute('aria-current', 'true');
+          } else {
+            dot.classList.remove('w-5', 'bg-[#d4ff00]');
+            dot.classList.add('w-1.5', 'bg-white/40');
+            dot.setAttribute('aria-current', 'false');
+          }
+        });
+      }
+
+      track.addEventListener('scroll', () => {
+        if (scrollRaf) cancelAnimationFrame(scrollRaf);
+        scrollRaf = requestAnimationFrame(updateDots);
+      }, { passive: true });
+
+      // Click dots
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const width = track.clientWidth || 0;
+          track.scrollTo({ left: idx * width, behavior: 'smooth' });
+        });
+      });
+
+      // Prev / Next actions
+      prevBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const width = track.clientWidth || 0;
+        const currentIdx = Math.round(track.scrollLeft / width);
+        const targetIdx = currentIdx <= 0 ? dots.length - 1 : currentIdx - 1;
+        track.scrollTo({ left: targetIdx * width, behavior: 'smooth' });
+      });
+
+      nextBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const width = track.clientWidth || 0;
+        const currentIdx = Math.round(track.scrollLeft / width);
+        const targetIdx = currentIdx >= dots.length - 1 ? 0 : currentIdx + 1;
+        track.scrollTo({ left: targetIdx * width, behavior: 'smooth' });
+      });
+    });
+  }
+
+  // Unified Lightbox Controller for Race Page
+  function setupRaceLightbox() {
+    const dataScript = document.getElementById('race-showcase-data');
+    let photosList: any[] = [];
+    try {
+      photosList = dataScript ? JSON.parse(dataScript.textContent || '[]') : [];
+    } catch {
+      photosList = [];
+    }
+
+    const raceLightbox = document.getElementById('race-photo-lightbox');
+    const raceLightboxBackdrop = document.getElementById('race-lightbox-backdrop');
+    const raceLightboxImg = document.getElementById('race-lightbox-img') as HTMLImageElement | null;
+    const raceLightboxCounter = document.getElementById('race-lightbox-counter');
+    const raceLightboxPhotographer = document.getElementById('race-lightbox-photographer');
+    const raceLightboxClose = document.getElementById('race-lightbox-close');
+    const raceLightboxPrev = document.getElementById('race-lightbox-prev');
+    const raceLightboxNext = document.getElementById('race-lightbox-next');
+
+    if (!raceLightbox) return;
+
+    let currentIndex = 0;
+
+    function updateRaceLightbox(index: number) {
+      if (!photosList.length || !raceLightboxImg) return;
+
+      if (index < 0) {
+        currentIndex = photosList.length - 1;
+      } else if (index >= photosList.length) {
+        currentIndex = 0;
+      } else {
+        currentIndex = index;
+      }
+
+      const photo = photosList[currentIndex];
+      if (!photo) return;
+
+      raceLightboxImg.src = photo.src;
+      raceLightboxImg.alt = photo.alt || '26.TRUE Photo';
+
+      if (raceLightboxCounter) {
+        raceLightboxCounter.textContent = `${currentIndex + 1} / ${photosList.length}`;
+      }
+
+      if (raceLightboxPhotographer) {
+        if (photo.photographer) {
+          raceLightboxPhotographer.textContent = `📷 ${photo.photographer}`;
+          raceLightboxPhotographer.style.display = 'block';
+        } else {
+          raceLightboxPhotographer.textContent = '';
+          raceLightboxPhotographer.style.display = 'none';
+        }
+      }
+    }
+
+    function openRaceLightbox(index: number) {
+      if (!raceLightbox) return;
+      currentIndex = index;
+      updateRaceLightbox(currentIndex);
+
+      raceLightbox.classList.remove('hidden');
+      raceLightbox.classList.add('flex');
+      requestAnimationFrame(() => {
+        raceLightbox.classList.remove('opacity-0');
+        raceLightbox.classList.add('opacity-100');
+      });
+
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeRaceLightbox() {
+      if (!raceLightbox) return;
+      raceLightbox.classList.add('opacity-0');
+      raceLightbox.classList.remove('opacity-100');
+      setTimeout(() => {
+        raceLightbox.classList.add('hidden');
+        raceLightbox.classList.remove('flex');
+        if (raceLightboxImg) raceLightboxImg.src = '';
+        document.body.style.overflow = '';
+      }, 200);
+    }
+
+    function showRaceNext() {
+      updateRaceLightbox(currentIndex + 1);
+    }
+
+    function showRacePrev() {
+      updateRaceLightbox(currentIndex - 1);
+    }
+
+    // Attach click listeners to all photo buttons
+    const openButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.race-photo-open-btn'));
+    openButtons.forEach((btn) => {
+      btn.onclick = (e) => {
+        const container = btn.closest<HTMLElement>('.race-carousel-container');
+        if (container && container.dataset.swiping === 'true') {
+          e.preventDefault();
+          return;
+        }
+        const idx = parseInt(btn.getAttribute('data-race-photo-index') || '0', 10);
+        openRaceLightbox(idx);
+      };
+    });
+
+    raceLightboxNext?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showRaceNext();
+    });
+
+    raceLightboxPrev?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showRacePrev();
+    });
+
+    raceLightboxClose?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeRaceLightbox();
+    });
+
+    raceLightboxBackdrop?.addEventListener('click', () => {
+      closeRaceLightbox();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (!raceLightbox || raceLightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeRaceLightbox();
+      if (e.key === 'ArrowRight') showRaceNext();
+      if (e.key === 'ArrowLeft') showRacePrev();
+    });
+
+    // Touch swipe gestures inside full-screen lightbox
+    let lbTouchStartX = 0;
+    let lbTouchStartY = 0;
+
+    raceLightbox.addEventListener('touchstart', (e) => {
+      lbTouchStartX = e.touches[0].clientX;
+      lbTouchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    raceLightbox.addEventListener('touchend', (e) => {
+      const diffX = e.changedTouches[0].clientX - lbTouchStartX;
+      const diffY = e.changedTouches[0].clientY - lbTouchStartY;
+
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+        if (diffX < 0) {
+          showRaceNext();
+        } else {
+          showRacePrev();
+        }
+      } else if (diffY > 80 && Math.abs(diffY) > Math.abs(diffX)) {
+        closeRaceLightbox();
+      }
+    }, { passive: true });
+  }
+
+  function init() {
+    setupRaceCarousels();
+    setupRaceLightbox();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

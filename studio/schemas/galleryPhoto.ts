@@ -68,6 +68,20 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'featuredOnRace1',
+      title: 'Feature in Race Page Photostrip 1 (Race Info & Swag)',
+      type: 'boolean',
+      description: 'Toggle on to feature in the 3-photo photostrip below Race Info & Inclusions on the Race page.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'featuredOnRace2',
+      title: 'Feature in Race Page Photostrip 2 (Block Party)',
+      type: 'boolean',
+      description: 'Toggle on to feature in the 3-photo photostrip below the Block Party section on the Race page.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'photographer',
       title: 'Photographer Credit',
       type: 'string',
@@ -88,14 +102,18 @@ export default defineType({
       featured: 'featuredOnHome',
       course1: 'featuredOnCourse1',
       course2: 'featuredOnCourse2',
+      race1: 'featuredOnRace1',
+      race2: 'featuredOnRace2',
       order: 'order',
       photographer: 'photographer',
     },
-    prepare({ title, media, featured, course1, course2, order, photographer }) {
+    prepare({ title, media, featured, course1, course2, race1, race2, order, photographer }) {
       const parts = [];
       if (featured) parts.push('⭐ Home');
       if (course1) parts.push('📍 Course 1');
       if (course2) parts.push('📣 Course 2');
+      if (race1) parts.push('🏁 Race Info');
+      if (race2) parts.push('🎉 Block Party');
       if (order !== undefined) parts.push(`Order: ${order}`);
       if (photographer) parts.push(`By ${photographer}`);
       return {

@@ -181,6 +181,8 @@ export async function getRaceData() {
                 featuredOnHome: Boolean(item.featuredOnHome),
                 featuredOnCourse1: Boolean(item.featuredOnCourse1),
                 featuredOnCourse2: Boolean(item.featuredOnCourse2),
+                featuredOnRace1: Boolean(item.featuredOnRace1),
+                featuredOnRace2: Boolean(item.featuredOnRace2),
                 order: typeof item.order === 'number' ? item.order : idx + 1,
               }))
             : localRaceData.gallery,
