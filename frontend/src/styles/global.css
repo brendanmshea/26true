@@ -13,10 +13,15 @@
   --color-volt: #d4ff00;
   --color-mint: #3fd4a4;
   --color-dark: #000000;
+
+  --color-neutral-100: #ffffff;
+  --color-neutral-200: #fafafa;
+  --color-neutral-300: #f0f0f0;
+  --color-neutral-400: #d4d4d4;
 }
 
 @layer base {
-  html {
+  html, body {
     scroll-behavior: smooth;
     background-color: #000000;
     color: #ffffff;
@@ -35,7 +40,7 @@ h1, h2, .font-title {
 
 /* Markdown formatting in FAQ answers */
 .prose-faq {
-  color: #d4d4d4;
+  color: var(--color-neutral-300, #f0f0f0);
 }
 .prose-faq p {
   margin-bottom: 0.75rem;
