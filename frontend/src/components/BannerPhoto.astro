@@ -1,19 +1,268 @@
 ---
-// BannerPhoto.astro - Full-bleed photo banner showcasing 26.TRUE runners
+// BannerPhoto.astro - Rotating photo banner carousel showcasing 26.TRUE runners
+const bannerSlides = [
+  {
+    src: '/images/photos/web/banner.jpg',
+    srcMobile: '/images/photos/web/banner-mobile.jpg',
+    alt: '26.TRUE community runners taking to Boston streets with joy and energy',
+  },
+  {
+    src: '/images/photos/start_line_2024_banner.jpg',
+    alt: '26.TRUE 2024 start line energy and runners gathering',
+  },
+  {
+    src: '/images/photos/block_party_banner.jpg',
+    alt: '26.TRUE Cheer Zone and neighborhood block party celebration',
+  },
+  {
+    src: '/images/photos/block_party_2_banner.jpg',
+    alt: 'Community cheer squad and supporters along the 26.TRUE course',
+  },
+];
 ---
 
 <section aria-label="26.TRUE Community Photo Banner" class="relative w-full bg-black overflow-hidden border-b border-neutral-900">
-  <div class="relative w-full max-w-7xl mx-auto overflow-hidden bg-neutral-950">
-    <!-- Responsive Picture Element: Mobile optimized (272KB) -> Desktop optimized (934KB) -->
-    <picture>
-      <source media="(max-width: 640px)" srcset="/images/photos/web/banner-mobile.jpg" />
-      <img
-        src="/images/photos/web/banner.jpg"
-        alt="26.TRUE community runners taking to Boston streets with joy and energy"
-        class="w-full h-auto max-h-[520px] lg:max-h-[560px] object-cover object-center block"
-        loading="eager"
-        decoding="async"
-      />
-    </picture>
+  <div
+    class="relative w-full max-w-7xl mx-auto overflow-hidden bg-neutral-950 group select-none"
+    id="banner-carousel"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="26.TRUE Community Photo Highlights"
+  >
+    <!-- Slides Container -->
+    <div class="relative w-full overflow-hidden">
+      {bannerSlides.map((slide, index) => {
+        const isFirst = index === 0;
+        return (
+          <div
+            class={`banner-slide ${
+              isFirst ? 'relative z-10 opacity-100 pointer-events-auto' : 'absolute inset-0 z-0 opacity-0 pointer-events-none'
+            } w-full transition-opacity duration-1000 ease-in-out`}
+            data-slide-index={index}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`Slide ${index + 1} of ${bannerSlides.length}`}
+            aria-hidden={isFirst ? "false" : "true"}
+          >
+            {slide.srcMobile ? (
+              <picture>
+                <source media="(max-width: 640px)" srcset={slide.srcMobile} />
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  class="w-full h-auto max-h-[520px] lg:max-h-[560px] object-cover object-center block"
+                  loading={isFirst ? "eager" : "lazy"}
+                  decoding="async"
+                />
+              </picture>
+            ) : (
+              <img
+                src={slide.src}
+                alt={slide.alt}
+                class="w-full h-full max-h-[520px] lg:max-h-[560px] object-cover object-center block"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Subtle dark gradient scrim at bottom for dot contrast -->
+    <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-10"></div>
+
+    <!-- Navigation Arrows (hover-reveal on desktop, accessible via touch/keyboard) -->
+    <button
+      type="button"
+      id="banner-prev-btn"
+      class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-black/90 border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 shadow-xl focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+      aria-label="Previous slide"
+    >
+      <svg class="w-4 h-4 sm:w-5 sm:h-5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <button
+      type="button"
+      id="banner-next-btn"
+      class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-black/90 border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 shadow-xl focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+      aria-label="Next slide"
+    >
+      <svg class="w-4 h-4 sm:w-5 sm:h-5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
+      </svg>
+    </button>
+
+    <!-- Dot Indicators (Pill shape for active slide) -->
+    <div class="absolute bottom-3 sm:bottom-4 inset-x-0 z-20 flex items-center justify-center gap-2 pointer-events-auto">
+      {bannerSlides.map((_, index) => (
+        <button
+          type="button"
+          class={`banner-dot h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
+            index === 0
+              ? 'w-6 sm:w-8 bg-[#d4ff00]'
+              : 'w-2 sm:w-2.5 bg-white/40 hover:bg-white/70'
+          }`}
+          data-dot-index={index}
+          aria-label={`Go to slide ${index + 1}`}
+          aria-current={index === 0 ? "true" : "false"}
+        />
+      ))}
+    </div>
   </div>
 </section>
+
+<script>
+  function setupBannerCarousel() {
+    const carouselEl = document.getElementById('banner-carousel');
+    if (!carouselEl) return;
+
+    const slides = Array.from(carouselEl.querySelectorAll<HTMLElement>('.banner-slide'));
+    const dots = Array.from(carouselEl.querySelectorAll<HTMLButtonElement>('.banner-dot'));
+    const prevBtn = document.getElementById('banner-prev-btn');
+    const nextBtn = document.getElementById('banner-next-btn');
+
+    if (slides.length <= 1) return;
+
+    let currentIndex = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const INTERVAL_MS = 5000;
+
+    function goToSlide(targetIndex: number) {
+      if (targetIndex < 0) {
+        currentIndex = slides.length - 1;
+      } else if (targetIndex >= slides.length) {
+        currentIndex = 0;
+      } else {
+        currentIndex = targetIndex;
+      }
+
+      // Update slides
+      slides.forEach((slide, i) => {
+        const isActive = i === currentIndex;
+        if (isActive) {
+          slide.classList.remove('opacity-0', 'pointer-events-none', 'z-0');
+          slide.classList.add('opacity-100', 'pointer-events-auto', 'z-10');
+          slide.setAttribute('aria-hidden', 'false');
+        } else {
+          slide.classList.remove('opacity-100', 'pointer-events-auto', 'z-10');
+          slide.classList.add('opacity-0', 'pointer-events-none', 'z-0');
+          slide.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      // Update dots
+      dots.forEach((dot, i) => {
+        const isActive = i === currentIndex;
+        if (isActive) {
+          dot.classList.remove('w-2', 'sm:w-2.5', 'bg-white/40', 'hover:bg-white/70');
+          dot.classList.add('w-6', 'sm:w-8', 'bg-[#d4ff00]');
+          dot.setAttribute('aria-current', 'true');
+        } else {
+          dot.classList.remove('w-6', 'sm:w-8', 'bg-[#d4ff00]');
+          dot.classList.add('w-2', 'sm:w-2.5', 'bg-white/40', 'hover:bg-white/70');
+          dot.setAttribute('aria-current', 'false');
+        }
+      });
+    }
+
+    function startTimer() {
+      stopTimer();
+      timer = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, INTERVAL_MS);
+    }
+
+    function stopTimer() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    // Controls
+    prevBtn?.addEventListener('click', () => {
+      goToSlide(currentIndex - 1);
+      startTimer();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      goToSlide(currentIndex + 1);
+      startTimer();
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        goToSlide(i);
+        startTimer();
+      });
+    });
+
+    // Pause on hover & focus
+    carouselEl.addEventListener('mouseenter', stopTimer);
+    carouselEl.addEventListener('mouseleave', startTimer);
+    carouselEl.addEventListener('focusin', stopTimer);
+    carouselEl.addEventListener('focusout', startTimer);
+
+    // Pause when tab is inactive
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    // Touch Swipe support
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    carouselEl.addEventListener(
+      'touchstart',
+      (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+        stopTimer();
+      },
+      { passive: true }
+    );
+
+    carouselEl.addEventListener(
+      'touchend',
+      (e) => {
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        // Require horizontal swipe larger than vertical scroll
+        if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX < 0) {
+            goToSlide(currentIndex + 1);
+          } else {
+            goToSlide(currentIndex - 1);
+          }
+        }
+        startTimer();
+      },
+      { passive: true }
+    );
+
+    // Keyboard navigation when focused
+    carouselEl.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        goToSlide(currentIndex - 1);
+        startTimer();
+      } else if (e.key === 'ArrowRight') {
+        goToSlide(currentIndex + 1);
+        startTimer();
+      }
+    });
+
+    // Start auto-rotation
+    startTimer();
+  }
+
+  // Run on page load & Astro client navigation
+  setupBannerCarousel();
+  document.addEventListener('astro:page-load', setupBannerCarousel);
+</script>
