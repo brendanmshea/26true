@@ -1,7 +1,7 @@
 ---
-// PhotoStrip.astro - Editorial photo showcase split into 3 contextual sections
-// Mobile: Edge-to-edge interactive carousel flush against neighbor sections (similar to BannerPhoto)
-// Desktop: Tightened multi-column responsive grid layout
+// PhotoStrip.astro - Editorial photo showcase for homepage
+// Section 1: Merged 5-photo showcase (2 over 3 on desktop, 5-image carousel on mobile + Explore Gallery CTA)
+// Section 2: Panoramic breaker photo + Lightbox modal
 import { getRaceData } from '../lib/sanity';
 
 interface Props {
@@ -30,13 +30,13 @@ const showcasePhotos = (
     : [...featuredPhotos, ...unfeaturedPhotos].slice(0, 6)
 );
 
-// Split into the 3 rows:
-// Section 1: photos 0 and 1 (placed between Hero and Highlights)
-// Section 2: photos 2, 3, 4 (placed between Highlights and Course Preview)
-// Section 3: photo 5 (placed between Course Preview and Testimonials)
-const section1Photos = showcasePhotos.slice(0, 2);
-const section2Photos = showcasePhotos.slice(2, 5);
-const section3Photos = showcasePhotos.slice(5, 6);
+// Merged 5 photos for Section 1
+const first5Photos = showcasePhotos.slice(0, 5);
+const row1Photos = showcasePhotos.slice(0, 2); // 2 photos on top
+const row2Photos = showcasePhotos.slice(2, 5); // 3 photos on bottom
+
+// Panoramic photo for Section 2 (Photo 5)
+const panoramicPhoto = showcasePhotos[5] || showcasePhotos[0];
 ---
 
 <style>
@@ -50,20 +50,20 @@ const section3Photos = showcasePhotos.slice(5, 6);
 </style>
 
 {section === 1 && (
-  <section aria-label="26.TRUE Photo Showcase Part 1" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+  <section aria-label="26.TRUE Photo Showcase" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
     <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
       
-      <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
-      <div class="block sm:hidden relative w-full home-carousel-container select-none overflow-hidden border-b border-neutral-900 sm:border-b-0" data-carousel-id="strip-1">
+      <!-- Mobile Carousel (< sm) - 5-Photo Full-Bleed Carousel -->
+      <div class="block sm:hidden relative w-full home-carousel-container select-none overflow-hidden border-b border-neutral-900 sm:border-b-0" data-carousel-id="strip-home-5">
         <div
           class="home-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
           tabindex="0"
           role="region"
           aria-roledescription="carousel"
-          aria-label="26.TRUE Photo Showcase Part 1 Carousel"
+          aria-label="26.TRUE 5-Photo Showcase Carousel"
         >
-          {section1Photos.map((photo: any, idx: number) => {
-            const originalIndex = idx; // 0 or 1
+          {first5Photos.map((photo: any, idx: number) => {
+            const originalIndex = idx; // 0, 1, 2, 3, 4
             return (
               <div class="w-full shrink-0 snap-center">
                 <button
@@ -108,234 +108,133 @@ const section3Photos = showcasePhotos.slice(5, 6);
         <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
 
         <!-- Navigation Arrows (Mobile) -->
-        {section1Photos.length > 1 && (
-          <>
+        <button
+          type="button"
+          class="home-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+          aria-label="Previous photo"
+        >
+          <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="home-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+          aria-label="Next photo"
+        >
+          <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
+          </svg>
+        </button>
+
+        <!-- Dot Indicators (Mobile) - 5 Dots -->
+        <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
+          {first5Photos.map((_: any, index: number) => (
             <button
               type="button"
-              class="home-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-              aria-label="Previous photo"
-            >
-              <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <button
-              type="button"
-              class="home-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-              aria-label="Next photo"
-            >
-              <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
-              </svg>
-            </button>
-
-            <!-- Dot Indicators (Mobile) -->
-            <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
-              {section1Photos.map((_: any, index: number) => (
-                <button
-                  type="button"
-                  class={`home-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
-                    index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
-                  }`}
-                  data-dot-index={index}
-                  aria-label={`Go to photo ${index + 1}`}
-                  aria-current={index === 0 ? "true" : "false"}
-                />
-              ))}
-            </div>
-          </>
-        )}
+              class={`home-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
+                index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
+              }`}
+              data-dot-index={index}
+              aria-label={`Go to photo ${index + 1}`}
+              aria-current={index === 0 ? "true" : "false"}
+            />
+          ))}
+        </div>
       </div>
 
-      <!-- Desktop Grid (sm and up) -->
-      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-12 gap-5" id="home-photo-grid-1">
-        {section1Photos.map((photo: any, idx: number) => {
-          const originalIndex = idx; // 0 or 1
-          const colSpan = idx === 0 ? 'lg:col-span-7 aspect-[16/10]' : 'lg:col-span-5 aspect-[16/10]';
-          return (
-            <button
-              type="button"
-              class={`home-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 ${colSpan} w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]`}
-              data-home-photo-index={originalIndex}
-              aria-label={`View photo ${originalIndex + 1} in large view`}
-            >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                loading="lazy"
-                class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              <!-- Hover Expand Badge -->
-              <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                <div class="flex items-center justify-end">
-                  <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                    </svg>
-                  </span>
-                </div>
+      <!-- Desktop 5-Image Layout: 2 over 3 (sm and up) -->
+      <div class="hidden sm:block space-y-5" id="home-photo-desktop-5">
+        
+        <!-- Row 1: 2 Photos (Asymmetric 7 / 5 Grid) -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-12 gap-5" id="home-photo-grid-row1">
+          {row1Photos.map((photo: any, idx: number) => {
+            const originalIndex = idx; // 0 or 1
+            const colSpan = idx === 0 ? 'lg:col-span-7 aspect-[16/10]' : 'lg:col-span-5 aspect-[16/10]';
+            return (
+              <button
+                type="button"
+                class={`home-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 ${colSpan} w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]`}
+                data-home-photo-index={originalIndex}
+                aria-label={`View photo ${originalIndex + 1} in large view`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
-                {photo.photographer && (
-                  <div>
-                    <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
-                      📷 {photo.photographer}
+                <!-- Hover Expand Badge -->
+                <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div class="flex items-center justify-end">
+                    <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                      </svg>
                     </span>
                   </div>
-                )}
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-)}
+                  
+                  {photo.photographer && (
+                    <div>
+                      <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                        📷 {photo.photographer}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
 
-{section === 2 && (
-  <section aria-label="26.TRUE Photo Showcase Part 2" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
-    <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-      
-      <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
-      <div class="block sm:hidden relative w-full home-carousel-container select-none overflow-hidden" data-carousel-id="strip-2">
-        <div
-          class="home-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
-          tabindex="0"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="26.TRUE Photo Showcase Part 2 Carousel"
-        >
-          {section2Photos.map((photo: any, idx: number) => {
+        <!-- Row 2: 3 Photos (Equal 3-Column Grid) -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="home-photo-grid-row2">
+          {row2Photos.map((photo: any, idx: number) => {
             const originalIndex = idx + 2; // 2, 3, or 4
             return (
-              <div class="w-full shrink-0 snap-center">
-                <button
-                  type="button"
-                  class="home-photo-open-btn group relative block overflow-hidden bg-neutral-950 aspect-[16/10] w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-                  data-home-photo-index={originalIndex}
-                  aria-label={`View photo ${originalIndex + 1} in large view`}
-                >
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    loading="lazy"
-                    class="h-full w-full object-cover object-center"
-                  />
-                  <!-- Scrim overlay -->
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
-
-                  <!-- Top-Right Expand Icon Badge -->
-                  <div class="absolute top-3.5 right-3.5 pointer-events-none z-10">
-                    <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button
+                type="button"
+                class="home-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                data-home-photo-index={originalIndex}
+                aria-label={`View photo ${originalIndex + 1} in large view`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <!-- Hover Expand Badge -->
+                <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div class="flex items-center justify-end">
+                    <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
                       </svg>
                     </span>
                   </div>
-
-                  <!-- Top-Left Photographer Badge -->
+                  
                   {photo.photographer && (
-                    <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
-                      <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                    <div>
+                      <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
                         📷 {photo.photographer}
                       </span>
                     </div>
                   )}
-                </button>
-              </div>
+                </div>
+              </button>
             );
           })}
         </div>
 
-        <!-- Scrim gradient for controls -->
-        <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
-
-        <!-- Navigation Arrows (Mobile) -->
-        {section2Photos.length > 1 && (
-          <>
-            <button
-              type="button"
-              class="home-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-              aria-label="Previous photo"
-            >
-              <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <button
-              type="button"
-              class="home-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-              aria-label="Next photo"
-            >
-              <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
-              </svg>
-            </button>
-
-            <!-- Dot Indicators (Mobile) -->
-            <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
-              {section2Photos.map((_: any, index: number) => (
-                <button
-                  type="button"
-                  class={`home-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
-                    index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
-                  }`}
-                  data-dot-index={index}
-                  aria-label={`Go to photo ${index + 1}`}
-                  aria-current={index === 0 ? "true" : "false"}
-                />
-              ))}
-            </div>
-          </>
-        )}
       </div>
 
-      <!-- Desktop Grid (sm and up) -->
-      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="home-photo-grid-2">
-        {section2Photos.map((photo: any, idx: number) => {
-          const originalIndex = idx + 2; // 2, 3, or 4
-          return (
-            <button
-              type="button"
-              class="home-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-              data-home-photo-index={originalIndex}
-              aria-label={`View photo ${originalIndex + 1} in large view`}
-            >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                loading="lazy"
-                class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              <!-- Hover Expand Badge -->
-              <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                <div class="flex items-center justify-end">
-                  <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                    </svg>
-                  </span>
-                </div>
-                
-                {photo.photographer && (
-                  <div>
-                    <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
-                      📷 {photo.photographer}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      <!-- Explore Gallery CTA Button (Section 2 Only) -->
+      <!-- Explore Gallery CTA Button -->
       <div class="py-5 sm:py-0 sm:mt-6 lg:mt-8 flex justify-center px-4">
         <a
           href="/gallery"
@@ -347,58 +246,54 @@ const section3Photos = showcasePhotos.slice(5, 6);
           </svg>
         </a>
       </div>
+
     </div>
   </section>
 )}
 
-{section === 3 && (
-  <section aria-label="26.TRUE Photo Showcase Part 3" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+{(section === 2 || section === 3) && (
+  <section aria-label="26.TRUE Photo Showcase Panoramic" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
     <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-      <!-- Row 3: Photo 5 (Panoramic Showcase) -->
-      {section3Photos.map((photo: any) => {
-        const originalIndex = 5;
-        return (
-          <button
-            type="button"
-            class="home-photo-open-btn group relative block overflow-hidden rounded-none sm:rounded-3xl bg-neutral-950 border-b border-neutral-900 sm:border sm:border-neutral-800 w-full aspect-[16/10] sm:aspect-[21/9] text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-            data-home-photo-index={originalIndex}
-            aria-label={`View photo ${originalIndex + 1} in large view`}
-          >
-            <img
-              src={photo.src}
-              alt={photo.alt}
-              loading="lazy"
-              class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300"></div>
-            
-            <!-- Expand Badge -->
-            <div class="absolute inset-0 p-4 sm:p-7 flex flex-col justify-between sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div class="flex items-center justify-end">
-                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                  <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                  </svg>
-                </span>
-              </div>
-              
-              {photo.photographer && (
-                <div>
-                  <span class="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
-                    📷 {photo.photographer}
-                  </span>
-                </div>
-              )}
+      <!-- Panoramic Photo 5 -->
+      <button
+        type="button"
+        class="home-photo-open-btn group relative block overflow-hidden rounded-none sm:rounded-3xl bg-neutral-950 border-b border-neutral-900 sm:border sm:border-neutral-800 w-full aspect-[16/10] sm:aspect-[21/9] text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+        data-home-photo-index={5}
+        aria-label="View photo 6 in large view"
+      >
+        <img
+          src={panoramicPhoto.src}
+          alt={panoramicPhoto.alt}
+          loading="lazy"
+          class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <!-- Expand Badge -->
+        <div class="absolute inset-0 p-4 sm:p-7 flex flex-col justify-between sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div class="flex items-center justify-end">
+            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+              <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+              </svg>
+            </span>
+          </div>
+          
+          {panoramicPhoto.photographer && (
+            <div>
+              <span class="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                📷 {panoramicPhoto.photographer}
+              </span>
             </div>
-          </button>
-        );
-      })}
+          )}
+        </div>
+      </button>
     </div>
 
     <!-- Curated Homepage Photos Data for Lightbox Modal -->
     <script id="home-showcase-data" type="application/json" set:html={JSON.stringify(showcasePhotos)} />
 
-    <!-- Lightbox Modal for Homepage Photos (Rendered once with Section 3) -->
+    <!-- Lightbox Modal for Homepage Photos (Rendered with Section 2) -->
     <div
       id="home-photo-lightbox"
       class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300 select-none items-center justify-center"
