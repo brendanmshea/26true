@@ -11,7 +11,7 @@ interface Props {
 const { strip = 1 } = Astro.props;
 
 const raceData = await getRaceData();
-const { gallery = [] } = raceData;
+const { gallery = [], general } = raceData;
 
 // Strip 1: 3 photos (between Race Info & Inclusions and Block Party)
 const featured1 = (gallery || [])
@@ -64,147 +64,406 @@ const allRacePhotos = [...strip1Photos, ...strip2Photos];
   }
 </style>
 
-<section aria-label={`26.TRUE Race Photo Showcase Part ${strip}`} class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
-  <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
-    
-    <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
-    <div class="block sm:hidden relative w-full race-carousel-container select-none overflow-hidden border-b border-neutral-900 sm:border-b-0" data-carousel-id={`race-strip-${strip}`}>
-      <div
-        class="race-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
-        tabindex="0"
-        role="region"
-        aria-roledescription="carousel"
-        aria-label={`26.TRUE Race Photo Showcase Part ${strip} Carousel`}
-      >
+{strip === 1 && (
+  <section aria-label="26.TRUE Race Photo Showcase Part 1" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+    <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+      
+      <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
+      <div class="block sm:hidden relative w-full race-carousel-container select-none overflow-hidden border-b border-neutral-900 sm:border-b-0" data-carousel-id="race-strip-1">
+        <div
+          class="race-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="26.TRUE Race Photo Showcase Part 1 Carousel"
+        >
+          {displayPhotos.map((photo: any, idx: number) => {
+            const originalIndex = startIndex + idx;
+            return (
+              <div class="w-full shrink-0 snap-center">
+                <button
+                  type="button"
+                  class="race-photo-open-btn group relative block overflow-hidden bg-neutral-950 aspect-[16/10] w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                  data-race-photo-index={originalIndex}
+                  aria-label={`View photo ${originalIndex + 1} in large view`}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    class="h-full w-full object-cover object-center"
+                  />
+                  <!-- Scrim overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+                  <!-- Top-Right Expand Icon Badge -->
+                  <div class="absolute top-3.5 right-3.5 pointer-events-none z-10">
+                    <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                      </svg>
+                    </span>
+                  </div>
+
+                  <!-- Top-Left Photographer Badge -->
+                  {photo.photographer && (
+                    <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                        📷 {photo.photographer}
+                      </span>
+                    </div>
+                  )}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        <!-- Scrim gradient for controls -->
+        <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
+
+        <!-- Navigation Arrows (Mobile) -->
+        {displayPhotos.length > 1 && (
+          <>
+            <button
+              type="button"
+              class="race-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              aria-label="Previous photo"
+            >
+              <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="race-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              aria-label="Next photo"
+            >
+              <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
+              </svg>
+            </button>
+
+            <!-- Dot Indicators (Mobile) -->
+            <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
+              {displayPhotos.map((_: any, index: number) => (
+                <button
+                  type="button"
+                  class={`race-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
+                    index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
+                  }`}
+                  data-dot-index={index}
+                  aria-label={`Go to photo ${index + 1}`}
+                  aria-current={index === 0 ? "true" : "false"}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      <!-- Desktop Grid (sm and up) -->
+      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="race-photo-grid-1">
         {displayPhotos.map((photo: any, idx: number) => {
           const originalIndex = startIndex + idx;
           return (
-            <div class="w-full shrink-0 snap-center">
-              <button
-                type="button"
-                class="race-photo-open-btn group relative block overflow-hidden bg-neutral-950 aspect-[16/10] w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-                data-race-photo-index={originalIndex}
-                aria-label={`View photo ${originalIndex + 1} in large view`}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  loading="lazy"
-                  class="h-full w-full object-cover object-center"
-                />
-                <!-- Scrim overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
-
-                <!-- Top-Right Expand Icon Badge -->
-                <div class="absolute top-3.5 right-3.5 pointer-events-none z-10">
-                  <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button
+              type="button"
+              class="race-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              data-race-photo-index={originalIndex}
+              aria-label={`View photo ${originalIndex + 1} in large view`}
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading="lazy"
+                class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <!-- Hover Expand Badge -->
+              <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                <div class="flex items-center justify-end">
+                  <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
                     </svg>
                   </span>
                 </div>
-
-                <!-- Top-Left Photographer Badge -->
+                
                 {photo.photographer && (
-                  <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
-                    <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                  <div>
+                    <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
                       📷 {photo.photographer}
                     </span>
                   </div>
                 )}
-              </button>
-            </div>
+              </div>
+            </button>
           );
         })}
       </div>
+    </div>
+  </section>
+)}
 
-      <!-- Scrim gradient for controls -->
-      <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
+{strip === 2 && (
+  <section id="block-party" aria-label="The Block Party Celebration" class="relative py-12 sm:py-16 lg:py-20 bg-neutral-950 border-t border-neutral-900 overflow-hidden">
+    <!-- Atmospheric Background Glow -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#d4ff00]/15 blur-[160px] rounded-full"></div>
+    </div>
 
-      <!-- Navigation Arrows (Mobile) -->
-      {displayPhotos.length > 1 && (
-        <>
-          <button
-            type="button"
-            class="race-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-            aria-label="Previous photo"
-          >
-            <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+    <div class="relative z-10 max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+      
+      <!-- Mobile Carousel (< lg) - Flows ABOVE the copy in a carousel -->
+      <div class="block lg:hidden relative w-full race-carousel-container select-none overflow-hidden border-b border-neutral-900 mb-8 sm:mb-12" data-carousel-id="race-strip-2">
+        <div
+          class="race-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="26.TRUE Block Party Photos Carousel"
+        >
+          {displayPhotos.map((photo: any, idx: number) => {
+            const originalIndex = startIndex + idx;
+            return (
+              <div class="w-full shrink-0 snap-center">
+                <button
+                  type="button"
+                  class="race-photo-open-btn group relative block overflow-hidden bg-neutral-950 aspect-[16/10] w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                  data-race-photo-index={originalIndex}
+                  aria-label={`View photo ${originalIndex + 1} in large view`}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    class="h-full w-full object-cover object-center"
+                  />
+                  <!-- Scrim overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
 
-          <button
-            type="button"
-            class="race-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-            aria-label="Next photo"
-          >
-            <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
-            </svg>
-          </button>
+                  <!-- Top-Right Expand Icon Badge -->
+                  <div class="absolute top-3.5 right-3.5 pointer-events-none z-10">
+                    <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                      </svg>
+                    </span>
+                  </div>
 
-          <!-- Dot Indicators (Mobile) -->
-          <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
-            {displayPhotos.map((_: any, index: number) => (
+                  <!-- Top-Left Photographer Badge -->
+                  {photo.photographer && (
+                    <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                        📷 {photo.photographer}
+                      </span>
+                    </div>
+                  )}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        <!-- Scrim gradient for controls -->
+        <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
+
+        <!-- Navigation Arrows (Mobile) -->
+        <button
+          type="button"
+          class="race-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+          aria-label="Previous photo"
+        >
+          <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="race-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+          aria-label="Next photo"
+        >
+          <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
+          </svg>
+        </button>
+
+        <!-- Dot Indicators (Mobile) -->
+        <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
+          {displayPhotos.map((_: any, index: number) => (
+            <button
+              type="button"
+              class={`race-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
+                index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
+              }`}
+              data-dot-index={index}
+              aria-label={`Go to photo ${index + 1}`}
+              aria-current={index === 0 ? "true" : "false"}
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- Main Layout: On desktop (lg+), 2-column grid with Copy beside Photos -->
+      <div class="px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+          
+          <!-- Copy Column (Left on desktop) -->
+          <div class="lg:col-span-6 xl:col-span-7 text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-black border border-neutral-800 text-[#3fd4a4] mb-4">
+              <span>The Finish Line Celebration</span>
+            </div>
+
+            <h2 class="font-edo text-4xl sm:text-5xl lg:text-6xl text-white uppercase tracking-normal mb-6">
+              The Block Party
+            </h2>
+
+            <!-- Provided Block Party Copy in Highlight Card -->
+            <div class="p-6 sm:p-8 rounded-3xl bg-black/90 border border-neutral-800 shadow-2xl mb-6 space-y-4">
+              <p class="text-base sm:text-lg text-white font-bold leading-relaxed">
+                After you put in the hard work, this where the celebratory magic happens!
+              </p>
+              <p class="text-sm sm:text-base text-neutral-200 leading-relaxed font-normal">
+                Food, drinks, DJs, photo ops, recovery stations, immaculate vibes, and everything else you need to feel good and supported after your run.
+              </p>
+              <p class="text-sm sm:text-base text-[#d4ff00] font-bold leading-relaxed pt-2 border-t border-neutral-800/80">
+                Definitely stick around for this and bring your friends, families, neighbors, co-workers, exes, WHOEVER! It's a party!
+              </p>
+            </div>
+
+            <!-- Feature Pill Badges -->
+            <div class="flex flex-wrap items-center gap-2.5 mb-8">
+              <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-200">
+                🍔 Local Food & Drinks
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-200">
+                🎧 Live DJs & Dance Floor
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-200">
+                📸 Photo Ops
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-neutral-200">
+                🧘 Recovery Stations
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-[#d4ff00]">
+                ✨ Immaculate Vibes
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-neutral-900 border border-neutral-800 text-[#3fd4a4]">
+                🤝 Everyone Welcome
+              </span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+              <a
+                href={general?.registrationUrl || "https://www.movemint.cc/events/Uwj1WJY"}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5"
+              >
+                <span>Claim Your Spot For 2027</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+              </a>
+
+              <a
+                href="/course"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-black hover:bg-neutral-900 border border-neutral-800 rounded-2xl transition-all"
+              >
+                <span>Explore The 26.TRUE Course</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Desktop Photos Column (Right on desktop: 3 photos in 1-over-2 collage beside copy) -->
+          <div class="hidden lg:flex flex-col gap-5 lg:col-span-6 xl:col-span-5" id="race-photo-desktop-strip-2">
+            <!-- Photo 0: Large Featured Top Photo -->
+            {displayPhotos[0] && (
               <button
                 type="button"
-                class={`race-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
-                  index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
-                }`}
-                data-dot-index={index}
-                aria-label={`Go to photo ${index + 1}`}
-                aria-current={index === 0 ? "true" : "false"}
-              />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-
-    <!-- Desktop Grid (sm and up) -->
-    <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id={`race-photo-grid-${strip}`}>
-      {displayPhotos.map((photo: any, idx: number) => {
-        const originalIndex = startIndex + idx;
-        return (
-          <button
-            type="button"
-            class="race-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-            data-race-photo-index={originalIndex}
-            aria-label={`View photo ${originalIndex + 1} in large view`}
-          >
-            <img
-              src={photo.src}
-              alt={photo.alt}
-              loading="lazy"
-              class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            
-            <!-- Hover Expand Badge -->
-            <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <div class="flex items-center justify-end">
-                <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                  </svg>
-                </span>
-              </div>
-              
-              {photo.photographer && (
-                <div>
-                  <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
-                    📷 {photo.photographer}
-                  </span>
+                class="race-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[16/10] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                data-race-photo-index={startIndex}
+                aria-label="View photo 4 in large view"
+              >
+                <img
+                  src={displayPhotos[0].src}
+                  alt={displayPhotos[0].alt}
+                  loading="lazy"
+                  class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div class="flex items-center justify-end">
+                    <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                      </svg>
+                    </span>
+                  </div>
+                  {displayPhotos[0].photographer && (
+                    <div>
+                      <span class="px-3 py-1 rounded-full text-[11px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                        📷 {displayPhotos[0].photographer}
+                      </span>
+                    </div>
+                  )}
                 </div>
-              )}
+              </button>
+            )}
+
+            <!-- Photos 1 & 2: Side-by-Side Lower Grid -->
+            <div class="grid grid-cols-2 gap-5">
+              {displayPhotos.slice(1, 3).map((photo: any, idx: number) => {
+                const originalIndex = startIndex + 1 + idx;
+                return (
+                  <button
+                    type="button"
+                    class="race-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                    data-race-photo-index={originalIndex}
+                    aria-label={`View photo ${originalIndex + 1} in large view`}
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      loading="lazy"
+                      class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    <div class="absolute inset-0 p-4 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <div class="flex items-center justify-end">
+                        <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                          </svg>
+                        </span>
+                      </div>
+                      {photo.photographer && (
+                        <div>
+                          <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                            📷 {photo.photographer}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
-          </button>
-        );
-      })}
+          </div>
+
+        </div>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section>
+)}
 
 {strip === 2 && (
   <>
