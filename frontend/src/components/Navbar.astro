@@ -4,6 +4,7 @@ const raceData = await getRaceData();
 const { general } = raceData;
 
 const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/' || currentPath === '';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/course', label: 'Course' },
@@ -16,7 +17,12 @@ const navLinks = [
 
 <header
   id="main-header"
-  class="fixed top-0 inset-x-0 z-50 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 shadow-xl shadow-black/50 transition-transform duration-300 ease-in-out -translate-y-full md:sticky md:top-0 md:translate-y-0"
+  data-is-home={isHome ? "true" : "false"}
+  class={`z-50 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 shadow-xl shadow-black/50 transition-transform duration-300 ease-in-out md:sticky md:top-0 md:translate-y-0 ${
+    isHome
+      ? 'fixed top-0 inset-x-0 -translate-y-full'
+      : 'sticky top-0 translate-y-0'
+  }`}
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
@@ -141,7 +147,18 @@ const navLinks = [
         return;
       }
 
-      // On mobile: show if scrolled down past threshold OR if drawer menu is currently open
+      // Check if current page is the homepage
+      const rawPath = (window.location.pathname || '').replace(/\/+$/, '') || '/';
+      const isHomePage = rawPath === '/' || header.getAttribute('data-is-home') === 'true';
+
+      if (!isHomePage) {
+        // On all other pages: always show the navbar on mobile
+        header.classList.remove('-translate-y-full');
+        header.classList.add('translate-y-0');
+        return;
+      }
+
+      // On mobile homepage: hidden only when scrolled to top and drawer menu is closed
       if (isMenuOpen() || window.scrollY > SCROLL_THRESHOLD) {
         header.classList.remove('-translate-y-full');
         header.classList.add('translate-y-0');
