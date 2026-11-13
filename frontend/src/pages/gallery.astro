@@ -4,7 +4,30 @@ import { getRaceData } from '../lib/sanity';
 
 const raceData = await getRaceData();
 const { gallery, general } = raceData;
-const categories = ['All', '26.TRUE', 'PIONEERS', 'Cheer Squad', 'Finish Line'];
+const categories = ['All', 'Start', 'Finish Line', 'Block Party', 'Cheer Zone', 'Runners'];
+
+function formatCategory(cat: string) {
+  if (!cat) return 'Runners';
+  const map: Record<string, string> = {
+    '26true': 'Runners',
+    'pioneers': 'Block Party',
+    'cheer-squad': 'Cheer Zone',
+    'cheer squad': 'Cheer Zone',
+    'cheer-zone': 'Cheer Zone',
+    'cheer zone': 'Cheer Zone',
+    'finish-line': 'Finish Line',
+    'finish line': 'Finish Line',
+    'start': 'Start',
+    'runners': 'Runners',
+    'block-party': 'Block Party',
+    'block party': 'Block Party',
+  };
+  return map[cat.toLowerCase().trim()] || cat;
+}
+
+function toSlug(cat: string) {
+  return formatCategory(cat).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+}
 ---
 
 <Layout
@@ -26,7 +49,7 @@ const categories = ['All', '26.TRUE', 'PIONEERS', 'Cheer Squad', 'Finish Line'];
                 ? 'bg-[#d4ff00] text-black shadow-md shadow-[#d4ff00]/20'
                 : 'bg-neutral-950 text-neutral-300 hover:text-white border border-neutral-800'
             }`}
-            data-category={cat.toLowerCase().replace('.', '').replace(' ', '-')}
+            data-category={cat === 'All' ? 'all' : toSlug(cat)}
           >
             {cat}
           </button>
@@ -35,48 +58,53 @@ const categories = ['All', '26.TRUE', 'PIONEERS', 'Cheer Squad', 'Finish Line'];
 
       <!-- Photo Cards Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
-        {(gallery || []).map((photo, index) => (
-          <button
-            type="button"
-            class="gallery-item group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] shadow-lg"
-            data-category={photo.category}
-            data-category-label={photo.category.replace('-', ' ')}
-            data-src={photo.src}
-            data-alt={photo.alt}
-            data-photographer={photo.photographer || ''}
-            data-index={index}
-            aria-label={`View photo ${index + 1}`}
-          >
-            <img
-              src={photo.src}
-              alt={photo.alt}
-              loading="lazy"
-              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            
-            <!-- Hover Overlay -->
-            <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-              <div class="flex items-center justify-between">
-                <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-black/80 backdrop-blur-md text-[#3fd4a4] border border-neutral-800">
-                  {photo.category.replace('-', ' ')}
-                </span>
-                <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                  </svg>
-                </span>
-              </div>
-              {photo.photographer && (
-                <div class="flex items-center">
-                  <span class="text-[11px] font-semibold text-neutral-300 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-neutral-800">
-                    📷 {photo.photographer}
+        {(gallery || []).map((photo, index) => {
+          const catLabel = formatCategory(photo.category);
+          const catSlug = toSlug(photo.category);
+
+          return (
+            <button
+              type="button"
+              class="gallery-item group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] shadow-lg"
+              data-category={catSlug}
+              data-category-label={catLabel}
+              data-src={photo.src}
+              data-alt={photo.alt}
+              data-photographer={photo.photographer || ''}
+              data-index={index}
+              aria-label={`View photo ${index + 1}`}
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading="lazy"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              <!-- Hover Overlay -->
+              <div class="absolute inset-0 p-5 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                <div class="flex items-center justify-between">
+                  <span class="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-black/80 backdrop-blur-md text-[#3fd4a4] border border-neutral-800">
+                    {catLabel}
+                  </span>
+                  <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                    </svg>
                   </span>
                 </div>
-              )}
-            </div>
-          </button>
-        ))}
+                {photo.photographer && (
+                  <div class="flex items-center">
+                    <span class="text-[11px] font-semibold text-neutral-300 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-neutral-800">
+                      📷 {photo.photographer}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       <!-- Lightbox Modal -->

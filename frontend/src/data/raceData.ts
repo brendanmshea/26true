@@ -21,7 +21,7 @@ export interface GalleryImage {
   photographer?: string;
   neighborhood: string;
   year: string;
-  category: '26true' | 'pioneers' | 'cheer-squad' | 'finish-line';
+  category: 'Start' | 'Finish Line' | 'Block Party' | 'Cheer Zone' | 'Runners' | string;
   featuredOnHome?: boolean;
   order?: number;
 }
@@ -329,7 +329,7 @@ export const raceData = {
       photographer: "Official 26.TRUE Photography",
       neighborhood: "Jamaica Plain",
       year: "2026",
-      category: "26true",
+      category: "Runners",
       featuredOnHome: true,
       order: 1,
     },
@@ -341,7 +341,7 @@ export const raceData = {
       photographer: "Charlotte Tuminelli",
       neighborhood: "Roxbury",
       year: "2026",
-      category: "26true",
+      category: "Runners",
       featuredOnHome: true,
       order: 2,
     },
@@ -353,7 +353,7 @@ export const raceData = {
       photographer: "@ShotByEK",
       neighborhood: "Mattapan",
       year: "2026",
-      category: "26true",
+      category: "Runners",
       featuredOnHome: true,
       order: 3,
     },
@@ -365,7 +365,7 @@ export const raceData = {
       photographer: "PIONEERS Run Crew",
       neighborhood: "Dorchester",
       year: "2026",
-      category: "pioneers",
+      category: "Block Party",
       featuredOnHome: true,
       order: 4,
     },
@@ -377,7 +377,7 @@ export const raceData = {
       photographer: "Official 26.TRUE Photography",
       neighborhood: "Dorchester",
       year: "2026",
-      category: "cheer-squad",
+      category: "Cheer Zone",
       featuredOnHome: true,
       order: 5,
     },
@@ -389,7 +389,7 @@ export const raceData = {
       photographer: "Charlotte Tuminelli",
       neighborhood: "Roxbury",
       year: "2026",
-      category: "finish-line",
+      category: "Finish Line",
       featuredOnHome: true,
       order: 6,
     },
@@ -401,7 +401,7 @@ export const raceData = {
       photographer: "PIONEERS Run Crew",
       neighborhood: "Dorchester",
       year: "2026",
-      category: "pioneers",
+      category: "Block Party",
       featuredOnHome: false,
       order: 7,
     },

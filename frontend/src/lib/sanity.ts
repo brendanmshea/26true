@@ -175,7 +175,7 @@ export async function getRaceData() {
                 alt: item.caption || '26.TRUE Photo',
                 caption: item.caption || '',
                 year: item.year || '2026',
-                category: item.category || '26.TRUE',
+                category: item.category || 'Runners',
                 neighborhood: item.neighborhood || 'Boston',
                 photographer: item.photographer || '',
                 featuredOnHome: Boolean(item.featuredOnHome),

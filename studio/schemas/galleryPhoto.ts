@@ -25,13 +25,14 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: '26.TRUE', value: '26.TRUE' },
-          { title: 'PIONEERS', value: 'PIONEERS' },
-          { title: 'Cheer Squad', value: 'Cheer Squad' },
+          { title: 'Start', value: 'Start' },
           { title: 'Finish Line', value: 'Finish Line' },
+          { title: 'Block Party', value: 'Block Party' },
+          { title: 'Cheer Zone', value: 'Cheer Zone' },
+          { title: 'Runners', value: 'Runners' },
         ],
       },
-      initialValue: '26.TRUE',
+      initialValue: 'Runners',
     }),
     defineField({
       name: 'neighborhood',
