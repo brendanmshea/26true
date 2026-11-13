@@ -11,9 +11,9 @@ const pillarImages = [
 ];
 ---
 
-<section class="relative py-8 sm:py-10 lg:py-12 bg-black overflow-hidden border-t border-neutral-900">
+<section class="relative py-6 sm:py-10 lg:py-12 bg-black overflow-hidden border-t border-neutral-900">
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       {(pillars || []).map((item, index) => {
         const linkUrl = item.linkUrl || '/history';
         const linkLabel = item.linkLabel || 'Read the history';
@@ -21,7 +21,7 @@ const pillarImages = [
         const bgPhoto = pillarImages[index % pillarImages.length];
 
         return (
-          <div class="group relative overflow-hidden rounded-3xl border border-neutral-800/80 hover:border-[#d4ff00]/60 p-7 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 shadow-2xl min-h-[320px] sm:min-h-[340px]">
+          <div class="group relative overflow-hidden rounded-3xl border border-neutral-800/80 hover:border-[#d4ff00]/60 p-5 sm:p-7 lg:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 shadow-2xl min-h-0 sm:min-h-[340px]">
             <!-- Photography Background with Cinematic Scrim -->
             <img
               src={bgPhoto}
@@ -33,7 +33,7 @@ const pillarImages = [
             <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-500"></div>
 
             <div class="relative z-10">
-              <h3 class="font-edo text-2xl text-white mb-3 tracking-normal group-hover:text-[#3fd4a4] transition-colors drop-shadow-md">
+              <h3 class="font-edo text-xl sm:text-2xl text-white mb-2 sm:mb-3 tracking-normal group-hover:text-[#3fd4a4] transition-colors drop-shadow-md">
                 <a
                   href={linkUrl}
                   class="hover:underline"
@@ -47,7 +47,7 @@ const pillarImages = [
               </p>
             </div>
             
-            <div class="relative z-10 mt-8 pt-4 border-t border-white/10 flex items-center gap-2 text-xs font-bold text-[#d4ff00]">
+            <div class="relative z-10 mt-4 sm:mt-8 pt-3 sm:pt-4 border-t border-white/10 flex items-center gap-2 text-xs font-bold text-[#d4ff00]">
               <a
                 href={linkUrl}
                 class="hover:underline flex items-center gap-1.5 group-hover:gap-2.5 transition-all drop-shadow"

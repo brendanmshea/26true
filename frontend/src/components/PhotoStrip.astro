@@ -1,5 +1,7 @@
 ---
 // PhotoStrip.astro - Editorial photo showcase split into 3 contextual sections
+// Mobile: Edge-to-edge interactive carousel flush against neighbor sections (similar to BannerPhoto)
+// Desktop: Tightened multi-column responsive grid layout
 import { getRaceData } from '../lib/sanity';
 
 interface Props {
@@ -37,22 +39,125 @@ const section2Photos = showcasePhotos.slice(2, 5);
 const section3Photos = showcasePhotos.slice(5, 6);
 ---
 
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
 {section === 1 && (
-  <section aria-label="26.TRUE Photo Showcase Part 1" class="py-10 sm:py-14 lg:py-16 bg-black border-t border-neutral-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Row 1: Photos 0 & 1 (Asymmetric 7 / 5 grid) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5" id="home-photo-grid-1">
+  <section aria-label="26.TRUE Photo Showcase Part 1" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+    <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+      
+      <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
+      <div class="block sm:hidden relative w-full home-carousel-container select-none overflow-hidden border-b border-neutral-900 sm:border-b-0" data-carousel-id="strip-1">
+        <div
+          class="home-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="26.TRUE Photo Showcase Part 1 Carousel"
+        >
+          {section1Photos.map((photo: any, idx: number) => {
+            const originalIndex = idx; // 0 or 1
+            return (
+              <div class="w-full shrink-0 snap-center">
+                <button
+                  type="button"
+                  class="home-photo-open-btn group relative block overflow-hidden bg-neutral-950 aspect-[16/10] w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                  data-home-photo-index={originalIndex}
+                  aria-label={`View photo ${originalIndex + 1} in large view`}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    class="h-full w-full object-cover object-center"
+                  />
+                  <!-- Scrim overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+                  <!-- Top-Right Expand Icon Badge -->
+                  <div class="absolute top-3.5 right-3.5 pointer-events-none z-10">
+                    <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                      </svg>
+                    </span>
+                  </div>
+
+                  <!-- Top-Left Photographer Badge -->
+                  {photo.photographer && (
+                    <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                        📷 {photo.photographer}
+                      </span>
+                    </div>
+                  )}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        <!-- Scrim gradient for controls -->
+        <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
+
+        <!-- Navigation Arrows (Mobile) -->
+        {section1Photos.length > 1 && (
+          <>
+            <button
+              type="button"
+              class="home-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              aria-label="Previous photo"
+            >
+              <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="home-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              aria-label="Next photo"
+            >
+              <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
+              </svg>
+            </button>
+
+            <!-- Dot Indicators (Mobile) -->
+            <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
+              {section1Photos.map((_: any, index: number) => (
+                <button
+                  type="button"
+                  class={`home-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
+                    index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
+                  }`}
+                  data-dot-index={index}
+                  aria-label={`Go to photo ${index + 1}`}
+                  aria-current={index === 0 ? "true" : "false"}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      <!-- Desktop Grid (sm and up) -->
+      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-12 gap-5" id="home-photo-grid-1">
         {section1Photos.map((photo: any, idx: number) => {
           const originalIndex = idx; // 0 or 1
           const colSpan = idx === 0 ? 'lg:col-span-7 aspect-[16/10]' : 'lg:col-span-5 aspect-[16/10]';
           return (
             <button
               type="button"
-              class={`home-photo-item group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 ${colSpan} w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]`}
-              data-src={photo.src}
-              data-alt={photo.alt}
-              data-photographer={photo.photographer || ''}
-              data-index={originalIndex}
+              class={`home-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 ${colSpan} w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]`}
+              data-home-photo-index={originalIndex}
               aria-label={`View photo ${originalIndex + 1} in large view`}
             >
               <img
@@ -90,20 +195,113 @@ const section3Photos = showcasePhotos.slice(5, 6);
 )}
 
 {section === 2 && (
-  <section aria-label="26.TRUE Photo Showcase Part 2" class="py-10 sm:py-14 lg:py-16 bg-black border-t border-neutral-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Row 2: Photos 2, 3, 4 (Triplet 4 / 4 / 4 grid) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="home-photo-grid-2">
+  <section aria-label="26.TRUE Photo Showcase Part 2" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+    <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+      
+      <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
+      <div class="block sm:hidden relative w-full home-carousel-container select-none overflow-hidden" data-carousel-id="strip-2">
+        <div
+          class="home-carousel-track flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full"
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="26.TRUE Photo Showcase Part 2 Carousel"
+        >
+          {section2Photos.map((photo: any, idx: number) => {
+            const originalIndex = idx + 2; // 2, 3, or 4
+            return (
+              <div class="w-full shrink-0 snap-center">
+                <button
+                  type="button"
+                  class="home-photo-open-btn group relative block overflow-hidden bg-neutral-950 aspect-[16/10] w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+                  data-home-photo-index={originalIndex}
+                  aria-label={`View photo ${originalIndex + 1} in large view`}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    class="h-full w-full object-cover object-center"
+                  />
+                  <!-- Scrim overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+                  <!-- Top-Right Expand Icon Badge -->
+                  <div class="absolute top-3.5 right-3.5 pointer-events-none z-10">
+                    <span class="w-8 h-8 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                      </svg>
+                    </span>
+                  </div>
+
+                  <!-- Top-Left Photographer Badge -->
+                  {photo.photographer && (
+                    <div class="absolute top-3.5 left-3.5 pointer-events-none z-10">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                        📷 {photo.photographer}
+                      </span>
+                    </div>
+                  )}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        <!-- Scrim gradient for controls -->
+        <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/75 to-transparent pointer-events-none z-10"></div>
+
+        <!-- Navigation Arrows (Mobile) -->
+        {section2Photos.length > 1 && (
+          <>
+            <button
+              type="button"
+              class="home-carousel-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              aria-label="Previous photo"
+            >
+              <svg class="w-3.5 h-3.5 -ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="home-carousel-next absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-black border border-neutral-700/80 text-white hover:text-[#d4ff00] backdrop-blur-md flex items-center justify-center transition-all active:scale-95 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              aria-label="Next photo"
+            >
+              <svg class="w-3.5 h-3.5 -mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7m0 0l-7 7" />
+              </svg>
+            </button>
+
+            <!-- Dot Indicators (Mobile) -->
+            <div class="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 pointer-events-auto">
+              {section2Photos.map((_: any, index: number) => (
+                <button
+                  type="button"
+                  class={`home-carousel-dot h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#d4ff00] ${
+                    index === 0 ? 'w-5 bg-[#d4ff00]' : 'w-1.5 bg-white/40'
+                  }`}
+                  data-dot-index={index}
+                  aria-label={`Go to photo ${index + 1}`}
+                  aria-current={index === 0 ? "true" : "false"}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      <!-- Desktop Grid (sm and up) -->
+      <div class="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="home-photo-grid-2">
         {section2Photos.map((photo: any, idx: number) => {
           const originalIndex = idx + 2; // 2, 3, or 4
           return (
             <button
               type="button"
-              class="home-photo-item group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-              data-src={photo.src}
-              data-alt={photo.alt}
-              data-photographer={photo.photographer || ''}
-              data-index={originalIndex}
+              class="home-photo-open-btn group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 aspect-[4/3] w-full text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+              data-home-photo-index={originalIndex}
               aria-label={`View photo ${originalIndex + 1} in large view`}
             >
               <img
@@ -138,10 +336,10 @@ const section3Photos = showcasePhotos.slice(5, 6);
       </div>
 
       <!-- Explore Gallery CTA Button (Section 2 Only) -->
-      <div class="mt-8 sm:mt-10 flex justify-center">
+      <div class="py-5 sm:py-0 sm:mt-6 lg:mt-8 flex justify-center px-4">
         <a
           href="/gallery"
-          class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider bg-neutral-900 hover:bg-neutral-800 text-[#d4ff00] hover:text-[#3fd4a4] border border-neutral-800 hover:border-neutral-700 shadow-xl transition-all transform hover:-translate-y-0.5"
+          class="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl text-xs sm:text-sm font-black uppercase tracking-wider bg-neutral-900 hover:bg-neutral-800 text-[#d4ff00] hover:text-[#3fd4a4] border border-neutral-800 hover:border-neutral-700 shadow-xl transition-all transform hover:-translate-y-0.5"
         >
           <span>Explore Full Gallery ({gallery?.length || 7} Photos)</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,19 +352,16 @@ const section3Photos = showcasePhotos.slice(5, 6);
 )}
 
 {section === 3 && (
-  <section aria-label="26.TRUE Photo Showcase Part 3" class="py-10 sm:py-14 lg:py-16 bg-black">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Row 3: Photo 5 (Full-width Panoramic Showcase) -->
+  <section aria-label="26.TRUE Photo Showcase Part 3" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+    <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+      <!-- Row 3: Photo 5 (Panoramic Showcase) -->
       {section3Photos.map((photo: any) => {
         const originalIndex = 5;
         return (
           <button
             type="button"
-            class="home-photo-item group relative block overflow-hidden rounded-3xl bg-neutral-950 border border-neutral-800 w-full aspect-[16/8] sm:aspect-[21/9] text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
-            data-src={photo.src}
-            data-alt={photo.alt}
-            data-photographer={photo.photographer || ''}
-            data-index={originalIndex}
+            class="home-photo-open-btn group relative block overflow-hidden rounded-none sm:rounded-3xl bg-neutral-950 border-b border-neutral-900 sm:border sm:border-neutral-800 w-full aspect-[16/10] sm:aspect-[21/9] text-left cursor-pointer hover:border-[#d4ff00]/60 transition-all duration-300 hover:-translate-y-1 shadow-xl focus:outline-none focus:ring-2 focus:ring-[#d4ff00]"
+            data-home-photo-index={originalIndex}
             aria-label={`View photo ${originalIndex + 1} in large view`}
           >
             <img
@@ -175,13 +370,13 @@ const section3Photos = showcasePhotos.slice(5, 6);
               loading="lazy"
               class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300"></div>
             
-            <!-- Hover Expand Badge -->
-            <div class="absolute inset-0 p-5 sm:p-7 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <!-- Expand Badge -->
+            <div class="absolute inset-0 p-4 sm:p-7 flex flex-col justify-between sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
               <div class="flex items-center justify-end">
-                <span class="w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/80 backdrop-blur-md border border-neutral-700 text-[#d4ff00] flex items-center justify-center shadow-lg">
+                  <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
                   </svg>
                 </span>
@@ -189,7 +384,7 @@ const section3Photos = showcasePhotos.slice(5, 6);
               
               {photo.photographer && (
                 <div>
-                  <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
+                  <span class="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold text-neutral-200 bg-black/85 backdrop-blur-md border border-neutral-800 shadow">
                     📷 {photo.photographer}
                   </span>
                 </div>
@@ -199,6 +394,9 @@ const section3Photos = showcasePhotos.slice(5, 6);
         );
       })}
     </div>
+
+    <!-- Curated Homepage Photos Data for Lightbox Modal -->
+    <script id="home-showcase-data" type="application/json" set:html={JSON.stringify(showcasePhotos)} />
 
     <!-- Lightbox Modal for Homepage Photos (Rendered once with Section 3) -->
     <div
@@ -214,7 +412,7 @@ const section3Photos = showcasePhotos.slice(5, 6);
       <div class="absolute top-0 inset-x-0 z-30 p-4 sm:p-6 flex items-center justify-between pointer-events-none">
         <div class="pointer-events-auto flex items-center gap-2.5 px-4 py-2 rounded-full bg-neutral-900/90 border border-neutral-800 text-xs font-bold text-neutral-300 shadow-xl">
           <span class="text-[#d4ff00] uppercase tracking-wider font-black">26.TRUE</span>
-          <span id="home-lightbox-counter" class="text-white">1 / 1</span>
+          <span id="home-lightbox-counter" class="text-white">1 / 6</span>
         </div>
 
         <button
@@ -270,8 +468,111 @@ const section3Photos = showcasePhotos.slice(5, 6);
 )}
 
 <script>
+  // Mobile Carousels Controller
+  function setupHomeCarousels() {
+    const containers = Array.from(document.querySelectorAll<HTMLElement>('.home-carousel-container'));
+
+    containers.forEach((container) => {
+      const track = container.querySelector<HTMLElement>('.home-carousel-track');
+      const prevBtn = container.querySelector<HTMLButtonElement>('.home-carousel-prev');
+      const nextBtn = container.querySelector<HTMLButtonElement>('.home-carousel-next');
+      const dots = Array.from(container.querySelectorAll<HTMLButtonElement>('.home-carousel-dot'));
+
+      if (!track || dots.length <= 1) return;
+
+      // Track touch drag vs tap to prevent opening lightbox on swipe
+      let startX = 0;
+      let startY = 0;
+      let isDragging = false;
+
+      track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = false;
+        container.dataset.swiping = 'false';
+      }, { passive: true });
+
+      track.addEventListener('touchmove', (e) => {
+        const dx = Math.abs(e.touches[0].clientX - startX);
+        const dy = Math.abs(e.touches[0].clientY - startY);
+        if (dx > 8 || dy > 8) {
+          isDragging = true;
+          container.dataset.swiping = 'true';
+        }
+      }, { passive: true });
+
+      track.addEventListener('touchend', () => {
+        if (isDragging) {
+          setTimeout(() => {
+            container.dataset.swiping = 'false';
+          }, 120);
+        }
+      });
+
+      // Update dots on scroll
+      let scrollRaf: number | null = null;
+      function updateDots() {
+        if (!track) return;
+        const width = track.clientWidth || 1;
+        const currentIdx = Math.round(track.scrollLeft / width);
+
+        dots.forEach((dot, idx) => {
+          const isActive = idx === currentIdx;
+          if (isActive) {
+            dot.classList.remove('w-1.5', 'bg-white/40');
+            dot.classList.add('w-5', 'bg-[#d4ff00]');
+            dot.setAttribute('aria-current', 'true');
+          } else {
+            dot.classList.remove('w-5', 'bg-[#d4ff00]');
+            dot.classList.add('w-1.5', 'bg-white/40');
+            dot.setAttribute('aria-current', 'false');
+          }
+        });
+      }
+
+      track.addEventListener('scroll', () => {
+        if (scrollRaf) cancelAnimationFrame(scrollRaf);
+        scrollRaf = requestAnimationFrame(updateDots);
+      }, { passive: true });
+
+      // Click dots
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const width = track.clientWidth || 0;
+          track.scrollTo({ left: idx * width, behavior: 'smooth' });
+        });
+      });
+
+      // Prev / Next button actions
+      prevBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const width = track.clientWidth || 0;
+        const currentIdx = Math.round(track.scrollLeft / width);
+        const targetIdx = currentIdx <= 0 ? dots.length - 1 : currentIdx - 1;
+        track.scrollTo({ left: targetIdx * width, behavior: 'smooth' });
+      });
+
+      nextBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const width = track.clientWidth || 0;
+        const currentIdx = Math.round(track.scrollLeft / width);
+        const targetIdx = currentIdx >= dots.length - 1 ? 0 : currentIdx + 1;
+        track.scrollTo({ left: targetIdx * width, behavior: 'smooth' });
+      });
+    });
+  }
+
+  // Unified Full-Screen Lightbox Controller
   function setupHomepageLightbox() {
-    const homeItems = Array.from(document.querySelectorAll<HTMLButtonElement>('.home-photo-item'));
+    const dataScript = document.getElementById('home-showcase-data');
+    let photosList: any[] = [];
+    try {
+      photosList = dataScript ? JSON.parse(dataScript.textContent || '[]') : [];
+    } catch {
+      photosList = [];
+    }
+
     const homeLightbox = document.getElementById('home-photo-lightbox');
     const homeLightboxBackdrop = document.getElementById('home-lightbox-backdrop');
     const homeLightboxImg = document.getElementById('home-lightbox-img') as HTMLImageElement | null;
@@ -281,36 +582,34 @@ const section3Photos = showcasePhotos.slice(5, 6);
     const homeLightboxPrev = document.getElementById('home-lightbox-prev');
     const homeLightboxNext = document.getElementById('home-lightbox-next');
 
-    if (!homeItems.length || !homeLightbox) return;
+    if (!homeLightbox) return;
 
     let homeCurrentIndex = 0;
 
     function updateHomeLightbox(index: number) {
-      if (!homeItems.length || !homeLightboxImg) return;
+      if (!photosList.length || !homeLightboxImg) return;
 
       if (index < 0) {
-        homeCurrentIndex = homeItems.length - 1;
-      } else if (index >= homeItems.length) {
+        homeCurrentIndex = photosList.length - 1;
+      } else if (index >= photosList.length) {
         homeCurrentIndex = 0;
       } else {
         homeCurrentIndex = index;
       }
 
-      const item = homeItems[homeCurrentIndex];
-      const src = item.getAttribute('data-src') || '';
-      const alt = item.getAttribute('data-alt') || '26.TRUE Photo';
-      const photographer = item.getAttribute('data-photographer') || '';
+      const photo = photosList[homeCurrentIndex];
+      if (!photo) return;
 
-      homeLightboxImg.src = src;
-      homeLightboxImg.alt = alt;
+      homeLightboxImg.src = photo.src;
+      homeLightboxImg.alt = photo.alt || '26.TRUE Photo';
 
       if (homeLightboxCounter) {
-        homeLightboxCounter.textContent = `${homeCurrentIndex + 1} / ${homeItems.length}`;
+        homeLightboxCounter.textContent = `${homeCurrentIndex + 1} / ${photosList.length}`;
       }
 
       if (homeLightboxPhotographer) {
-        if (photographer) {
-          homeLightboxPhotographer.textContent = `📷 ${photographer}`;
+        if (photo.photographer) {
+          homeLightboxPhotographer.textContent = `📷 ${photo.photographer}`;
           homeLightboxPhotographer.style.display = 'block';
         } else {
           homeLightboxPhotographer.textContent = '';
@@ -354,10 +653,18 @@ const section3Photos = showcasePhotos.slice(5, 6);
       updateHomeLightbox(homeCurrentIndex - 1);
     }
 
-    // Attach click listeners to all photo buttons across all 3 sections
-    homeItems.forEach((item, index) => {
-      // Clean clone or replace to avoid multiple bindings
-      item.onclick = () => openHomeLightbox(index);
+    // Attach click listeners to all photo buttons across mobile carousels and desktop grids
+    const openButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.home-photo-open-btn'));
+    openButtons.forEach((btn) => {
+      btn.onclick = (e) => {
+        const container = btn.closest<HTMLElement>('.home-carousel-container');
+        if (container && container.dataset.swiping === 'true') {
+          e.preventDefault();
+          return;
+        }
+        const idx = parseInt(btn.getAttribute('data-home-photo-index') || '0', 10);
+        openHomeLightbox(idx);
+      };
     });
 
     homeLightboxNext?.addEventListener('click', (e) => {
@@ -385,8 +692,42 @@ const section3Photos = showcasePhotos.slice(5, 6);
       if (e.key === 'ArrowRight') showHomeNext();
       if (e.key === 'ArrowLeft') showHomePrev();
     });
+
+    // Touch swipe gestures inside the full-screen lightbox modal
+    let lbTouchStartX = 0;
+    let lbTouchStartY = 0;
+
+    homeLightbox.addEventListener('touchstart', (e) => {
+      lbTouchStartX = e.touches[0].clientX;
+      lbTouchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    homeLightbox.addEventListener('touchend', (e) => {
+      const diffX = e.changedTouches[0].clientX - lbTouchStartX;
+      const diffY = e.changedTouches[0].clientY - lbTouchStartY;
+
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+        if (diffX < 0) {
+          showHomeNext();
+        } else {
+          showHomePrev();
+        }
+      } else if (diffY > 80 && Math.abs(diffY) > Math.abs(diffX)) {
+        closeHomeLightbox();
+      }
+    }, { passive: true });
   }
 
-  setupHomepageLightbox();
-  document.addEventListener('astro:page-load', setupHomepageLightbox);
+  function init() {
+    setupHomeCarousels();
+    setupHomepageLightbox();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  document.addEventListener('astro:page-load', init);
 </script>
