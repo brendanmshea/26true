@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CoursePhotoStrip from '../components/CoursePhotoStrip.astro';
 import { getRaceData } from '../lib/sanity';
 
 const raceData = await getRaceData();
@@ -47,6 +48,9 @@ const { course, general } = raceData;
       </div>
     </div>
   </section>
+
+  <!-- Photo Strip 1: 3-Photo Showcase (Configurable in Sanity) -->
+  <CoursePhotoStrip strip={1} />
 
   <!-- The 4 Neighborhoods Cards -->
   <section class="bg-neutral-950 border-b border-neutral-900 py-10">
@@ -110,7 +114,7 @@ const { course, general } = raceData;
       </div>
 
       <!-- Embedded Google Map -->
-      <div class="w-full h-[550px] sm:h-[620px] rounded-3xl overflow-hidden border border-neutral-800 relative bg-neutral-950 shadow-2xl mb-16">
+      <div class="w-full h-[550px] sm:h-[620px] rounded-3xl overflow-hidden border border-neutral-800 relative bg-neutral-950 shadow-2xl">
         <iframe
           src={course.googleMapsEmbedUrl}
           width="100%"
@@ -122,9 +126,16 @@ const { course, general } = raceData;
           title="26.TRUE Course Map (Google My Maps)"
         ></iframe>
       </div>
+    </div>
+  </section>
 
-      <!-- Cheer Zones Guide -->
-      <div class="pt-8 border-t border-neutral-900">
+  <!-- Photo Strip 2: 3-Photo Showcase (Configurable in Sanity) -->
+  <CoursePhotoStrip strip={2} />
+
+  <!-- Cheer Zones Guide -->
+  <section class="py-16 bg-black border-t border-neutral-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
         <div class="max-w-3xl mb-8">
           <div class="text-xs font-black uppercase tracking-widest text-[#d4ff00] mb-2">
             If You're Not Running, You're Cheering

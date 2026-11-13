@@ -179,6 +179,8 @@ export async function getRaceData() {
                 neighborhood: item.neighborhood || 'Boston',
                 photographer: item.photographer || '',
                 featuredOnHome: Boolean(item.featuredOnHome),
+                featuredOnCourse1: Boolean(item.featuredOnCourse1),
+                featuredOnCourse2: Boolean(item.featuredOnCourse2),
                 order: typeof item.order === 'number' ? item.order : idx + 1,
               }))
             : localRaceData.gallery,

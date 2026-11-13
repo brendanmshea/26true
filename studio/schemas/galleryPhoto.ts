@@ -54,6 +54,20 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
+      name: 'featuredOnCourse1',
+      title: 'Feature in Course Photostrip 1 (Overview / Neighborhoods)',
+      type: 'boolean',
+      description: 'Toggle on to feature in the 3-photo photostrip between Course Overview and Neighborhood Cards on the Course page.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'featuredOnCourse2',
+      title: 'Feature in Course Photostrip 2 (Course Map / Cheer Zones)',
+      type: 'boolean',
+      description: 'Toggle on to feature in the 3-photo photostrip between Course Map and Cheer Zones on the Course page.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'photographer',
       title: 'Photographer Credit',
       type: 'string',
@@ -72,12 +86,16 @@ export default defineType({
       title: 'caption',
       media: 'image',
       featured: 'featuredOnHome',
+      course1: 'featuredOnCourse1',
+      course2: 'featuredOnCourse2',
       order: 'order',
       photographer: 'photographer',
     },
-    prepare({ title, media, featured, order, photographer }) {
+    prepare({ title, media, featured, course1, course2, order, photographer }) {
       const parts = [];
-      if (featured) parts.push('⭐ Homepage Photostrip');
+      if (featured) parts.push('⭐ Home');
+      if (course1) parts.push('📍 Course 1');
+      if (course2) parts.push('📣 Course 2');
       if (order !== undefined) parts.push(`Order: ${order}`);
       if (photographer) parts.push(`By ${photographer}`);
       return {

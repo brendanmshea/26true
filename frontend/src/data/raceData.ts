@@ -23,6 +23,8 @@ export interface GalleryImage {
   year: string;
   category: 'Start' | 'Finish Line' | 'Block Party' | 'Cheer Zone' | 'Runners' | string;
   featuredOnHome?: boolean;
+  featuredOnCourse1?: boolean;
+  featuredOnCourse2?: boolean;
   order?: number;
 }
 
@@ -331,6 +333,7 @@ export const raceData = {
       year: "2026",
       category: "Runners",
       featuredOnHome: true,
+      featuredOnCourse1: true,
       order: 1,
     },
     {
@@ -343,6 +346,7 @@ export const raceData = {
       year: "2026",
       category: "Runners",
       featuredOnHome: true,
+      featuredOnCourse1: true,
       order: 2,
     },
     {
@@ -355,6 +359,7 @@ export const raceData = {
       year: "2026",
       category: "Runners",
       featuredOnHome: true,
+      featuredOnCourse1: true,
       order: 3,
     },
     {
@@ -367,6 +372,7 @@ export const raceData = {
       year: "2026",
       category: "Block Party",
       featuredOnHome: true,
+      featuredOnCourse2: true,
       order: 4,
     },
     {
@@ -379,6 +385,7 @@ export const raceData = {
       year: "2026",
       category: "Cheer Zone",
       featuredOnHome: true,
+      featuredOnCourse2: true,
       order: 5,
     },
     {
@@ -391,6 +398,7 @@ export const raceData = {
       year: "2026",
       category: "Finish Line",
       featuredOnHome: true,
+      featuredOnCourse2: true,
       order: 6,
     },
     {
@@ -403,6 +411,8 @@ export const raceData = {
       year: "2026",
       category: "Block Party",
       featuredOnHome: false,
+      featuredOnCourse1: false,
+      featuredOnCourse2: false,
       order: 7,
     },
   ] as GalleryImage[],
