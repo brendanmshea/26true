@@ -227,7 +227,7 @@ export const raceData = {
       year: "2025",
       date: "April 19, 2025",
       stats: "100 First-Time Marathoners",
-      highlight: "276 registrants featuring 100 first-time marathoners.",
+      highlight: "The debut of our 13.1-mile loop route. 276 registrants featuring 100 first-time marathoners.",
     },
     {
       year: "2026",
