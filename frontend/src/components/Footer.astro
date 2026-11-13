@@ -4,6 +4,8 @@ const raceData = await getRaceData();
 const { general } = raceData;
 
 const currentYear = new Date().getFullYear();
+const regOpenTime = new Date(general.registrationOpenDate || '2026-11-20T08:00:00-05:00').getTime();
+const isPreRegistration = Date.now() < regOpenTime;
 ---
 
 <footer class="bg-black border-t border-neutral-900 text-neutral-400 text-sm">
@@ -78,12 +80,26 @@ const currentYear = new Date().getFullYear();
           <p><a href={`mailto:${general.volunteerEmail}?subject=26.TRUE%20Volunteer`} class="hover:text-[#d4ff00] transition-colors font-bold">Volunteer & Cheer Zones</a></p>
           <p><a href={`mailto:${general.contactEmail}`} class="hover:text-[#d4ff00] transition-colors">{general.contactEmail}</a></p>
         </div>
-        <div class="mt-6">
+        <div class="mt-6" data-reg-open-date={general.registrationOpenDate || '2026-11-20T08:00:00-05:00'}>
+          <!-- Pre-registration notice in footer (not a button) -->
+          <div
+            id="footer-reg-prereg"
+            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-neutral-300 bg-neutral-900 border border-neutral-800 select-none cursor-default"
+            style={isPreRegistration ? '' : 'display: none;'}
+            aria-label="Registration status"
+          >
+            <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-pulse"></span>
+            <span>Registration opens Nov 20</span>
+          </div>
+
+          <!-- Active Register button in footer -->
           <a
+            id="footer-reg-btn"
             href={general.registrationUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-[#d4ff00] text-black hover:bg-[#c3ec00] transition-colors"
+            style={isPreRegistration ? 'display: none;' : ''}
           >
             <span>Register on Movemint</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,3 +123,33 @@ const currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<script>
+  function updateFooterRegistration() {
+    const prereg = document.getElementById('footer-reg-prereg');
+    const btn = document.getElementById('footer-reg-btn');
+    if (!prereg && !btn) return;
+
+    const parent = prereg?.parentElement || btn?.parentElement;
+    const regDateStr = parent?.getAttribute('data-reg-open-date') || '2026-11-20T08:00:00-05:00';
+    const regOpenTime = new Date(regDateStr).getTime();
+    const isOpen = Date.now() >= regOpenTime;
+
+    if (isOpen) {
+      if (prereg) prereg.style.display = 'none';
+      if (btn) btn.style.display = '';
+    } else {
+      if (prereg) prereg.style.display = '';
+      if (btn) btn.style.display = 'none';
+    }
+  }
+
+  updateFooterRegistration();
+
+  if (!(window as any).__footerRegIntervalSet) {
+    (window as any).__footerRegIntervalSet = true;
+    setInterval(updateFooterRegistration, 1000);
+  }
+
+  document.addEventListener('astro:page-load', updateFooterRegistration);
+</script>

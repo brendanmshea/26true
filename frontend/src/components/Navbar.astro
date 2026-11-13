@@ -5,6 +5,8 @@ const { general } = raceData;
 
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/' || currentPath === '';
+const regOpenTime = new Date(general.registrationOpenDate || '2026-11-20T08:00:00-05:00').getTime();
+const isPreRegistration = Date.now() < regOpenTime;
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/course', label: 'Course' },
@@ -18,6 +20,7 @@ const navLinks = [
 <header
   id="main-header"
   data-is-home={isHome ? "true" : "false"}
+  data-reg-open-date={general.registrationOpenDate || '2026-11-20T08:00:00-05:00'}
   class={`z-50 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 shadow-xl shadow-black/50 transition-transform duration-300 ease-in-out md:sticky md:top-0 md:translate-y-0 ${
     isHome
       ? 'fixed top-0 inset-x-0 -translate-y-full'
@@ -65,11 +68,25 @@ const navLinks = [
 
       <!-- CTA & Mobile Toggle -->
       <div class="flex items-center gap-3">
+        <!-- Pre-registration notice (not a button) -->
+        <span
+          id="nav-reg-prereg"
+          class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-neutral-300 bg-neutral-900/90 border border-neutral-800 backdrop-blur-md select-none cursor-default"
+          style={isPreRegistration ? '' : 'display: none;'}
+          aria-label="Registration status"
+        >
+          <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-pulse"></span>
+          <span>Registration opens Nov 20</span>
+        </span>
+
+        <!-- Active Register button -->
         <a
+          id="nav-reg-btn"
           href={general.registrationUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-xl shadow-lg shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          style={isPreRegistration ? 'display: none;' : ''}
         >
           <span>Register</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,11 +123,24 @@ const navLinks = [
       </a>
     ))}
     <div class="pt-4">
+      <!-- Pre-registration notice in mobile menu (not a button) -->
+      <div
+        id="nav-mobile-prereg"
+        class="w-full flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold text-neutral-300 bg-neutral-900 border border-neutral-800 rounded-xl select-none cursor-default"
+        style={isPreRegistration ? '' : 'display: none;'}
+      >
+        <span class="w-2 h-2 rounded-full bg-[#d4ff00] animate-pulse"></span>
+        <span>Registration opens Nov 20</span>
+      </div>
+
+      <!-- Active Register button in mobile menu -->
       <a
+        id="nav-mobile-btn"
         href={general.registrationUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="w-full flex items-center justify-center gap-2 px-5 py-3 text-xs font-black uppercase tracking-wider text-black bg-[#d4ff00] rounded-xl"
+        style={isPreRegistration ? 'display: none;' : ''}
       >
         <span>Register on Movemint</span>
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,7 +253,41 @@ const navLinks = [
     updateNavbar();
   }
 
+  function updateRegistrationState() {
+    const header = document.getElementById('main-header');
+    const regDateStr = header?.getAttribute('data-reg-open-date') || '2026-11-20T08:00:00-05:00';
+    const regOpenTime = new Date(regDateStr).getTime();
+    const isOpen = Date.now() >= regOpenTime;
+
+    const preregDesktop = document.getElementById('nav-reg-prereg');
+    const btnDesktop = document.getElementById('nav-reg-btn');
+    const preregMobile = document.getElementById('nav-mobile-prereg');
+    const btnMobile = document.getElementById('nav-mobile-btn');
+
+    if (isOpen) {
+      if (preregDesktop) preregDesktop.style.display = 'none';
+      if (btnDesktop) btnDesktop.style.display = '';
+      if (preregMobile) preregMobile.style.display = 'none';
+      if (btnMobile) btnMobile.style.display = '';
+    } else {
+      if (preregDesktop) preregDesktop.style.display = '';
+      if (btnDesktop) btnDesktop.style.display = 'none';
+      if (preregMobile) preregMobile.style.display = '';
+      if (btnMobile) btnMobile.style.display = 'none';
+    }
+  }
+
   // Support direct page load & Astro client router transitions
   setupMobileNavbar();
-  document.addEventListener('astro:page-load', setupMobileNavbar);
+  updateRegistrationState();
+
+  if (!(window as any).__regIntervalSet) {
+    (window as any).__regIntervalSet = true;
+    setInterval(updateRegistrationState, 1000);
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    setupMobileNavbar();
+    updateRegistrationState();
+  });
 </script>

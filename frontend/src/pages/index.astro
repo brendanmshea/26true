@@ -11,6 +11,8 @@ import { getRaceData } from '../lib/sanity';
 
 const raceData = await getRaceData();
 const { general } = raceData;
+const regOpenTime = new Date(general.registrationOpenDate || '2026-11-20T08:00:00-05:00').getTime();
+const isPreRegistration = Date.now() < regOpenTime;
 ---
 
 <Layout>
@@ -39,7 +41,11 @@ const { general } = raceData;
   <FaqAccordion limit={4} />
 
   <!-- Pre-Footer Registration CTA with PIONEERS Crew Photo Background -->
-  <section class="relative py-20 lg:py-28 bg-black border-t border-neutral-900 text-center overflow-hidden" id="event-info">
+  <section
+    class="relative py-20 lg:py-28 bg-black border-t border-neutral-900 text-center overflow-hidden"
+    id="event-info"
+    data-reg-open-date={general.registrationOpenDate || '2026-11-20T08:00:00-05:00'}
+  >
     <div class="absolute inset-0 pointer-events-none z-0">
       <img
         src="/images/photos/web/562A6072.jpg"
@@ -73,17 +79,32 @@ const { general } = raceData;
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <!-- Pre-registration notice (not a button) -->
+        <div
+          id="bottom-cta-prereg"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-xs sm:text-sm font-bold text-neutral-300 bg-neutral-900/90 border border-neutral-800 rounded-2xl select-none cursor-default backdrop-blur-md"
+          style={isPreRegistration ? '' : 'display: none;'}
+          aria-label="Registration status"
+        >
+          <span class="w-2.5 h-2.5 rounded-full bg-[#d4ff00] animate-pulse"></span>
+          <span>Registration opens Nov 20</span>
+        </div>
+
+        <!-- Active Register button -->
         <a
+          id="bottom-cta-btn"
           href={general.registrationUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          style={isPreRegistration ? 'display: none;' : ''}
         >
           <span>Register on Movemint</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
           </svg>
         </a>
+
         <a
           href="/history"
           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white bg-black/80 hover:bg-neutral-900 border border-neutral-800 rounded-2xl transition-all"
@@ -94,3 +115,33 @@ const { general } = raceData;
     </div>
   </section>
 </Layout>
+
+<script>
+  function updateBottomCtaRegistration() {
+    const prereg = document.getElementById('bottom-cta-prereg');
+    const btn = document.getElementById('bottom-cta-btn');
+    if (!prereg && !btn) return;
+
+    const section = document.getElementById('event-info');
+    const regDateStr = section?.getAttribute('data-reg-open-date') || '2026-11-20T08:00:00-05:00';
+    const regOpenTime = new Date(regDateStr).getTime();
+    const isOpen = Date.now() >= regOpenTime;
+
+    if (isOpen) {
+      if (prereg) prereg.style.display = 'none';
+      if (btn) btn.style.display = '';
+    } else {
+      if (prereg) prereg.style.display = '';
+      if (btn) btn.style.display = 'none';
+    }
+  }
+
+  updateBottomCtaRegistration();
+
+  if (!(window as any).__bottomCtaIntervalSet) {
+    (window as any).__bottomCtaIntervalSet = true;
+    setInterval(updateBottomCtaRegistration, 1000);
+  }
+
+  document.addEventListener('astro:page-load', updateBottomCtaRegistration);
+</script>
