@@ -5,18 +5,22 @@ const bannerSlides = [
     src: '/images/photos/web/banner.jpg',
     srcMobile: '/images/photos/web/banner-mobile.jpg',
     alt: '26.TRUE community runners taking to Boston streets with joy and energy',
+    photographer: '@chartumi_snaps',
   },
   {
     src: '/images/photos/start_line_2024_banner.jpg',
     alt: '26.TRUE 2024 start line energy and runners gathering',
+    photographer: '@franipac',
   },
   {
     src: '/images/photos/block_party_banner.jpg',
     alt: '26.TRUE Cheer Zone and neighborhood block party celebration',
+    photographer: '@franipac',
   },
   {
     src: '/images/photos/block_party_2_banner.jpg',
     alt: 'Community cheer squad and supporters along the 26.TRUE course',
+    photographer: '@franipac',
   },
 ];
 ---
@@ -63,6 +67,16 @@ const bannerSlides = [
                 loading="lazy"
                 decoding="async"
               />
+            )}
+
+            <!-- Photo Attribution Badge -->
+            {slide.photographer && (
+              <div class="absolute bottom-3 left-4 sm:bottom-4 sm:left-6 z-20 pointer-events-none">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold text-neutral-200 bg-black/80 backdrop-blur-md border border-neutral-700/80 shadow-lg">
+                  <span class="text-neutral-400">📷</span>
+                  <span>{slide.photographer}</span>
+                </span>
+              </div>
             )}
           </div>
         );
