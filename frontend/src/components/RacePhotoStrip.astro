@@ -16,7 +16,7 @@ const { gallery = [], general } = raceData;
 const regOpenTime = new Date(general?.registrationOpenDate || '2026-11-20T08:00:00-05:00').getTime();
 const isPreRegistration = Date.now() < regOpenTime;
 
-// Strip 1: 3 photos (between Race Info & Inclusions and Block Party)
+// Strip 1: 3 photos (between Event Info & Inclusions and Block Party)
 const featured1 = (gallery || [])
   .filter((p: any) => p.featuredOnRace1 === true)
   .sort((a: any, b: any) => (a.order ?? 10) - (b.order ?? 10));
@@ -68,7 +68,7 @@ const allRacePhotos = [...strip1Photos, ...strip2Photos];
 </style>
 
 {strip === 1 && (
-  <section aria-label="26.TRUE Race Photo Showcase Part 1" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
+  <section aria-label="26.TRUE Event Photo Showcase Part 1" class="py-0 sm:py-6 lg:py-8 bg-black border-t border-neutral-900">
     <div class="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
       
       <!-- Mobile Carousel (< sm) - Full Bleed Flush Against Neighbors -->
@@ -78,7 +78,7 @@ const allRacePhotos = [...strip1Photos, ...strip2Photos];
           tabindex="0"
           role="region"
           aria-roledescription="carousel"
-          aria-label="26.TRUE Race Photo Showcase Part 1 Carousel"
+          aria-label="26.TRUE Event Photo Showcase Part 1 Carousel"
         >
           {displayPhotos.map((photo: any, idx: number) => {
             const originalIndex = startIndex + idx;
@@ -365,7 +365,7 @@ const allRacePhotos = [...strip1Photos, ...strip2Photos];
               <!-- Registration button linking to Movemint (updates text based on registration status) -->
               <a
                 id="blockparty-reg-btn"
-                href={general?.registrationUrl || "https://www.movemint.cc/events/Uwj1WJY"}
+                href={general?.registrationUrl || "https://www.movemint.cc/events/26true2027"}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5"

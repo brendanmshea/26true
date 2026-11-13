@@ -83,7 +83,7 @@ export const raceData = {
       "Mattapan",
       "Dorchester",
     ],
-    registrationUrl: "https://www.movemint.cc/events/Uwj1WJY",
+    registrationUrl: "https://www.movemint.cc/events/26true2027",
     registrationStatus: "Opens Friday, Nov 20 @ 8 AM EST",
     fieldCaps: {
       marathon: 200,
@@ -319,7 +319,7 @@ export const raceData = {
         location: "Shelburne Community Center Park",
         mile: "Mile 26.2",
         vibe: "The Celebratory Finish Line Block Party",
-        amenities: ["Finisher Medals", "Finisher Jackets", "Post-Race Meal", "Live DJ & Dance Floor"],
+        amenities: ["Finisher Medals", "Finisher Jackets", "Post-Run Meal", "Live DJ & Dance Floor"],
       },
     ] as CheerZone[],
   },

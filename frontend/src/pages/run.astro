@@ -20,7 +20,7 @@ const inclusions = [
     icon: "coach",
   },
   {
-    title: "Souvenir Race Bib",
+    title: "Souvenir 26.TRUE Bib",
     description: "A 26.TRUE Souvenir Bib",
     icon: "bib",
   },
@@ -40,12 +40,12 @@ const inclusions = [
     icon: "bag",
   },
   {
-    title: "Post-Race Meal Ticket",
+    title: "Post-Run Meal Ticket",
     description: "One Meal Ticket",
     icon: "meal",
   },
   {
-    title: "Post-Race Drink Ticket",
+    title: "Post-Run Drink Ticket",
     description: "One Drink Ticket",
     icon: "drink",
   },
@@ -53,10 +53,10 @@ const inclusions = [
 ---
 
 <Layout
-  title={`Race Info — ${general.name}`}
+  title={`Event Info — ${general.name}`}
   description="Event date, registration details, 131 Dale Street start & finish line, runner registration inclusions, and the Finish Line Block Party for 26.TRUE."
 >
-  <!-- Hero / Race Info Header & Key Logistics -->
+  <!-- Hero / Event Info Header & Key Logistics -->
   <section class="relative py-12 sm:py-16 lg:py-20 bg-black border-b border-neutral-900 overflow-hidden">
     <!-- Ambient Glow Accent -->
     <div class="absolute inset-0 pointer-events-none z-0">
@@ -71,7 +71,7 @@ const inclusions = [
         <div class="lg:col-span-7 space-y-6">
 
           <h1 class="font-edo text-4xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal leading-[0.95]">
-            Race Info
+            Event Info
           </h1>
 
           <!-- Key Event Details Grid -->
@@ -161,7 +161,7 @@ const inclusions = [
     </div>
   </section>
 
-  <!-- Photo Strip 1: Race Info & Runner Energy (Configurable in Sanity) -->
+  <!-- Photo Strip 1: Event Info & Runner Energy (Configurable in Sanity) -->
   <RacePhotoStrip strip={1} />
 
   <!-- What is Included with Runner Registration -->
