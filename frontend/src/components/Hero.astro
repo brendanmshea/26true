@@ -15,7 +15,7 @@ const { general } = raceData;
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
       
       <!-- Left Column: Copy -->
-      <div class="lg:col-span-7 text-left">
+      <div class="lg:col-span-7 text-left sm:text-center lg:text-left">
         
         <!-- Mobile Logo: Spans full width on mobile (< sm) -->
         <div class="block sm:hidden w-full mb-6">
@@ -29,7 +29,7 @@ const { general } = raceData;
         </div>
 
         <!-- Race Date Badge -->
-        <div class="flex items-center gap-2.5 mb-3 sm:mb-4">
+        <div class="flex items-center justify-start sm:justify-center lg:justify-start gap-2.5 mb-3 sm:mb-4">
           <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold text-neutral-200 bg-neutral-900/90 border border-neutral-800 backdrop-blur-md">
             <span class="w-2 h-2 rounded-full bg-[#3fd4a4] animate-pulse"></span>
             {general.raceDisplayDate}
@@ -37,7 +37,7 @@ const { general } = raceData;
         </div>
 
         <!-- Headline & Desktop Logo Row: On desktop (sm+), logo is under date badge and to the left of headline -->
-        <div class="flex items-center gap-4 sm:gap-6 lg:gap-7 xl:gap-8 mb-4 sm:mb-5">
+        <div class="flex items-center justify-start sm:justify-center lg:justify-start gap-4 sm:gap-6 lg:gap-7 xl:gap-8 mb-4 sm:mb-5">
           <!-- Desktop Logo: under date badge & to the left of headline (sm+) -->
           <div class="hidden sm:block shrink-0">
             <img
@@ -50,7 +50,7 @@ const { general } = raceData;
           </div>
 
           <!-- Main Headline using Edo Font -->
-          <h1 class="font-edo text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl text-white tracking-normal uppercase leading-[0.95]">
+          <h1 class="font-edo text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl text-white tracking-normal uppercase leading-[0.95] text-left">
             <span class="block whitespace-nowrap">OUR CITY.</span>
             <span class="block whitespace-nowrap text-[#d4ff00] drop-shadow-[0_2px_20px_rgba(212,255,0,0.35)]">
               OUR WAY.
@@ -58,13 +58,13 @@ const { general } = raceData;
           </h1>
         </div>
 
-        <p class="text-base sm:text-lg text-neutral-200 max-w-xl leading-relaxed font-normal">
+        <p class="text-base sm:text-lg text-neutral-200 max-w-xl leading-relaxed font-normal sm:mx-auto lg:mx-0">
           An untimed, community-first marathon and half marathon created by <span class="text-[#3fd4a4] font-bold">PIONEERS Run Crew</span>. Running 100% inside Boston city limits.
         </p>
 
       </div>
 
-      <!-- Right Column: CTAs, Countdown Widget & Race Logo -->
+      <!-- Right Column: CTAs, Countdown Widget -->
       <div class="lg:col-span-5 flex flex-col items-center justify-center gap-5">
         
         <!-- Action Buttons -->

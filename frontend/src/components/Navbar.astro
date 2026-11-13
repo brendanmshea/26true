@@ -14,7 +14,10 @@ const navLinks = [
 ];
 ---
 
-<header class="sticky top-0 z-50 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 transition-all">
+<header
+  id="main-header"
+  class="fixed top-0 inset-x-0 z-50 w-full bg-black/90 backdrop-blur-md border-b border-neutral-900 shadow-xl shadow-black/50 transition-transform duration-300 ease-in-out -translate-y-full md:sticky md:top-0 md:translate-y-0"
+>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       
@@ -87,7 +90,7 @@ const navLinks = [
   </div>
 
   <!-- Mobile Drawer -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-900 bg-black px-4 pt-3 pb-6 space-y-2">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-900 bg-black/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
     {navLinks.map((link) => (
       <a
         href={link.href}
@@ -113,16 +116,97 @@ const navLinks = [
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('menu-icon');
-  const closeIcon = document.getElementById('close-icon');
+  function setupMobileNavbar() {
+    const header = document.getElementById('main-header');
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
 
-  if (btn && menu && menuIcon && closeIcon) {
-    btn.addEventListener('click', () => {
-      const isExpanded = menu.classList.toggle('hidden');
-      menuIcon.classList.toggle('hidden', !isExpanded);
-      closeIcon.classList.toggle('hidden', isExpanded);
-    });
+    if (!header) return;
+
+    // Threshold in pixels before sliding in the navbar on mobile
+    const SCROLL_THRESHOLD = 50;
+
+    function isMenuOpen() {
+      return menu ? !menu.classList.contains('hidden') : false;
+    }
+
+    function updateNavbar() {
+      const isMobile = window.innerWidth < 768; // < md breakpoint
+      if (!isMobile) {
+        // Always visible and sticky on desktop
+        header.classList.remove('-translate-y-full');
+        header.classList.add('translate-y-0');
+        return;
+      }
+
+      // On mobile: show if scrolled down past threshold OR if drawer menu is currently open
+      if (isMenuOpen() || window.scrollY > SCROLL_THRESHOLD) {
+        header.classList.remove('-translate-y-full');
+        header.classList.add('translate-y-0');
+      } else {
+        header.classList.remove('translate-y-0');
+        header.classList.add('-translate-y-full');
+      }
+    }
+
+    // Toggle mobile menu drawer
+    if (btn && menu && menuIcon && closeIcon) {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const willBeHidden = !menu.classList.contains('hidden');
+        if (willBeHidden) {
+          menu.classList.add('hidden');
+          menuIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        } else {
+          menu.classList.remove('hidden');
+          menuIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+        }
+        updateNavbar();
+      };
+
+      // Auto-close menu if a navigation link inside drawer is clicked
+      const drawerLinks = menu.querySelectorAll('a');
+      drawerLinks.forEach((link) => {
+        link.onclick = () => {
+          menu.classList.add('hidden');
+          menuIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+          updateNavbar();
+        };
+      });
+    }
+
+    // Scroll listener throttled via requestAnimationFrame for 60fps smoothness
+    if (!header.dataset.navInitialized) {
+      header.dataset.navInitialized = 'true';
+      let ticking = false;
+
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateNavbar();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+
+      window.addEventListener('resize', updateNavbar, { passive: true });
+    }
+
+    // Run immediately on page load / route navigation
+    updateNavbar();
   }
+
+  // Support direct page load & Astro client router transitions
+  setupMobileNavbar();
+  document.addEventListener('astro:page-load', setupMobileNavbar);
 </script>
