@@ -119,6 +119,8 @@ export async function getRaceData() {
                 if (!targetLabel) {
                   if (targetUrl === '/course' || targetUrl.startsWith('/course')) {
                     targetLabel = /cheer/i.test(p.title) ? 'Explore cheer zones' : 'Explore the course';
+                  } else if (targetUrl === '/race' || targetUrl.startsWith('/race')) {
+                    targetLabel = 'View race info';
                   } else if (targetUrl === '/history' || targetUrl.startsWith('/history')) {
                     targetLabel = 'Read the history';
                   } else if (targetUrl === '/faq' || targetUrl.startsWith('/faq')) {

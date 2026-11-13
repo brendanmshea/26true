@@ -32,6 +32,7 @@ export default defineType({
       options: {
         list: [
           { title: 'Course & Route (/course)', value: '/course' },
+          { title: 'Race Info & Inclusions (/race)', value: '/race' },
           { title: 'Origin & History (/history)', value: '/history' },
           { title: 'FAQ & Runner Guide (/faq)', value: '/faq' },
           { title: 'Photo Gallery (/gallery)', value: '/gallery' },
