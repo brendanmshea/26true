@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getRaceData } from '../lib/sanity';
+
+const raceData = await getRaceData();
+const { general } = raceData;
+
+const pdfUrl = encodeURI('/images/2027 26.TRUE training plans.pdf');
+
+const coaches = [
+  {
+    name: "Lindsey Thorne-Bingham",
+    organization: "sixRUNseven co.",
+    email: "sixrunsevenco@gmail.com",
+    image: "/images/Lindsey.png",
+    quote:
+      "I got into coaching through a program called Game Changers. Game Changers supports women of color in the running space become certified run coaches. I initially became a coach to deepen my personal running knowledge; however, through the program, I recognized that I have a gift to share and a desire to coach.",
+  },
+  {
+    name: "Trish Moran",
+    email: "moran.patricia16@gmail.com",
+    image: "/images/Trish.png",
+    quote:
+      "Running has changed my life for the better, and I want to share the joy it has brought me with others. I want to make training more accessible and less intimidating.",
+  },
+];
+---
+
+<Layout
+  title={`Training Plans — ${general.name}`}
+  description="Official 2027 26.TRUE training plans for Marathon and Half Marathon runners, developed by certified community run coaches Lindsey Thorne-Bingham and Trish Moran."
+>
+  <!-- Hero Section -->
+  <section class="relative py-12 sm:py-16 lg:py-20 bg-black border-b border-neutral-900 overflow-hidden">
+    <!-- Ambient Glow Accent -->
+    <div class="absolute inset-0 pointer-events-none z-0">
+      <div class="absolute top-0 right-1/4 w-[500px] h-[350px] bg-[#d4ff00]/10 blur-[150px] rounded-full"></div>
+      <div class="absolute bottom-0 left-10 w-[400px] h-[300px] bg-[#3fd4a4]/10 blur-[140px] rounded-full"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl space-y-6">
+
+        <h1 class="font-edo text-4xl sm:text-6xl lg:text-7xl text-white uppercase tracking-normal leading-[0.95]">
+          Training Plans
+        </h1>
+
+        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
+          Whether you are tackling a half or full marathon for the very first time, or you're training for your 10th, these comprehensive plans are designed to help you cross the finish line feeling confident, healthy, and supported.
+        </p>
+
+        <!-- Primary PDF Download CTA -->
+        <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <a
+            href={pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-center"
+          >
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <span>Download 2027 Training Plans</span>
+          </a>
+
+          <span class="text-xs text-neutral-400 font-medium text-center sm:text-left">
+            Includes Half & Full Marathon • First Time, Beginner & Intermediate
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet Our Run Coaches Section -->
+  <section class="py-16 sm:py-24 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="text-xs font-black uppercase tracking-widest text-[#d4ff00] mb-3">
+          Community Leadership
+        </div>
+        <h2 class="font-edo text-4xl sm:text-5xl text-white uppercase tracking-normal">
+          Meet Our Run Coaches
+        </h2>
+        <p class="text-sm text-neutral-300 mt-3 font-normal">
+          These plans were thoughtfully crafted by our community run coaches dedicated to making distance running more inclusive, accessible, and joyful.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+        {coaches.map((c) => (
+          <div class="bg-neutral-950/90 border border-neutral-800 rounded-3xl p-8 sm:p-10 flex flex-col justify-between backdrop-blur-md hover:border-[#d4ff00]/40 transition-all shadow-xl">
+            <div class="space-y-6">
+              
+              <!-- Coach Header: Photo, Name, Organization, Email -->
+              <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-neutral-800 shadow-xl shrink-0"
+                />
+                <div class="space-y-1.5">
+                  <h3 class="font-edo text-2xl sm:text-3xl text-white tracking-normal">
+                    {c.name}
+                  </h3>
+                  {c.organization && (
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#3fd4a4]">
+                      {c.organization}
+                    </div>
+                  )}
+                  <div>
+                    <a
+                      href={`mailto:${c.email}`}
+                      class="inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-[#d4ff00] transition-colors"
+                    >
+                      <svg class="w-3.5 h-3.5 text-[#d4ff00]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                      </svg>
+                      <span>{c.email}</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quote Block -->
+              <div class="relative pl-5 border-l-2 border-[#d4ff00]/60">
+                <p class="text-sm text-neutral-300 leading-relaxed italic font-normal">
+                  "{c.quote}"
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+      <!-- Bottom Download Callout Card -->
+      <div class="mt-16 sm:mt-20 p-8 sm:p-12 rounded-3xl bg-neutral-950 border border-neutral-800 text-center max-w-3xl mx-auto shadow-2xl">
+        <h3 class="font-edo text-3xl sm:text-4xl text-white uppercase tracking-normal mb-3">
+          Ready To Start Logging Miles?
+        </h3>
+        <p class="text-sm text-neutral-300 max-w-xl mx-auto mb-8 font-normal leading-relaxed">
+          Grab your copy of the training plans and start building towards April 17th!
+        </p>
+        <a
+          href={pdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-3 px-8 py-4 text-xs sm:text-sm font-black uppercase tracking-wider text-black bg-[#d4ff00] hover:bg-[#c3ec00] rounded-2xl shadow-xl shadow-[#d4ff00]/20 transition-all transform hover:-translate-y-0.5"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          <span>Download 2027 Training Plans</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>

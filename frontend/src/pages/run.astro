@@ -16,8 +16,10 @@ const inclusions = [
   },
   {
     title: "Certified Training Plans",
-    description: "A training plan designed by local certified run coaches (Beginner and Intermediate levels) - COMING SOON!",
+    description: "Training plans designed by local certified run coaches Lindsey Thorne-Bingham and Trish Moran (Beginner and Intermediate levels).",
     icon: "coach",
+    href: "/training",
+    linkText: "View Training Plans",
   },
   {
     title: "Souvenir 26.TRUE Bib",
@@ -232,14 +234,34 @@ const inclusions = [
 
               <!-- Title beside icon -->
               <h3 class="font-edo text-base sm:text-lg text-white tracking-normal group-hover:text-[#3fd4a4] transition-colors leading-snug">
-                {item.title}
+                {item.href ? (
+                  <a href={item.href} class="hover:text-[#d4ff00] transition-colors">
+                    {item.title}
+                  </a>
+                ) : (
+                  item.title
+                )}
               </h3>
             </div>
 
             <!-- Description -->
-            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal flex-1">
               {item.description}
             </p>
+
+            {item.href && (
+              <div class="mt-4 pt-3 border-t border-neutral-900">
+                <a
+                  href={item.href}
+                  class="inline-flex items-center gap-1.5 text-xs font-bold text-[#d4ff00] hover:text-white transition-colors"
+                >
+                  <span>{item.linkText || 'View Training Plans'}</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+            )}
 
           </div>
         ))}

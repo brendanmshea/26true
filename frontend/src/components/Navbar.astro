@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/course', label: 'Course' },
   { href: '/run', label: 'Run' },
+  { href: '/training', label: 'Training' },
   { href: '/gallery', label: 'Gallery' },
   { href: '/history', label: 'History' },
   { href: '/faq', label: 'FAQ' },
@@ -54,7 +55,7 @@ const navLinks = [
           return (
             <a
               href={link.href}
-              class={`px-3.5 py-2 text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${
+              class={`px-2.5 lg:px-3.5 py-2 text-xs lg:text-sm font-bold uppercase tracking-wider rounded-lg transition-all ${
                 isActive
                   ? 'text-[#d4ff00] bg-neutral-900 border-b-2 border-[#d4ff00]'
                   : 'text-neutral-300 hover:text-white hover:bg-neutral-900/80'
